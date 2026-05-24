@@ -482,7 +482,7 @@
         .carousel-track {
             display: flex;
             gap: 12px;
-            transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+            transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
             cursor: grab;
         }
         .carousel-track:active { cursor: grabbing; }
@@ -515,7 +515,16 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center top;
+            display: block;
             transition: transform 0.4s ease;
+        }
+        .p-card-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
         }
         .p-card:hover .p-card-img img {
             transform: scale(1.1);
@@ -992,14 +1001,15 @@
                 <div class="p-card">
                     <div class="p-card-img">
                         <div class="p-card-placeholder">
-                            <div class="ph-icon">+</div>
-                            <div class="ph-text">Photo</div>
+                            <!-- <div class="ph-icon">+</div> -->
+                            <!-- <div class="ph-text">Photo</div> -->
+                            <img src="team/as.png" alt="Ash Singh" class="p-card-photo">
                         </div>
                         <div class="p-card-num">01</div>
                     </div>
                     <div class="p-card-info">
                         <div class="p-card-role">Captain</div>
-                        <div class="p-card-name">Player Name</div>
+                        <div class="p-card-name">Ash Singh</div>
                         <div class="p-card-pos">Top Order</div>
                     </div>
                 </div>
@@ -1007,29 +1017,32 @@
                 <div class="p-card">
                     <div class="p-card-img">
                         <div class="p-card-placeholder">
-                            <div class="ph-icon">+</div>
-                            <div class="ph-text">Photo</div>
+                            <!-- <div class="ph-icon">+</div> -->
+                            <!-- <div class="ph-text">Photo</div> -->
+                            <img src="team/g.png" alt="Mayank" class="p-card-photo">
                         </div>
                         <div class="p-card-num">02</div>
                     </div>
                     <div class="p-card-info">
-                        <div class="p-card-role">Vice Captain</div>
-                        <div class="p-card-name">Player Name</div>
-                        <div class="p-card-pos">All-Rounder</div>
+                        <div class="p-card-role">Vice Captain / Wicket Keeper</div>
+                        <div class="p-card-name">Mayank</div>
+                        <div class="p-card-pos">WK Batsman</div>
                     </div>
                 </div>
                 <!-- Player 3 -->
                 <div class="p-card">
                     <div class="p-card-img">
                         <div class="p-card-placeholder">
-                            <div class="ph-icon">+</div>
-                            <div class="ph-text">Photo</div>
+                            <!-- <div class="ph-icon">+</div>
+                            <div class="ph-text">Photo</div> -->
+                            <img src="team/r.png" alt="Rajesh Suyravanshi" class="p-card-photo">
+                            
                         </div>
                         <div class="p-card-num">03</div>
                     </div>
                     <div class="p-card-info">
                         <div class="p-card-role">Batsman</div>
-                        <div class="p-card-name">Player Name</div>
+                        <div class="p-card-name">Rajesh (Suyravanshi)</div>
                         <div class="p-card-pos">Opener</div>
                     </div>
                 </div>
@@ -1037,14 +1050,16 @@
                 <div class="p-card">
                     <div class="p-card-img">
                         <div class="p-card-placeholder">
-                            <div class="ph-icon">+</div>
-                            <div class="ph-text">Photo</div>
+                            <!-- <div class="ph-icon">+</div> -->
+                            <!-- <div class="ph-text">Photo</div> -->
+                            <img src="team/h.png" alt="Harshit Rathi" class="p-card-photo">
+
                         </div>
                         <div class="p-card-num">04</div>
                     </div>
                     <div class="p-card-info">
                         <div class="p-card-role">Batsman</div>
-                        <div class="p-card-name">Player Name</div>
+                        <div class="p-card-name">Harshit rathi</div>
                         <div class="p-card-pos">Middle Order</div>
                     </div>
                 </div>
@@ -1052,15 +1067,17 @@
                 <div class="p-card">
                     <div class="p-card-img">
                         <div class="p-card-placeholder">
-                            <div class="ph-icon">+</div>
-                            <div class="ph-text">Photo</div>
+                            <!-- <div class="ph-icon">+</div> -->
+                            <!-- <div class="ph-text">Photo</div> -->
+                            <img src="team/m.png" alt="Mohit" class="p-card-photo">
+
                         </div>
                         <div class="p-card-num">05</div>
                     </div>
                     <div class="p-card-info">
-                        <div class="p-card-role">Wicket Keeper</div>
-                        <div class="p-card-name">Player Name</div>
-                        <div class="p-card-pos">WK Batsman</div>
+                        <div class="p-card-role">Bowling All Rounder</div>
+                        <div class="p-card-name">Mohit</div>
+                        <div class="p-card-pos">Bowler</div>
                     </div>
                 </div>
                 <!-- Player 6 -->
@@ -1074,7 +1091,7 @@
                     </div>
                     <div class="p-card-info">
                         <div class="p-card-role">All-Rounder</div>
-                        <div class="p-card-name">Player Name</div>
+                        <div class="p-card-name">Unnat</div>
                         <div class="p-card-pos">Batting AR</div>
                     </div>
                 </div>
@@ -1088,8 +1105,8 @@
                         <div class="p-card-num">07</div>
                     </div>
                     <div class="p-card-info">
-                        <div class="p-card-role">Bowler</div>
-                        <div class="p-card-name">Player Name</div>
+                        <div class="p-card-role">All Rounder</div>
+                        <div class="p-card-name">Abhishek</div>
                         <div class="p-card-pos">Fast Bowler</div>
                     </div>
                 </div>
@@ -1104,7 +1121,7 @@
                     </div>
                     <div class="p-card-info">
                         <div class="p-card-role">Bowler</div>
-                        <div class="p-card-name">Player Name</div>
+                        <div class="p-card-name">Shudanshu</div>
                         <div class="p-card-pos">Spin Bowler</div>
                     </div>
                 </div>
@@ -1362,7 +1379,7 @@
                     currentIndex = (currentIndex + 1) % cards.length;
                     goToSlide(currentIndex);
                 }
-            }, 3000);
+            }, 6500);
         }
         startAutoScroll();
 
