@@ -1349,7 +1349,6 @@
         const cards = track.querySelectorAll('.p-card');
         const cardWidth = 172; // 160 + 12 gap
         let currentIndex = 0;
-        let autoScrollInterval;
         let isDragging = false;
         let startX = 0;
         let scrollLeft = 0;
@@ -1373,31 +1372,18 @@
             updateDots();
         }
 
-        // Auto scroll
-        function startAutoScroll() {
-            autoScrollInterval = setInterval(() => {
-                if (!isDragging) {
-                    currentIndex = (currentIndex + 1) % cards.length;
-                    goToSlide(currentIndex);
-                }
-            }, 6500);
-        }
-        startAutoScroll();
-
         // Touch / Drag
         track.addEventListener('mousedown', (e) => {
             isDragging = true;
             track.classList.add('dragging');
             startX = e.pageX;
             scrollLeft = currentIndex * cardWidth;
-            clearInterval(autoScrollInterval);
         });
         track.addEventListener('touchstart', (e) => {
             isDragging = true;
             track.classList.add('dragging');
             startX = e.touches[0].pageX;
             scrollLeft = currentIndex * cardWidth;
-            clearInterval(autoScrollInterval);
         }, { passive: true });
 
         track.addEventListener('mousemove', (e) => {
@@ -1424,7 +1410,6 @@
                 else currentIndex = Math.max(currentIndex - 1, 0);
             }
             goToSlide(currentIndex);
-            startAutoScroll();
         }
         track.addEventListener('mouseup', endDrag);
         track.addEventListener('mouseleave', endDrag);
