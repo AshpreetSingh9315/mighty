@@ -284,8 +284,42 @@
             color: rgba(255,255,255,0.5);
             letter-spacing: 4px;
             text-transform: uppercase;
-            margin-bottom: 24px;
+            margin-bottom: 12px;
             opacity: 0;
+        }
+        .hero-motto {
+            display: inline-block;
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1rem, 4vw, 1.45rem);
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            padding: 7px 18px;
+            margin-bottom: 22px;
+            color: transparent;
+            background:
+                linear-gradient(135deg, #fff8c7 0%, var(--gold) 34%, #ff9f1c 62%, #e23b4f 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            border: 1px solid rgba(255,215,0,0.18);
+            border-radius: 999px;
+            box-shadow:
+                inset 0 0 18px rgba(255,215,0,0.06),
+                0 8px 28px rgba(220,20,60,0.18);
+            text-shadow:
+                0 0 14px rgba(255,215,0,0.3),
+                0 0 28px rgba(220,20,60,0.18);
+            opacity: 0;
+            animation: mottoGlow 2.4s ease-in-out infinite;
+        }
+        @keyframes mottoGlow {
+            0%, 100% {
+                filter: brightness(1);
+                transform: translateY(0);
+            }
+            50% {
+                filter: brightness(1.35);
+                transform: translateY(-1px);
+            }
         }
         .hero-cta {
             display: inline-flex;
@@ -939,6 +973,7 @@
             <img src="logo.png" alt="Kings XI" class="hero-logo" id="heroLogo">
             <h1 class="hero-title" id="heroTitle"><span>KINGS</span> XI</h1>
             <p class="hero-tag" id="heroTag">Born to Rule · Est. 2026</p>
+            <p class="hero-motto" id="heroMotto">#BasJeetnaHai</p>
             <a href="#squad" class="hero-cta" id="heroCta">
                 Meet The Squad
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -995,7 +1030,7 @@
             </div>
             <div class="squad-count"><span>11</span> / 11 ACTIVE</div>
         </div>
-
+        
         <div class="carousel" id="carousel">
             <div class="carousel-track" id="track">
                 <!-- Player 1 -->
@@ -1330,7 +1365,8 @@
             .to('#heroLogo', { opacity: 1, scale: 1, duration: 1, ease: 'power3.out', startAt: { scale: 0.7 } })
             .to('#heroTitle', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', startAt: { y: 40 } }, '-=0.5')
             .to('#heroTag', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', startAt: { y: 20 } }, '-=0.4')
-            .to('#heroCta', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', startAt: { y: 20 } }, '-=0.3')
+            .to('#heroMotto', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', startAt: { y: 16 } }, '-=0.3')
+            .to('#heroCta', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', startAt: { y: 20 } }, '-=0.25')
             .to('#heroScroll', { opacity: 1, duration: 0.8 }, '-=0.2');
 
         // Hero parallax
