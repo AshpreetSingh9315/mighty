@@ -880,6 +880,168 @@
             flex-direction: column;
             gap: 12px;
         }
+        .cricheroes-panel {
+            margin: 18px 0 16px;
+            padding: 18px;
+            border: 1px solid rgba(255,215,0,0.16);
+            border-radius: 16px;
+            background:
+                linear-gradient(145deg, rgba(220,20,60,0.12), rgba(255,215,0,0.05)),
+                rgba(255,255,255,0.035);
+            box-shadow: 0 18px 55px rgba(0,0,0,0.22);
+        }
+        .cricheroes-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+        .cricheroes-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+        .cricheroes-badge {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            background: var(--gold);
+            color: #161000;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 800;
+        }
+        .cricheroes-brand span {
+            display: block;
+            font-size: 0.66rem;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+        }
+        .cricheroes-brand strong {
+            display: block;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.95rem;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .cricheroes-live {
+            flex: 0 0 auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 10px;
+            border: 1px solid rgba(255,215,0,0.18);
+            border-radius: 999px;
+            color: var(--gold);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.66rem;
+            font-weight: 700;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+        }
+        .cricheroes-live::before {
+            content: '';
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #30d158;
+            box-shadow: 0 0 14px rgba(48,209,88,0.9);
+        }
+        .score-card {
+            padding: 18px;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 14px;
+            background: rgba(5,5,5,0.35);
+        }
+        .score-teams {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 10px;
+        }
+        .score-team {
+            text-align: center;
+            min-width: 0;
+        }
+        .score-team img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+            margin-bottom: 8px;
+        }
+        .score-team strong {
+            display: block;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.78rem;
+            color: #fff;
+            line-height: 1.25;
+        }
+        .score-team span {
+            display: block;
+            margin-top: 5px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.68rem;
+            color: rgba(255,255,255,0.52);
+        }
+        .score-vs {
+            display: grid;
+            place-items: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(255,215,0,0.1);
+            color: var(--gold);
+            font-family: 'Syne', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+        .score-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .score-meta span {
+            font-size: 0.68rem;
+            color: rgba(255,255,255,0.48);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .score-link {
+            flex: 0 0 auto;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 36px;
+            padding: 0 12px;
+            border: 1px solid rgba(255,215,0,0.22);
+            border-radius: 10px;
+            color: var(--gold);
+            background: rgba(255,215,0,0.06);
+            font-family: 'Syne', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+        .score-link:hover {
+            transform: translateY(-1px);
+            border-color: rgba(255,215,0,0.5);
+            background: rgba(255,215,0,0.12);
+        }
         .fixture-image-link {
             position: relative;
             display: block;
@@ -1043,6 +1205,22 @@
             .fixture-card {
                 max-width: 600px;
                 margin: 0 auto;
+            }
+            .cricheroes-panel {
+                max-width: 720px;
+                margin-left: auto;
+                margin-right: auto;
+                padding: 22px;
+            }
+            .fixture-list {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                max-width: 720px;
+                margin: 0 auto;
+            }
+            .fixture-list .fixture-card {
+                max-width: none;
+                margin: 0;
             }
         }
     </style>
@@ -1389,6 +1567,7 @@
                 <div class="fixture-vs-sm">
                     VS
                     <span class="vs-date-sm">TBD</span>
+                    <a class="score-link" href="https://cricheroes.com/" target="_blank" rel="noopener">Score</a>
                 </div>
                 <div class="fixture-team-sm">
                     <img src="1.png" alt="MCT">
@@ -1403,6 +1582,7 @@
                 <div class="fixture-vs-sm">
                     VS
                     <span class="vs-date-sm">TBD</span>
+                    <a class="score-link" href="https://cricheroes.com/" target="_blank" rel="noopener">Score</a>
                 </div>
                 <div class="fixture-team-sm">
                     <img src="2.png" alt="NG Yuva Cricket">
