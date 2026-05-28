@@ -891,6 +891,186 @@
             flex-direction: column;
             gap: 12px;
         }
+        .match-centre {
+            display: grid;
+            gap: 16px;
+        }
+        .next-match-card {
+            position: relative;
+            overflow: hidden;
+            padding: 22px;
+            border: 1px solid rgba(255,215,0,0.22);
+            border-radius: 18px;
+            background:
+                linear-gradient(145deg, rgba(220,20,60,0.18), rgba(255,215,0,0.08)),
+                rgba(255,255,255,0.04);
+            box-shadow: 0 24px 70px rgba(0,0,0,0.32);
+        }
+        .next-match-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.08), transparent);
+            transform: translateX(-100%);
+            animation: matchShine 5s ease-in-out infinite;
+        }
+        @keyframes matchShine {
+            0%, 55% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .match-kicker,
+        .match-teams,
+        .match-details,
+        .match-action {
+            position: relative;
+            z-index: 1;
+        }
+        .match-kicker {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+        .match-kicker span {
+            padding: 7px 10px;
+            border-radius: 999px;
+            background: var(--gold);
+            color: #130d00;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.64rem;
+            font-weight: 800;
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+        }
+        .match-kicker strong {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.72);
+            text-align: right;
+        }
+        .match-teams {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 12px;
+        }
+        .match-team {
+            min-width: 0;
+            text-align: center;
+        }
+        .match-team img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 12px 22px rgba(0,0,0,0.35));
+        }
+        .match-team span {
+            display: block;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 800;
+            line-height: 1.15;
+            color: #fff;
+        }
+        .kings-side span {
+            color: var(--gold);
+        }
+        .match-versus {
+            display: grid;
+            place-items: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(5,5,5,0.48);
+            border: 1px solid rgba(255,215,0,0.22);
+            color: var(--gold);
+            font-family: 'Syne', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+        .match-details {
+            display: grid;
+            gap: 6px;
+            margin: 20px 0 14px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            text-align: center;
+        }
+        .match-details span {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.6);
+            letter-spacing: 0.8px;
+        }
+        .match-action {
+            width: 100%;
+        }
+        .result-card {
+            padding: 18px;
+            border: 1px solid rgba(220,20,60,0.22);
+            border-radius: 16px;
+            background: rgba(220,20,60,0.07);
+        }
+        .result-label {
+            margin-bottom: 14px;
+            color: rgba(255,255,255,0.48);
+            font-size: 0.66rem;
+            font-weight: 700;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+        }
+        .result-row {
+            display: grid;
+            grid-template-columns: 1fr minmax(96px, auto) 1fr;
+            align-items: center;
+            gap: 10px;
+        }
+        .result-team {
+            text-align: center;
+            min-width: 0;
+        }
+        .result-team img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            margin-bottom: 7px;
+        }
+        .result-team span {
+            display: block;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.76rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .result-status {
+            text-align: center;
+        }
+        .result-status strong {
+            display: block;
+            color: #ff5a70;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+        }
+        .result-status span {
+            display: block;
+            margin-top: 5px;
+            color: rgba(255,255,255,0.46);
+            font-size: 0.62rem;
+            line-height: 1.25;
+        }
+        .result-card p {
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.62);
+            font-size: 0.76rem;
+            line-height: 1.6;
+            text-align: center;
+        }
         .cricheroes-panel {
             margin: 18px 0 16px;
             padding: 18px;
@@ -1056,7 +1236,7 @@
         .fixture-image-link {
             position: relative;
             display: block;
-            margin-bottom: 16px;
+            margin-top: 2px;
             border-radius: 16px;
             overflow: hidden;
             border: 1px solid rgba(255,215,0,0.18);
@@ -1223,10 +1403,30 @@
                 margin-right: auto;
                 padding: 22px;
             }
+            .match-centre {
+                max-width: 780px;
+                margin: 0 auto;
+                grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+                align-items: start;
+            }
+            .next-match-card {
+                grid-row: span 2;
+                padding: 28px;
+            }
+            .match-team img {
+                width: 88px;
+                height: 88px;
+            }
+            .match-team span {
+                font-size: 1rem;
+            }
+            .fixture-image-link {
+                grid-column: 1 / -1;
+            }
             .fixture-list {
                 display: grid;
                 grid-template-columns: repeat(2, minmax(0, 1fr));
-                max-width: 720px;
+                max-width: 780px;
                 margin: 0 auto;
             }
             .fixture-list .fixture-card {
@@ -1518,19 +1718,19 @@
 
     <!-- VS Section -->
     <section class="vs-section" id="vs">
-        <p class="vs-label">The Battle</p>
+        <p class="vs-label">Next Battle</p>
         <div class="vs-matchup">
+            <div class="vs-team">
+                <img src="2.png" alt="NG Yuva Manch">
+                <span class="vs-team-name">NG YUVA MANCH</span>
+            </div>
+            <div class="vs-divider">VS</div>
             <div class="vs-team">
                 <img src="logo.png" alt="Kings XI">
                 <span class="vs-team-name">KINGS XI</span>
             </div>
-            <div class="vs-divider">VS</div>
-            <div class="vs-team">
-                <img src="aa.png" alt="Opponent">
-                <span class="vs-team-name">ALPHA XI</span>
-            </div>
         </div>
-        <p class="vs-date">TBD — Dominate Cricket Ground</p>
+        <p class="vs-date">Mon, 01 Jun - 05:30 AM - Dominate Cricket Ground</p>
         <a href="#fixtures" class="vs-cta">View Fixtures</a>
     </section>
 
@@ -1543,20 +1743,20 @@
         </div>
         <div class="stats-grid">
             <div class="stat-box reveal-scale">
-                <div class="stat-box-num" data-target="11">0</div>
-                <div class="stat-box-label">Kings</div>
+                <div class="stat-box-num" data-target="1">0</div>
+                <div class="stat-box-label">Played</div>
             </div>
             <div class="stat-box reveal-scale">
-                <div class="stat-box-num" data-target="2026">0</div>
-                <div class="stat-box-label">Born</div>
+                <div class="stat-box-num" data-target="0">0</div>
+                <div class="stat-box-label">Wins</div>
             </div>
             <div class="stat-box reveal-scale">
-                <div class="stat-box-num" data-target="100">0</div>
+                <div class="stat-box-num" data-target="0">0</div>
                 <div class="stat-box-label">Win %</div>
             </div>
             <div class="stat-box reveal-scale">
                 <div class="stat-box-num" data-target="1">0</div>
-                <div class="stat-box-label">Dynasty</div>
+                <div class="stat-box-label">Next</div>
             </div>
         </div>
     </section>
@@ -1564,45 +1764,89 @@
     <!-- Fixtures -->
     <section class="section fixtures" id="fixtures">
         <div class="section-head reveal">
-            <p class="section-label">Upcoming</p>
-            <h2 class="section-title">Fixtures</h2>
+            <p class="section-label">Campaign Update</p>
+            <h2 class="section-title">Match <span>Centre</span></h2>
             <div class="section-line"></div>
         </div>
-        <a href="fixture.jpeg" class="fixture-image-link reveal" aria-label="Open full fixture image">
-            <img src="fixture.jpeg" alt="Kings XI fixture schedule">
-            <span>View Full Fixture</span>
-        </a>
-        <div class="fixture-list">
-            <div class="fixture-card reveal-left">
-                <div class="fixture-team-sm">
-                    <img src="logo.png" alt="Kings XI">
-                    <span>Kings XI</span>
+
+        <div class="match-centre">
+            <div class="next-match-card reveal">
+                <div class="match-kicker">
+                    <span>Next Match</span>
+                    <strong>Mon, 01 Jun - 05:30 AM</strong>
                 </div>
-                <div class="fixture-vs-sm">
-                    VS
-                    <span class="vs-date-sm">TBD</span>
-                    <a class="score-link" href="https://cricheroes.com/" target="_blank" rel="noopener">Score</a>
+                <div class="match-teams">
+                    <div class="match-team">
+                        <img src="2.png" alt="NG Yuva Manch">
+                        <span>NG Yuva Manch</span>
+                    </div>
+                    <div class="match-versus">VS</div>
+                    <div class="match-team kings-side">
+                        <img src="logo.png" alt="Kings XI">
+                        <span>Kings XI</span>
+                    </div>
                 </div>
-                <div class="fixture-team-sm">
-                    <img src="1.png" alt="MCT">
-                    <span>MCT</span>
+                <div class="match-details">
+                    <span>20 Overs</span>
+                    <span>The Dominate Cricket Ground, New Delhi</span>
                 </div>
+                <a class="score-link match-action" href="https://cricheroes.com/" target="_blank" rel="noopener">Follow Score</a>
             </div>
-            <div class="fixture-card reveal-left">
-                <div class="fixture-team-sm">
-                    <img src="logo.png" alt="Kings XI">
-                    <span>Kings XI</span>
+
+            <div class="result-card reveal-left">
+                <div class="result-label">Opening Match Result</div>
+                <div class="result-row">
+                    <div class="result-team">
+                        <img src="aa.png" alt="Alpha XI">
+                        <span>Alpha XI</span>
+                    </div>
+                    <div class="result-status">
+                        <strong>Kings XI lost</strong>
+                        <span>Thu, 28 May - 05:30 AM</span>
+                    </div>
+                    <div class="result-team">
+                        <img src="logo.png" alt="Kings XI">
+                        <span>Kings XI</span>
+                    </div>
                 </div>
-                <div class="fixture-vs-sm">
-                    VS
-                    <span class="vs-date-sm">TBD</span>
-                    <a class="score-link" href="https://cricheroes.com/" target="_blank" rel="noopener">Score</a>
-                </div>
-                <div class="fixture-team-sm">
-                    <img src="2.png" alt="NG Yuva Cricket">
-                    <span>NG Yuva Cricket</span>
-                </div>
+                <p>Not the start we wanted. The response begins with the next ball.</p>
             </div>
+
+            <div class="fixture-list">
+                <div class="fixture-card reveal-left">
+                    <div class="fixture-team-sm">
+                        <img src="1.png" alt="MCT">
+                        <span>MCT</span>
+                    </div>
+                    <div class="fixture-vs-sm">
+                        VS
+                        <span class="vs-date-sm">Thu, 04 Jun</span>
+                    </div>
+                    <div class="fixture-team-sm">
+                        <img src="logo.png" alt="Kings XI">
+                        <span>Kings XI</span>
+                    </div>
+                </div>
+                <!-- <div class="fixture-card reveal-left">
+                    <div class="fixture-team-sm">
+                        <img src="logo.png" alt="Kings XI">
+                        <span>Kings XI</span>
+                    </div>
+                    <div class="fixture-vs-sm">
+                        Full
+                        <span class="vs-date-sm">Schedule</span>
+                    </div>
+                    <div class="fixture-team-sm">
+                        <img src="fixture.jpeg" alt="Fixture schedule">
+                        <span>All Matches</span>
+                    </div>
+                </div> -->
+            </div>
+
+            <a href="fixture.jpeg" class="fixture-image-link reveal" aria-label="Open full fixture image">
+                <img src="fixture.jpeg" alt="Kings XI fixture schedule">
+                <span>View Full Fixture</span>
+            </a>
         </div>
     </section>
 
