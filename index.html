@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Kings XI — 2026</title>
+    <title>Mighty XI - 2026</title>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="icon" href="logo.png">
+    <link rel="icon" href="m1.png">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after {
@@ -20,12 +20,12 @@
         }
 
         :root {
-            --crimson: #DC143C;
-            --blood: #8B0000;
-            --gold: #FFD700;
-            --gold-dim: #B8860B;
-            --dark: #0A0A0A;
-            --darker: #050505;
+            --crimson: #C8911B;
+            --blood: #241604;
+            --gold: #F8C65A;
+            --gold-dim: #A76C12;
+            --dark: #090806;
+            --darker: #020202;
             --card: rgba(255,255,255,0.03);
             --glass: rgba(255,255,255,0.05);
         }
@@ -162,8 +162,8 @@
             position: absolute;
             inset: 0;
             background:
-                radial-gradient(ellipse 80% 50% at 50% 50%, rgba(220,20,60,0.12) 0%, transparent 70%),
-                radial-gradient(ellipse 60% 40% at 80% 20%, rgba(255,215,0,0.05) 0%, transparent 60%);
+                radial-gradient(ellipse 80% 50% at 50% 50%, rgba(200,145,27,0.16) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 40% at 80% 20%, rgba(248,198,90,0.08) 0%, transparent 60%);
         }
         .hero-grid {
             position: absolute;
@@ -271,7 +271,7 @@
             opacity: 0;
         }
         .hero-title span {
-            background: linear-gradient(135deg, #fff 0%, var(--gold) 50%, var(--crimson) 100%);
+            background: linear-gradient(135deg, #fff 0%, var(--gold) 48%, #9F6510 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -316,10 +316,10 @@
             border-radius: 999px;
             box-shadow:
                 inset 0 0 18px rgba(255,215,0,0.06),
-                0 8px 28px rgba(220,20,60,0.18);
+                0 8px 28px rgba(200,145,27,0.22);
             text-shadow:
                 0 0 14px rgba(255,215,0,0.3),
-                0 0 28px rgba(220,20,60,0.18);
+                0 0 28px rgba(200,145,27,0.24);
             opacity: 0;
             animation: mottoGlow 2.4s ease-in-out infinite;
         }
@@ -350,12 +350,12 @@
             border: none;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 40px rgba(220,20,60,0.3);
+            box-shadow: 0 10px 40px rgba(200,145,27,0.32);
             opacity: 0;
         }
         .hero-cta:hover {
             transform: translateY(-2px);
-            box-shadow: 0 15px 50px rgba(220,20,60,0.4);
+            box-shadow: 0 15px 50px rgba(200,145,27,0.42);
         }
         .hero-cta svg {
             width: 16px;
@@ -497,7 +497,7 @@
             width: 100%;
             max-width: 360px;
             border-radius: 20px;
-            filter: drop-shadow(0 20px 60px rgba(220,20,60,0.2));
+            filter: drop-shadow(0 20px 60px rgba(200,145,27,0.24));
             transform-origin: 50% 50%;
             will-change: transform, filter;
         }
@@ -510,8 +510,8 @@
             z-index: -1;
             background:
                 radial-gradient(circle at 50% 45%, rgba(255,215,0,0.14), transparent 46%),
-                radial-gradient(circle at 50% 80%, rgba(220,20,60,0.14), transparent 56%);
-            box-shadow: 0 0 38px rgba(255,215,0,0.06), inset 0 0 28px rgba(220,20,60,0.08);
+                radial-gradient(circle at 50% 80%, rgba(200,145,27,0.16), transparent 56%);
+            box-shadow: 0 0 38px rgba(248,198,90,0.08), inset 0 0 28px rgba(200,145,27,0.1);
             opacity: var(--emblem-bg-opacity);
             transform: scale(var(--emblem-bg-scale));
         }
@@ -550,7 +550,7 @@
             top: var(--spark-y);
             border-radius: 50%;
             background: var(--gold);
-            box-shadow: 0 0 14px rgba(255,215,0,0.85), 0 0 28px rgba(220,20,60,0.45);
+            box-shadow: 0 0 14px rgba(248,198,90,0.85), 0 0 28px rgba(200,145,27,0.45);
             pointer-events: none;
             opacity: 0;
             transform: translate(-50%, -50%) scale(0);
@@ -609,12 +609,12 @@
         .p-card:hover {
             border-color: rgba(255,215,0,0.3);
             transform: translateY(-4px);
-            box-shadow: 0 10px 30px rgba(220,20,60,0.15);
+            box-shadow: 0 10px 30px rgba(200,145,27,0.18);
         }
         .p-card-img {
             height: 180px;
             position: relative;
-            background: linear-gradient(180deg, rgba(220,20,60,0.15) 0%, rgba(10,10,10,0.8) 100%);
+            background: linear-gradient(180deg, rgba(200,145,27,0.16) 0%, rgba(10,10,10,0.8) 100%);
             overflow: hidden;
         }
         .p-card-img img {
@@ -643,7 +643,7 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            background: linear-gradient(135deg, rgba(220,20,60,0.2) 0%, rgba(139,0,0,0.3) 100%);
+            background: linear-gradient(135deg, rgba(200,145,27,0.2) 0%, rgba(95,63,9,0.32) 100%);
         }
         .p-card-placeholder .ph-icon {
             width: 40px;
@@ -902,7 +902,7 @@
             border: 1px solid rgba(255,215,0,0.22);
             border-radius: 18px;
             background:
-                linear-gradient(145deg, rgba(220,20,60,0.18), rgba(255,215,0,0.08)),
+                linear-gradient(145deg, rgba(200,145,27,0.18), rgba(248,198,90,0.08)),
                 rgba(255,255,255,0.04);
             box-shadow: 0 24px 70px rgba(0,0,0,0.32);
         }
@@ -977,6 +977,21 @@
         .kings-side span {
             color: var(--gold);
         }
+        .upcoming-card {
+            text-align: center;
+        }
+        .upcoming-logo-wrap {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            place-items: center;
+            padding: 10px 0 4px;
+        }
+        .upcoming-logo-wrap img {
+            width: min(230px, 72vw);
+            height: auto;
+            filter: drop-shadow(0 18px 38px rgba(0,0,0,0.45)) drop-shadow(0 0 24px rgba(248,198,90,0.2));
+        }
         .match-versus {
             display: grid;
             place-items: center;
@@ -1009,9 +1024,9 @@
         }
         .result-card {
             padding: 18px;
-            border: 1px solid rgba(220,20,60,0.22);
+            border: 1px solid rgba(200,145,27,0.22);
             border-radius: 16px;
-            background: rgba(220,20,60,0.07);
+            background: rgba(200,145,27,0.07);
         }
         .result-label {
             margin-bottom: 14px;
@@ -1049,7 +1064,7 @@
         }
         .result-status strong {
             display: block;
-            color: #ff5a70;
+            color: #E7B33E;
             font-family: 'Syne', sans-serif;
             font-size: 0.8rem;
             letter-spacing: 0.4px;
@@ -1077,7 +1092,7 @@
             border: 1px solid rgba(255,215,0,0.16);
             border-radius: 16px;
             background:
-                linear-gradient(145deg, rgba(220,20,60,0.12), rgba(255,215,0,0.05)),
+                linear-gradient(145deg, rgba(200,145,27,0.12), rgba(248,198,90,0.05)),
                 rgba(255,255,255,0.035);
             box-shadow: 0 18px 55px rgba(0,0,0,0.22);
         }
@@ -1442,8 +1457,8 @@
     <!-- Nav -->
     <nav class="nav" id="nav">
         <div class="nav-logo">
-            <img src="logo.png" alt="Kings XI">
-            <span>KINGS XI</span>
+            <img src="m1.png" alt="Mighty XI">
+            <span>MIGHTY XI</span>
         </div>
         <div class="nav-ham" id="navHam">
             <span></span><span></span><span></span>
@@ -1454,7 +1469,7 @@
         <a href="#home" onclick="closeMenu()">Home</a>
         <a href="#about" onclick="closeMenu()">About</a>
         <a href="#squad" onclick="closeMenu()">Squad</a>
-        <a href="#vs" onclick="closeMenu()">The Match</a>
+        <a href="#fixtures" onclick="closeMenu()">Tournament</a>
         <a href="#stats" onclick="closeMenu()">Records</a>
         <a href="#fixtures" onclick="closeMenu()">Fixtures</a>
     </div>
@@ -1470,11 +1485,11 @@
         <div class="hero-content">
             <div class="hero-logo-lockup">
                 <span class="hero-year">2</span>
-                <img src="logo.png" alt="Kings XI" class="hero-logo" id="heroLogo">
+                <img src="m1.png" alt="Mighty XI" class="hero-logo" id="heroLogo">
                 <span class="hero-year">6</span>
             </div>
-            <h1 class="hero-title" id="heroTitle"><span>KINGS</span> XI</h1>
-            <p class="hero-tag" id="heroTag">Born to Rule · Est. 2026</p>
+            <h1 class="hero-title" id="heroTitle"><span>Mighty</span> XI</h1>
+            <p class="hero-tag" id="heroTag">Built Mighty - Est. 2026</p>
             <p class="hero-motto" id="heroMotto">#BasJeetnaHai</p>
             <!-- <a href="#squad" class="hero-cta" id="heroCta">
                 Meet The Squad
@@ -1493,15 +1508,15 @@
     <!-- Marquee -->
     <div class="marquee">
         <div class="marquee-track">
-            <span class="marquee-item">Kings XI 2026</span>
+            <span class="marquee-item">Mighty XI 2026</span>
             <span class="marquee-item">Rule The Pitch</span>
             <span class="marquee-item">Own The Game</span>
-            <span class="marquee-item">Crown The Dynasty</span>
+            <span class="marquee-item">Rise With Pride</span>
             <span class="marquee-item">Born To Win</span>
-            <span class="marquee-item">Kings XI 2026</span>
+            <span class="marquee-item">Mighty XI 2026</span>
             <span class="marquee-item">Rule The Pitch</span>
             <span class="marquee-item">Own The Game</span>
-            <span class="marquee-item">Crown The Dynasty</span>
+            <span class="marquee-item">Rise With Pride</span>
             <span class="marquee-item">Born To Win</span>
         </div>
     </div>
@@ -1514,11 +1529,11 @@
             <div class="section-line"></div>
         </div>
         <div class="about-text reveal">
-            <p>Constructed in <strong>2026</strong>, Kings XI isn't just a cricket team. It's a <strong>movement</strong>. Eleven warriors, one crown, zero mercy.</p>
-            <p>From explosive openers to death-over specialists, every king brings <strong>fire</strong>. We don't chase targets. We <strong>demolish</strong> them.</p>
+            <p>Constructed in <strong>2026</strong>, Mighty XI isn't just a cricket team. It's a <strong>movement</strong>. Eleven warriors, one roar, one mission.</p>
+            <p>From explosive openers to death-over specialists, every player brings <strong>fire</strong>. We don't chase moments. We <strong>own</strong> them.</p>
         </div>
         <div class="about-img">
-            <img src="logo.png" alt="Kings XI Emblem">
+            <img src="m1.png" alt="Mighty XI Emblem">
         </div>
     </section>
 
@@ -1526,8 +1541,8 @@
     <section class="section squad" id="squad">
         <div class="squad-header reveal">
             <div class="section-head" style="margin-bottom:0">
-                <p class="section-label">The Royal Guard</p>
-                <h2 class="section-title">11 <span>Kings</span></h2>
+                <p class="section-label">The Mighty Core</p>
+                <h2 class="section-title">11 <span>Warriors</span></h2>
                 <div class="section-line"></div>
             </div>
             <div class="squad-count"><span>11</span> / 11 ACTIVE</div>
@@ -1539,170 +1554,154 @@
                 <div class="p-card">
                     <div class="p-card-img">
                         <div class="p-card-placeholder">
-                            <!-- <div class="ph-icon">+</div> -->
-                            <!-- <div class="ph-text">Photo</div> -->
-                            <img src="team/as.png" alt="Ash Singh" class="p-card-photo">
+                            <img src="team/h.png" alt="Rathi" class="p-card-photo">
                         </div>
                         <div class="p-card-num">01</div>
                     </div>
                     <div class="p-card-info">
-                        <div class="p-card-role">Captain</div>
-                        <div class="p-card-name">Ash Singh</div>
-                        <div class="p-card-pos">Top Order</div>
+                        <div class="p-card-role">Vice Captain / Wicket Keeper</div>
+                        <div class="p-card-name">Rathi</div>
+                        <div class="p-card-pos">WK Batsman</div>
                     </div>
                 </div>
                 <!-- Player 2 -->
                 <div class="p-card">
                     <div class="p-card-img">
                         <div class="p-card-placeholder">
-                            <!-- <div class="ph-icon">+</div> -->
-                            <!-- <div class="ph-text">Photo</div> -->
-                            <img src="team/g.png" alt="Mayank" class="p-card-photo">
+                            <img src="team/dummy-player.svg" alt="Sahil" class="p-card-photo">
                         </div>
                         <div class="p-card-num">02</div>
                     </div>
                     <div class="p-card-info">
-                        <div class="p-card-role">Vice Captain / Wicket Keeper</div>
-                        <div class="p-card-name">Mayank</div>
-                        <div class="p-card-pos">WK Batsman</div>
+                        <div class="p-card-role">Player</div>
+                        <div class="p-card-name">Sahil</div>
+                        <div class="p-card-pos">Squad Member</div>
                     </div>
                 </div>
                 <!-- Player 3 -->
                 <div class="p-card">
                     <div class="p-card-img">
                         <div class="p-card-placeholder">
-                            <!-- <div class="ph-icon">+</div>
-                            <div class="ph-text">Photo</div> -->
-                            <img src="team/r.png" alt="Rajesh Suyravanshi" class="p-card-photo">
-                            
+                            <img src="team/as.png" alt="Ashpreet" class="p-card-photo">
                         </div>
                         <div class="p-card-num">03</div>
                     </div>
                     <div class="p-card-info">
-                        <div class="p-card-role">Batsman</div>
-                        <div class="p-card-name">Rajesh (Suyravanshi)</div>
-                        <div class="p-card-pos">Opener</div>
+                        <div class="p-card-role">Captain</div>
+                        <div class="p-card-name">Ashpreet</div>
+                        <div class="p-card-pos">Top Order</div>
                     </div>
                 </div>
                 <!-- Player 4 -->
                 <div class="p-card">
                     <div class="p-card-img">
                         <div class="p-card-placeholder">
-                            <!-- <div class="ph-icon">+</div> -->
-                            <!-- <div class="ph-text">Photo</div> -->
-                            <img src="team/h.png" alt="Harshit Rathi" class="p-card-photo">
-
+                            <img src="team/dummy-player.svg" alt="Aadi" class="p-card-photo">
                         </div>
                         <div class="p-card-num">04</div>
                     </div>
                     <div class="p-card-info">
-                        <div class="p-card-role">Batsman</div>
-                        <div class="p-card-name">Harshit rathi</div>
-                        <div class="p-card-pos">Middle Order</div>
+                        <div class="p-card-role">Player</div>
+                        <div class="p-card-name">Aadi</div>
+                        <div class="p-card-pos">Squad Member</div>
                     </div>
                 </div>
                 <!-- Player 5 -->
                 <div class="p-card">
                     <div class="p-card-img">
                         <div class="p-card-placeholder">
-                            <!-- <div class="ph-icon">+</div> -->
-                            <!-- <div class="ph-text">Photo</div> -->
-                            <img src="team/m.png" alt="Mohit" class="p-card-photo">
-
+                            <img src="team/g.png" alt="Gaurav" class="p-card-photo">
                         </div>
                         <div class="p-card-num">05</div>
                     </div>
                     <div class="p-card-info">
-                        <div class="p-card-role">Bowling All Rounder</div>
-                        <div class="p-card-name">Mohit</div>
-                        <div class="p-card-pos">Bowler</div>
+                        <div class="p-card-role">Player</div>
+                        <div class="p-card-name">Gaurav</div>
+                        <div class="p-card-pos">Squad Member</div>
                     </div>
                 </div>
-
-                
                 <!-- Player 6 -->
-                 <div class="p-card">
+                <div class="p-card">
                     <div class="p-card-img">
                         <div class="p-card-placeholder">
-                            <img src="team/anil.png" alt="Player Name" class="p-card-photo">
+                            <img src="team/r.png" alt="Bhatia" class="p-card-photo">
                         </div>
                         <div class="p-card-num">06</div>
                     </div>
                     <div class="p-card-info">
-                        <div class="p-card-role">All-Rounder</div>
-                        <div class="p-card-name">Anil</div>
-                        <div class="p-card-pos">Batting AR</div>
+                        <div class="p-card-role">Player</div>
+                        <div class="p-card-name">Bhatia</div>
+                        <div class="p-card-pos">Squad Member</div>
                     </div>
                 </div>
-                
                 <!-- Player 7 -->
                 <div class="p-card">
                     <div class="p-card-img">
                         <div class="p-card-placeholder">
-                            <img src="team/dummy-player.svg" alt="Abhishek" class="p-card-photo">
+                            <img src="team/dummy-player.svg" alt="Shashank" class="p-card-photo">
                         </div>
                         <div class="p-card-num">07</div>
                     </div>
                     <div class="p-card-info">
-                        <div class="p-card-role">Batter</div>
-                        <div class="p-card-name">Raja</div>
-                        <div class="p-card-pos">Top Order Batter</div>
+                        <div class="p-card-role">Player</div>
+                        <div class="p-card-name">Shashank</div>
+                        <div class="p-card-pos">Squad Member</div>
                     </div>
                 </div>
                 <!-- Player 8 -->
                 <div class="p-card">
                     <div class="p-card-img">
                         <div class="p-card-placeholder">
-                            <img src="team/dummy-player.svg" alt="Shudanshu" class="p-card-photo">
+                            <img src="team/dummy-player.svg" alt="Sagar" class="p-card-photo">
                         </div>
                         <div class="p-card-num">08</div>
                     </div>
                     <div class="p-card-info">
-                        <div class="p-card-role">Bowling All Rounder</div>
-                        <div class="p-card-name">Sahil Rao</div>
-                        <div class="p-card-pos">Fast Bowler</div>
+                        <div class="p-card-role">Player</div>
+                        <div class="p-card-name">Sagar</div>
+                        <div class="p-card-pos">Squad Member</div>
                     </div>
                 </div>
                 <!-- Player 9 -->
                 <div class="p-card">
                     <div class="p-card-img">
                         <div class="p-card-placeholder">
-                            <img src="team/dummy-player.svg" alt="Player Name" class="p-card-photo">
+                            <img src="team/dummy-player.svg" alt="Vaibhav" class="p-card-photo">
                         </div>
                         <div class="p-card-num">09</div>
                     </div>
                     <div class="p-card-info">
-                        <div class="p-card-role">Bowler</div>
-                        <div class="p-card-name">Sanjay</div>
-                        <div class="p-card-pos">Medium Pacer</div>
+                        <div class="p-card-role">Player</div>
+                        <div class="p-card-name">Vaibhav</div>
+                        <div class="p-card-pos">Squad Member</div>
                     </div>
                 </div>
                 <!-- Player 10 -->
                 <div class="p-card">
                     <div class="p-card-img">
                         <div class="p-card-placeholder">
-                            <img src="team/dummy-player.svg" alt="Unnat" class="p-card-photo">
+                            <img src="team/m.png" alt="Mohit" class="p-card-photo">
                         </div>
                         <div class="p-card-num">10</div>
                     </div>
                     <div class="p-card-info">
-                        <div class="p-card-role">Bowler</div>
-                        <div class="p-card-name">Sudhanshu</div>
-                        <div class="p-card-pos">Fast Bowler</div>
+                        <div class="p-card-role">Floater</div>
+                        <div class="p-card-name">Mohit</div>
+                        <div class="p-card-pos">Flexible Role</div>
                     </div>
                 </div>
                 <!-- Player 11 -->
                 <div class="p-card">
                     <div class="p-card-img">
                         <div class="p-card-placeholder">
-                            <img src="team/dummy-player.svg" alt="Player Name" class="p-card-photo">
+                            <img src="team/anil.png" alt="Tyagi" class="p-card-photo">
                         </div>
                         <div class="p-card-num">11</div>
                     </div>
                     <div class="p-card-info">
-                        <div class="p-card-role">Bowler</div>
-                        <div class="p-card-name">Sanjay Friend</div>
-                        <div class="p-card-pos">Fast Bowler</div>
+                        <div class="p-card-role">Player</div>
+                        <div class="p-card-name">Tyagi</div>
+                        <div class="p-card-pos">Squad Member</div>
                     </div>
                 </div>
             </div>
@@ -1716,34 +1715,16 @@
         </div>
     </section>
 
-    <!-- VS Section -->
-    <section class="vs-section" id="vs">
-        <p class="vs-label">Next Battle</p>
-        <div class="vs-matchup">
-            <div class="vs-team">
-                <img src="2.png" alt="NG Yuva Manch">
-                <span class="vs-team-name">NG YUVA MANCH</span>
-            </div>
-            <div class="vs-divider">VS</div>
-            <div class="vs-team">
-                <img src="logo.png" alt="Kings XI">
-                <span class="vs-team-name">KINGS XI</span>
-            </div>
-        </div>
-        <p class="vs-date">Mon, 01 Jun - 05:30 AM - Dominate Cricket Ground</p>
-        <a href="#fixtures" class="vs-cta">View Fixtures</a>
-    </section>
-
     <!-- Stats -->
     <section class="section stats" id="stats">
         <div class="section-head reveal">
             <p class="section-label">By The Numbers</p>
-            <h2 class="section-title">Royal <span>Records</span></h2>
+            <h2 class="section-title">Mighty <span>Records</span></h2>
             <div class="section-line"></div>
         </div>
         <div class="stats-grid">
             <div class="stat-box reveal-scale">
-                <div class="stat-box-num" data-target="1">0</div>
+                <div class="stat-box-num" data-target="0">0</div>
                 <div class="stat-box-label">Played</div>
             </div>
             <div class="stat-box reveal-scale">
@@ -1755,8 +1736,8 @@
                 <div class="stat-box-label">Win %</div>
             </div>
             <div class="stat-box reveal-scale">
-                <div class="stat-box-num" data-target="1">0</div>
-                <div class="stat-box-label">Next</div>
+                <div class="stat-box-num" data-target="0">0</div>
+                <div class="stat-box-label">Upcoming</div>
             </div>
         </div>
     </section>
@@ -1765,99 +1746,35 @@
     <section class="section fixtures" id="fixtures">
         <div class="section-head reveal">
             <p class="section-label">Campaign Update</p>
-            <h2 class="section-title">Match <span>Centre</span></h2>
+            <h2 class="section-title">Tournament <span>Centre</span></h2>
             <div class="section-line"></div>
         </div>
 
         <div class="match-centre">
-            <div class="next-match-card reveal">
+            <div class="next-match-card reveal upcoming-card">
                 <div class="match-kicker">
-                    <span>Next Match</span>
-                    <strong>Mon, 01 Jun - 05:30 AM</strong>
+                    <span>Upcoming Tournament</span>
+                    <strong>Schedule coming soon</strong>
                 </div>
-                <div class="match-teams">
-                    <div class="match-team">
-                        <img src="2.png" alt="NG Yuva Manch">
-                        <span>NG Yuva Manch</span>
-                    </div>
-                    <div class="match-versus">VS</div>
-                    <div class="match-team kings-side">
-                        <img src="logo.png" alt="Kings XI">
-                        <span>Kings XI</span>
-                    </div>
+                <div class="upcoming-logo-wrap">
+                    <img src="m1.png" alt="Mighty XI">
                 </div>
                 <div class="match-details">
-                    <span>20 Overs</span>
-                    <span>The Dominate Cricket Ground, New Delhi</span>
+                    <span>Mighty XI is preparing for the next campaign.</span>
+                    <span>Fixtures, opponents, venue, and score links will be added once the tournament is announced.</span>
                 </div>
-                <a class="score-link match-action" href="https://cricheroes.com/" target="_blank" rel="noopener">Follow Score</a>
             </div>
-
-            <div class="result-card reveal-left">
-                <div class="result-label">Opening Match Result</div>
-                <div class="result-row">
-                    <div class="result-team">
-                        <img src="aa.png" alt="Alpha XI">
-                        <span>Alpha XI</span>
-                    </div>
-                    <div class="result-status">
-                        <strong>Kings XI lost</strong>
-                        <span>Thu, 28 May - 05:30 AM</span>
-                    </div>
-                    <div class="result-team">
-                        <img src="logo.png" alt="Kings XI">
-                        <span>Kings XI</span>
-                    </div>
-                </div>
-                <p>Not the start we wanted. The response begins with the next ball.</p>
-            </div>
-
-            <div class="fixture-list">
-                <div class="fixture-card reveal-left">
-                    <div class="fixture-team-sm">
-                        <img src="1.png" alt="MCT">
-                        <span>MCT</span>
-                    </div>
-                    <div class="fixture-vs-sm">
-                        VS
-                        <span class="vs-date-sm">Thu, 04 Jun</span>
-                    </div>
-                    <div class="fixture-team-sm">
-                        <img src="logo.png" alt="Kings XI">
-                        <span>Kings XI</span>
-                    </div>
-                </div>\
-                <!-- <div class="fixture-card reveal-left">
-                    <div class="fixture-team-sm">
-                        <img src="logo.png" alt="Kings XI">
-                        <span>Kings XI</span>
-                    </div>
-                    <div class="fixture-vs-sm">
-                        Full
-                        <span class="vs-date-sm">Schedule</span>
-                    </div>
-                    <div class="fixture-team-sm">
-                        <img src="fixture.jpeg" alt="Fixture schedule">
-                        <span>All Matches</span>
-                    </div>
-                </div> -->
-            </div>
-
-            <a href="fixture.jpeg" class="fixture-image-link reveal" aria-label="Open full fixture image">
-                <img src="fixture.jpeg" alt="Kings XI fixture schedule">
-                <span>View Full Fixture</span>
-            </a>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <img src="logo.png" alt="Kings XI">
-        <h3>KINGS XI</h3>
-        <p>Royal Cricket Dynasty</p>
+        <img src="m1.png" alt="Mighty XI">
+        <h3>MIGHTY XI</h3>
+        <p>Gold-Blooded Cricket Unit</p>
         <p class="footer-contact">Want to join the team? Contact us.</p>
         <div class="footer-line"></div>
-        <p class="footer-copy">2026 Kings XI. Crowned With Passion.</p>
+        <p class="footer-copy">2026 Mighty XI. Built With Passion.</p>
     </footer>
 
     <script>
@@ -2057,7 +1974,7 @@
 
                 emblemTl
                     .fromTo(aboutEmblem, { opacity: 0, y: 46, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.75, ease: 'power3.out' })
-                    .fromTo(emblemImg, { rotateY: -18, rotateZ: -5, filter: 'drop-shadow(0 12px 30px rgba(220,20,60,0.08))' }, { rotateY: 0, rotateZ: 0, filter: 'drop-shadow(0 24px 68px rgba(220,20,60,0.36)) drop-shadow(0 0 24px rgba(255,215,0,0.25))', duration: 1, ease: 'back.out(1.25)' }, '-=0.55')
+                    .fromTo(emblemImg, { rotateY: -18, rotateZ: -5, filter: 'drop-shadow(0 12px 30px rgba(200,145,27,0.08))' }, { rotateY: 0, rotateZ: 0, filter: 'drop-shadow(0 24px 68px rgba(200,145,27,0.36)) drop-shadow(0 0 24px rgba(248,198,90,0.25))', duration: 1, ease: 'back.out(1.25)' }, '-=0.55')
                     .to(aboutEmblem, { '--emblem-bg-opacity': 1, '--emblem-bg-scale': 1, duration: 0.8, ease: 'power2.out' }, '-=0.75')
                     .to(orbit, { opacity: 1, scale: 1, rotate: 0, duration: 0.9, ease: 'power3.out' }, '-=0.72')
                     .to(aboutEmblem.querySelectorAll('.emblem-spark'), { opacity: 1, scale: 1, duration: 0.28, stagger: 0.045, ease: 'back.out(2.8)' }, '-=0.52');
