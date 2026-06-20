@@ -882,6 +882,151 @@
             text-transform: uppercase;
         }
 
+        /* ===== STAR ARRIVAL ===== */
+        .star-arrival {
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(circle at 12% 42%, rgba(248,198,90,0.07), transparent 30%), var(--darker);
+        }
+        .star-arrival::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 1px;
+            height: 80px;
+            background: linear-gradient(var(--gold), transparent);
+            opacity: 0.45;
+            pointer-events: none;
+        }
+        .star-player-card {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            background: #080806;
+            box-shadow: 0 30px 90px rgba(0,0,0,0.42);
+        }
+        .star-player-visual {
+            position: relative;
+            min-height: 430px;
+            overflow: hidden;
+            background: #111;
+        }
+        .star-player-visual img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 48% 57%;
+            transform: scale(1.38);
+            filter: saturate(0.76) contrast(1.06) brightness(0.83);
+        }
+        .star-player-visual::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(2,2,2,0.72), transparent 34%), linear-gradient(90deg, transparent 65%, rgba(2,2,2,0.3));
+            pointer-events: none;
+        }
+        .star-badge {
+            position: absolute;
+            z-index: 2;
+            top: 18px;
+            left: 18px;
+            padding: 7px 10px;
+            border: 1px solid rgba(255,255,255,0.32);
+            border-radius: 2px;
+            background: rgba(4,4,4,0.62);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.58rem;
+            font-weight: 700;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+        }
+        .star-photo-note {
+            position: absolute;
+            z-index: 2;
+            left: 18px;
+            bottom: 16px;
+            color: rgba(255,255,255,0.72);
+            font-size: 0.58rem;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+        }
+        .star-player-copy {
+            padding: 34px 24px 38px;
+        }
+        .star-player-copy::before {
+            content: '';
+            display: block;
+            width: 38px;
+            height: 2px;
+            margin-bottom: 25px;
+            background: var(--gold);
+        }
+        .star-eyebrow {
+            color: rgba(255,255,255,0.48);
+            font-size: 0.62rem;
+            font-weight: 600;
+            letter-spacing: 2.8px;
+            text-transform: uppercase;
+        }
+        .star-player-name {
+            margin: 12px 0 20px;
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.8rem, 14vw, 5.5rem);
+            font-weight: 800;
+            line-height: 0.82;
+            letter-spacing: -0.06em;
+            text-transform: uppercase;
+        }
+        .star-player-name span { color: #fff; }
+        .star-player-copy p {
+            max-width: 480px;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.8rem;
+            line-height: 1.8;
+        }
+        .star-player-meta {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            margin-top: 28px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255,255,255,0.09);
+        }
+        .star-player-meta div {
+            min-width: 0;
+            padding: 0 12px;
+            border-right: 1px solid rgba(255,255,255,0.09);
+        }
+        .star-player-meta div:first-child { padding-left: 0; }
+        .star-player-meta div:last-child {
+            padding-right: 0;
+            border-right: 0;
+        }
+        .star-player-meta strong,
+        .star-player-meta span { display: block; }
+        .star-player-meta strong {
+            color: #fff;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .star-player-meta span {
+            margin-top: 4px;
+            color: rgba(255,255,255,0.34);
+            font-size: 0.5rem;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
         /* ===== FIXTURES ===== */
         .fixtures {
             background: var(--darker);
@@ -894,29 +1039,28 @@
         .match-centre {
             display: grid;
             gap: 16px;
+            max-width: 820px;
+            margin: 0 auto;
         }
         .next-match-card {
             position: relative;
             overflow: hidden;
             padding: 22px;
-            border: 1px solid rgba(255,215,0,0.22);
-            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
             background:
-                linear-gradient(145deg, rgba(200,145,27,0.18), rgba(248,198,90,0.08)),
-                rgba(255,255,255,0.04);
-            box-shadow: 0 24px 70px rgba(0,0,0,0.32);
+                radial-gradient(circle at 50% 0, rgba(248,198,90,0.09), transparent 38%),
+                #080806;
+            box-shadow: 0 30px 90px rgba(0,0,0,0.38);
         }
         .next-match-card::before {
             content: '';
             position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.08), transparent);
-            transform: translateX(-100%);
-            animation: matchShine 5s ease-in-out infinite;
-        }
-        @keyframes matchShine {
-            0%, 55% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+            top: 0;
+            left: 12%;
+            right: 12%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
         }
         .match-kicker,
         .match-teams,
@@ -933,10 +1077,9 @@
             margin-bottom: 18px;
         }
         .match-kicker span {
-            padding: 7px 10px;
-            border-radius: 999px;
-            background: var(--gold);
-            color: #130d00;
+            padding: 0;
+            background: none;
+            color: var(--gold);
             font-family: 'Syne', sans-serif;
             font-size: 0.64rem;
             font-weight: 800;
@@ -966,6 +1109,22 @@
             margin-bottom: 10px;
             filter: drop-shadow(0 12px 22px rgba(0,0,0,0.35));
         }
+        .alpha-crest {
+            display: grid;
+            place-items: center;
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 10px;
+            border: 2px solid rgba(255,255,255,0.7);
+            border-radius: 50%;
+            background: linear-gradient(145deg, #252525, #090909);
+            box-shadow: 0 12px 22px rgba(0,0,0,0.35), inset 0 0 0 5px rgba(248,198,90,0.12);
+            color: #fff;
+            font-family: 'Syne', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
         .match-team span {
             display: block;
             font-family: 'Syne', sans-serif;
@@ -980,6 +1139,18 @@
         .upcoming-card {
             text-align: center;
         }
+        .mega-match-title {
+            position: relative;
+            z-index: 1;
+            margin: 2px 0 20px;
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.5rem, 7vw, 2.25rem);
+            font-weight: 800;
+            line-height: 1;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        .mega-match-title span { color: rgba(255,255,255,0.38); }
         .upcoming-logo-wrap {
             position: relative;
             z-index: 1;
@@ -998,8 +1169,8 @@
             width: 48px;
             height: 48px;
             border-radius: 50%;
-            background: rgba(5,5,5,0.48);
-            border: 1px solid rgba(255,215,0,0.22);
+            background: #050505;
+            border: 1px solid rgba(255,255,255,0.14);
             color: var(--gold);
             font-family: 'Syne', sans-serif;
             font-size: 0.72rem;
@@ -1018,6 +1189,14 @@
             font-size: 0.72rem;
             color: rgba(255,255,255,0.6);
             letter-spacing: 0.8px;
+        }
+        .match-date-main {
+            color: #fff !important;
+            font-family: 'Syne', sans-serif;
+            font-size: 1.35rem !important;
+            font-weight: 800;
+            letter-spacing: 1.5px !important;
+            text-transform: uppercase;
         }
         .match-action {
             width: 100%;
@@ -1394,6 +1573,80 @@
             transform: scale(0.9);
         }
 
+        /* Mobile card treatment */
+        @media (max-width: 767px) {
+            .star-arrival { padding: 64px 18px 72px; }
+            .star-arrival .section-head {
+                max-width: 380px;
+                margin: 0 auto 24px;
+            }
+            .star-arrival .section-label {
+                font-size: 0.62rem;
+                letter-spacing: 3px;
+            }
+            .star-arrival .section-title { font-size: 1.9rem; }
+            .star-player-card {
+                width: 100%;
+                max-width: 380px;
+                margin: 0 auto;
+                border-color: rgba(255,255,255,0.13);
+                border-radius: 18px;
+                box-shadow: 0 24px 64px rgba(0,0,0,0.55);
+            }
+            .star-player-visual {
+                min-height: 0;
+                height: 335px;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+            .star-player-visual img {
+                object-position: 48% 55%;
+                transform: scale(1.26);
+            }
+            .star-player-visual::after {
+                background: linear-gradient(0deg, rgba(4,4,3,0.82), transparent 38%), linear-gradient(90deg, transparent 72%, rgba(2,2,2,0.22));
+            }
+            .star-badge {
+                top: 14px;
+                left: 14px;
+                padding: 7px 9px;
+            }
+            .star-photo-note {
+                left: 16px;
+                bottom: 14px;
+            }
+            .star-player-copy { padding: 27px 22px 24px; }
+            .star-player-copy::before {
+                width: 30px;
+                margin-bottom: 20px;
+            }
+            .star-eyebrow {
+                font-size: 0.56rem;
+                letter-spacing: 2.2px;
+            }
+            .star-player-name {
+                max-width: 100%;
+                margin: 10px 0 16px;
+                font-size: clamp(2.2rem, 10.5vw, 2.65rem);
+                line-height: 0.92;
+                letter-spacing: -0.045em;
+                overflow-wrap: break-word;
+            }
+            .star-player-copy p {
+                font-size: 0.76rem;
+                line-height: 1.65;
+            }
+            .star-player-meta {
+                margin-top: 22px;
+                padding-top: 16px;
+            }
+            .star-player-meta div { padding: 0 9px; }
+            .star-player-meta strong { font-size: 0.64rem; }
+            .star-player-meta span {
+                font-size: 0.45rem;
+                letter-spacing: 0.8px;
+            }
+        }
+
         /* Desktop overrides */
         @media (min-width: 768px) {
             .hero-logo { width: clamp(210px, 18vw, 280px); }
@@ -1408,6 +1661,25 @@
             .stats-grid {
                 grid-template-columns: repeat(4, 1fr);
             }
+            .star-player-card {
+                grid-template-columns: minmax(330px, 0.9fr) minmax(0, 1.1fr);
+                max-width: 880px;
+                margin: 0 auto;
+                align-items: stretch;
+            }
+            .star-player-visual { min-height: 500px; }
+            .star-player-visual img {
+                width: 100%;
+                height: 100%;
+                object-position: 48% 57%;
+                transform: scale(1.42);
+            }
+            .star-player-copy {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding: 56px;
+            }
             .fixture-card {
                 max-width: 600px;
                 margin: 0 auto;
@@ -1419,13 +1691,9 @@
                 padding: 22px;
             }
             .match-centre {
-                max-width: 780px;
-                margin: 0 auto;
-                grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-                align-items: start;
+                max-width: 820px;
             }
             .next-match-card {
-                grid-row: span 2;
                 padding: 28px;
             }
             .match-team img {
@@ -1434,6 +1702,11 @@
             }
             .match-team span {
                 font-size: 1rem;
+            }
+            .alpha-crest {
+                width: 88px;
+                height: 88px;
+                font-size: 1.35rem;
             }
             .fixture-image-link {
                 grid-column: 1 / -1;
@@ -1469,6 +1742,7 @@
         <a href="#home" onclick="closeMenu()">Home</a>
         <a href="#about" onclick="closeMenu()">About</a>
         <a href="#squad" onclick="closeMenu()">Squad</a>
+        <a href="#star-player" onclick="closeMenu()">Star Player</a>
         <a href="#fixtures" onclick="closeMenu()">Tournament</a>
         <a href="#stats" onclick="closeMenu()">Records</a>
         <a href="#fixtures" onclick="closeMenu()">Fixtures</a>
@@ -1542,10 +1816,10 @@
         <div class="squad-header reveal">
             <div class="section-head" style="margin-bottom:0">
                 <p class="section-label">The Mighty Core</p>
-                <h2 class="section-title">11 <span>Warriors</span></h2>
+                <h2 class="section-title">10 <span>Warriors</span></h2>
                 <div class="section-line"></div>
             </div>
-            <div class="squad-count"><span>11</span> / 11 ACTIVE</div>
+            <div class="squad-count"><span>10</span> CORE + 1 STAR</div>
         </div>
         
         <div class="carousel" id="carousel">
@@ -1607,27 +1881,13 @@
                         <div class="p-card-pos">Squad Member</div>
                     </div>
                 </div>
-                <!-- Player 5 -->
-                <div class="p-card">
-                    <div class="p-card-img">
-                        <div class="p-card-placeholder">
-                            <img src="team/dummy-player.svg" alt="Gaurav" class="p-card-photo">
-                        </div>
-                        <div class="p-card-num">05</div>
-                    </div>
-                    <div class="p-card-info">
-                        <div class="p-card-role">Player</div>
-                        <div class="p-card-name">Gaurav</div>
-                        <div class="p-card-pos">Squad Member</div>
-                    </div>
-                </div>
                 <!-- Player 6 -->
                 <div class="p-card">
                     <div class="p-card-img">
                         <div class="p-card-placeholder">
                             <img src="team/dummy-player.svg" alt="Bhatia" class="p-card-photo">
                         </div>
-                        <div class="p-card-num">06</div>
+                        <div class="p-card-num">05</div>
                     </div>
                     <div class="p-card-info">
                         <div class="p-card-role">Player</div>
@@ -1641,7 +1901,7 @@
                         <div class="p-card-placeholder">
                             <img src="team/dummy-player.svg" alt="Shashank" class="p-card-photo">
                         </div>
-                        <div class="p-card-num">07</div>
+                        <div class="p-card-num">06</div>
                     </div>
                     <div class="p-card-info">
                         <div class="p-card-role">Player</div>
@@ -1655,7 +1915,7 @@
                         <div class="p-card-placeholder">
                             <img src="team/dummy-player.svg" alt="Sagar" class="p-card-photo">
                         </div>
-                        <div class="p-card-num">08</div>
+                        <div class="p-card-num">07</div>
                     </div>
                     <div class="p-card-info">
                         <div class="p-card-role">Player</div>
@@ -1669,7 +1929,7 @@
                         <div class="p-card-placeholder">
                             <img src="team/dummy-player.svg" alt="Vaibhav" class="p-card-photo">
                         </div>
-                        <div class="p-card-num">09</div>
+                        <div class="p-card-num">08</div>
                     </div>
                     <div class="p-card-info">
                         <div class="p-card-role">Player</div>
@@ -1683,7 +1943,7 @@
                         <div class="p-card-placeholder">
                             <img src="team/m.png" alt="Mohit" class="p-card-photo">
                         </div>
-                        <div class="p-card-num">10</div>
+                        <div class="p-card-num">09</div>
                     </div>
                     <div class="p-card-info">
                         <div class="p-card-role">Floater</div>
@@ -1697,7 +1957,7 @@
                         <div class="p-card-placeholder">
                             <img src="team/dummy-player.svg" alt="Tyagi" class="p-card-photo">
                         </div>
-                        <div class="p-card-num">11</div>
+                        <div class="p-card-num">10</div>
                     </div>
                     <div class="p-card-info">
                         <div class="p-card-role">Player</div>
@@ -1713,6 +1973,32 @@
                 <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
             Swipe to explore
+        </div>
+    </section>
+
+    <!-- Star Player -->
+    <section class="section star-arrival" id="star-player">
+        <div class="section-head reveal">
+            <p class="section-label">A Mighty Welcome</p>
+            <h2 class="section-title">Star <span>Arrival</span></h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="star-player-card reveal-scale">
+            <div class="star-player-visual">
+                <span class="star-badge">New Signing</span>
+                <img src="team/gaurav.jpeg" alt="Gaurav Tyagi at the cricket stadium">
+                <span class="star-photo-note">Mighty XI · 2026</span>
+            </div>
+            <div class="star-player-copy">
+                <div class="star-eyebrow">Welcome to Mighty XI</div>
+                <h3 class="star-player-name"><span>Gaurav Tyagi</span></h3>
+                <p>Fresh energy. Fearless cricket. Match-winning intent. Gaurav joins the Mighty XI as the newest force in our 2026 squad.</p>
+                <div class="star-player-meta" aria-label="Player details">
+                    <div><strong>Star</strong><span>Status</span></div>
+                    <div><strong>Mighty XI</strong><span>Team</span></div>
+                    <div><strong>2026</strong><span>Season</span></div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1737,7 +2023,7 @@
                 <div class="stat-box-label">Win %</div>
             </div>
             <div class="stat-box reveal-scale">
-                <div class="stat-box-num" data-target="0">0</div>
+                <div class="stat-box-num" data-target="1">0</div>
                 <div class="stat-box-label">Upcoming</div>
             </div>
         </div>
@@ -1746,23 +2032,33 @@
     <!-- Fixtures -->
     <section class="section fixtures" id="fixtures">
         <div class="section-head reveal">
-            <p class="section-label">Campaign Update</p>
-            <h2 class="section-title">Tournament <span>Centre</span></h2>
+            <p class="section-label">The Next Battle</p>
+            <h2 class="section-title">Mega <span>Match</span></h2>
             <div class="section-line"></div>
         </div>
 
         <div class="match-centre">
             <div class="next-match-card reveal upcoming-card">
                 <div class="match-kicker">
-                    <span>Upcoming Tournament</span>
-                    <strong>Schedule coming soon</strong>
+                    <span>Upcoming Mega Match</span>
+                    <strong>22 June 2026</strong>
                 </div>
-                <div class="upcoming-logo-wrap">
-                    <img src="m1.png" alt="Mighty XI">
+                <h3 class="mega-match-title">One Ground. <span>Two Forces.</span></h3>
+                <div class="match-teams">
+                    <div class="match-team kings-side">
+                        <img src="m1.png" alt="Mighty XI">
+                        <span>Mighty XI</span>
+                    </div>
+                    <div class="match-versus">VS</div>
+                    <div class="match-team">
+                        <!-- <div class="alpha-crest" aria-label="Alpha XI crest">AXI</div> -->
+                         <img src="aa.png" alt="Alpha XI">
+                        <span>Alpha XI</span>
+                    </div>
                 </div>
                 <div class="match-details">
-                    <span>Mighty XI is preparing for the next campaign.</span>
-                    <span>Fixtures, opponents, venue, and score links will be added once the tournament is announced.</span>
+                    <span class="match-date-main">22 June 2026</span>
+                    <span>Venue and match time will be announced soon.</span>
                 </div>
             </div>
         </div>
