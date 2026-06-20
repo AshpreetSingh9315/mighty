@@ -970,6 +970,7 @@
         }
         .star-player-copy {
             padding: 34px 24px 38px;
+            container-type: inline-size;
         }
         .star-player-copy::before {
             content: '';
@@ -996,6 +997,11 @@
             text-transform: uppercase;
         }
         .star-player-name span { color: #fff; }
+        .star-player-card--captain .star-player-name {
+            font-size: clamp(2.25rem, 11cqi, 4.4rem);
+            letter-spacing: -0.045em;
+            white-space: nowrap;
+        }
         .star-player-copy p {
             max-width: 480px;
             color: rgba(255,255,255,0.5);
@@ -1823,6 +1829,10 @@
                 letter-spacing: -0.045em;
                 overflow-wrap: break-word;
             }
+            .star-player-card--captain .star-player-name {
+                font-size: clamp(2.15rem, 11cqi, 2.65rem);
+                white-space: nowrap;
+            }
             .star-player-copy p {
                 font-size: 0.76rem;
                 line-height: 1.65;
@@ -2015,7 +2025,7 @@
                 <h2 class="section-title">10 <span>Warriors</span></h2>
                 <div class="section-line"></div>
             </div>
-            <div class="squad-count"><span>10</span> CORE · 2 FEATURED STARS</div>
+            <div class="squad-count"><span>9</span> CORE · 2 STARS</div>
         </div>
         
         <div class="carousel" id="carousel">
