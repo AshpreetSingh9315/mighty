@@ -909,6 +909,14 @@
             background: #080806;
             box-shadow: 0 30px 90px rgba(0,0,0,0.42);
         }
+        .star-player-list {
+            display: grid;
+            gap: 28px;
+        }
+        .star-player-card--captain .star-player-visual img {
+            object-position: 50% 48%;
+            transform: scale(1.08);
+        }
         .star-player-visual {
             position: relative;
             min-height: 430px;
@@ -1782,6 +1790,10 @@
                 object-position: 48% 55%;
                 transform: scale(1.26);
             }
+            .star-player-card--captain .star-player-visual img {
+                object-position: 50% 45%;
+                transform: scale(1.08);
+            }
             .star-player-visual::after {
                 background: linear-gradient(0deg, rgba(4,4,3,0.82), transparent 38%), linear-gradient(90deg, transparent 72%, rgba(2,2,2,0.22));
             }
@@ -1854,6 +1866,10 @@
                 object-position: 48% 57%;
                 transform: scale(1.42);
             }
+            .star-player-card--captain .star-player-visual img {
+                object-position: 50% 48%;
+                transform: scale(1.08);
+            }
             .star-player-copy {
                 display: flex;
                 flex-direction: column;
@@ -1922,7 +1938,7 @@
         <a href="#home" onclick="closeMenu()">Home</a>
         <a href="#about" onclick="closeMenu()">About</a>
         <a href="#squad" onclick="closeMenu()">Squad</a>
-        <a href="#star-player" onclick="closeMenu()">Star Player</a>
+        <a href="#star-player" onclick="closeMenu()">Star Players</a>
         <a href="#fixtures" onclick="closeMenu()">Tournament</a>
         <a href="#stats" onclick="closeMenu()">Records</a>
         <a href="#fixtures" onclick="closeMenu()">Fixtures</a>
@@ -1999,7 +2015,7 @@
                 <h2 class="section-title">10 <span>Warriors</span></h2>
                 <div class="section-line"></div>
             </div>
-            <div class="squad-count"><span>10</span> CORE + 1 STAR</div>
+            <div class="squad-count"><span>10</span> CORE · 2 FEATURED STARS</div>
         </div>
         
         <div class="carousel" id="carousel">
@@ -2156,27 +2172,46 @@
         </div>
     </section>
 
-    <!-- Star Player -->
+    <!-- Star Players -->
     <section class="section star-arrival" id="star-player">
         <div class="section-head reveal">
-            <p class="section-label">A Mighty Welcome</p>
-            <h2 class="section-title">Star <span>Arrival</span></h2>
+            <p class="section-label">The Mighty Standouts</p>
+            <h2 class="section-title">Star <span>Players</span></h2>
             <div class="section-line"></div>
         </div>
-        <div class="star-player-card">
-            <div class="star-player-visual">
-                <span class="star-badge">New Signing</span>
-                <img src="team/gaurav.jpeg" alt="Gaurav Tyagi at the cricket stadium">
-                <span class="star-photo-note">Mighty XI · 2026</span>
+        <div class="star-player-list">
+            <div class="star-player-card star-player-card--captain">
+                <div class="star-player-visual">
+                    <span class="star-badge">Captain · Star Player</span>
+                    <img src="team/as.png" alt="Ashpreet, Mighty XI captain">
+                    <span class="star-photo-note">Mighty XI · Captain</span>
+                </div>
+                <div class="star-player-copy">
+                    <div class="star-eyebrow">Leading Mighty XI</div>
+                    <h3 class="star-player-name"><span>Ashpreet</span></h3>
+                    <p>Calm leadership. Top-order authority. Match-winning intent. Captain Ashpreet leads the Mighty XI from the front as one of our star players.</p>
+                    <div class="star-player-meta" aria-label="Ashpreet player details">
+                        <div><strong>Captain</strong><span>Role</span></div>
+                        <div><strong>Top Order</strong><span>Position</span></div>
+                        <div><strong>Star</strong><span>Status</span></div>
+                    </div>
+                </div>
             </div>
-            <div class="star-player-copy">
-                <div class="star-eyebrow">Welcome to Mighty XI</div>
-                <h3 class="star-player-name"><span>Gaurav Tyagi</span></h3>
-                <p>Fresh energy. Fearless cricket. Match-winning intent. Gaurav joins the Mighty XI as the newest force in our 2026 squad.</p>
-                <div class="star-player-meta" aria-label="Player details">
-                    <div><strong>Star</strong><span>Status</span></div>
-                    <div><strong>Mighty XI</strong><span>Team</span></div>
-                    <div><strong>2026</strong><span>Season</span></div>
+            <div class="star-player-card">
+                <div class="star-player-visual">
+                    <span class="star-badge">New Signing</span>
+                    <img src="team/gaurav.jpeg" alt="Gaurav Tyagi at the cricket stadium">
+                    <span class="star-photo-note">Mighty XI · 2026</span>
+                </div>
+                <div class="star-player-copy">
+                    <div class="star-eyebrow">Welcome to Mighty XI</div>
+                    <h3 class="star-player-name"><span>Gaurav Tyagi</span></h3>
+                    <p>Fresh energy. Fearless cricket. Match-winning intent. Gaurav joins the Mighty XI as the newest force in our 2026 squad.</p>
+                    <div class="star-player-meta" aria-label="Gaurav Tyagi player details">
+                        <div><strong>Star</strong><span>Status</span></div>
+                        <div><strong>Mighty XI</strong><span>Team</span></div>
+                        <div><strong>2026</strong><span>Season</span></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2423,34 +2458,35 @@
         });
 
         // ===== STAR PLAYER FEATURE =====
-        const starCard = document.querySelector('.star-player-card');
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (starCard && !prefersReducedMotion) {
-            const starTimeline = gsap.timeline({
-                scrollTrigger: {
-                    trigger: starCard,
-                    start: 'top 82%',
-                    toggleActions: 'play none none reverse'
-                }
-            });
+        document.querySelectorAll('.star-player-card').forEach((starCard) => {
+            if (!prefersReducedMotion) {
+                const starTimeline = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: starCard,
+                        start: 'top 82%',
+                        toggleActions: 'play none none reverse'
+                    }
+                });
 
-            starTimeline
-                .fromTo(starCard,
-                    { autoAlpha: 0, y: 42 },
-                    { autoAlpha: 1, y: 0, duration: 0.85, ease: 'power3.out' })
-                .fromTo('.star-player-visual',
-                    { clipPath: 'inset(0 0 100% 0)' },
-                    { clipPath: 'inset(0 0 0% 0)', duration: 0.9, ease: 'power4.inOut' }, 0.08)
-                .fromTo('.star-player-visual img',
-                    { scale: 1.52 },
-                    { scale: () => window.innerWidth < 768 ? 1.26 : 1.42, duration: 1.25, ease: 'power3.out' }, 0.08)
-                .fromTo('.star-badge, .star-photo-note',
-                    { autoAlpha: 0, y: 10 },
-                    { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power2.out' }, 0.55)
-                .fromTo('.star-eyebrow, .star-player-name, .star-player-copy > p, .star-player-meta',
-                    { autoAlpha: 0, y: 20 },
-                    { autoAlpha: 1, y: 0, duration: 0.62, stagger: 0.09, ease: 'power3.out' }, 0.52);
-        }
+                starTimeline
+                    .fromTo(starCard,
+                        { autoAlpha: 0, y: 42 },
+                        { autoAlpha: 1, y: 0, duration: 0.85, ease: 'power3.out' })
+                    .fromTo(starCard.querySelector('.star-player-visual'),
+                        { clipPath: 'inset(0 0 100% 0)' },
+                        { clipPath: 'inset(0 0 0% 0)', duration: 0.9, ease: 'power4.inOut' }, 0.08)
+                    .fromTo(starCard.querySelector('.star-player-visual img'),
+                        { scale: 1.52 },
+                        { scale: () => starCard.classList.contains('star-player-card--captain') ? 1.08 : (window.innerWidth < 768 ? 1.26 : 1.42), duration: 1.25, ease: 'power3.out' }, 0.08)
+                    .fromTo(starCard.querySelectorAll('.star-badge, .star-photo-note'),
+                        { autoAlpha: 0, y: 10 },
+                        { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power2.out' }, 0.55)
+                    .fromTo(starCard.querySelectorAll('.star-eyebrow, .star-player-name, .star-player-copy > p, .star-player-meta'),
+                        { autoAlpha: 0, y: 20 },
+                        { autoAlpha: 1, y: 0, duration: 0.62, stagger: 0.09, ease: 'power3.out' }, 0.52);
+            }
+        });
 
         // ===== ABOUT EMBLEM ANIMATION =====
         const aboutEmblem = document.querySelector('.about-img');
