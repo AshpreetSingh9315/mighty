@@ -393,6 +393,52 @@
             50% { transform: scaleY(1.3); opacity: 1; }
         }
 
+        /* ===== FIRST WIN — OPENING FILM ===== */
+        body.victory-playing { overflow: hidden; }
+        .victory-intro { position: fixed; inset: 0; z-index: 5000; display: grid; place-items: center; overflow: hidden; background: #030302; color: #fff; }
+        .victory-intro::before { content: ''; position: absolute; inset: -20%; background: radial-gradient(circle at 50% 42%, rgba(248,198,90,.23), transparent 23%), conic-gradient(from 20deg at 50% 45%, transparent 0 9%, rgba(248,198,90,.07) 10%, transparent 12% 23%, rgba(200,145,27,.05) 25%, transparent 27% 100%); animation: victorySpin 18s linear infinite; }
+        .victory-intro::after { content: ''; position: absolute; inset: 0; opacity: .32; background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size: 42px 42px; mask-image: radial-gradient(circle, #000 25%, transparent 78%); }
+        @keyframes victorySpin { to { transform: rotate(360deg) scale(1.08); } }
+        .victory-beam { position: absolute; left: -10%; width: 120%; height: 1px; top: 50%; background: linear-gradient(90deg, transparent, rgba(248,198,90,.9), transparent); box-shadow: 0 0 45px 14px rgba(248,198,90,.2); transform: scaleX(0); }
+        .victory-content { position: relative; z-index: 3; width: min(920px, calc(100% - 32px)); text-align: center; }
+        .victory-kicker { display: inline-flex; align-items: center; gap: 10px; font-family: 'Space Grotesk', sans-serif; font-size: clamp(.62rem, 2vw, .78rem); font-weight: 700; letter-spacing: .34em; text-transform: uppercase; color: var(--gold); }
+        .victory-kicker::before, .victory-kicker::after { content: ''; width: 35px; height: 1px; background: currentColor; }
+        .victory-number { position: relative; margin: clamp(12px, 2vh, 20px) 0 0; font-family: 'Syne', sans-serif; font-size: clamp(7.2rem, 30vw, 17rem); font-weight: 800; letter-spacing: -.09em; line-height: .72; color: transparent; background: linear-gradient(160deg, #fff8d8 8%, #f8c65a 43%, #a7690d 72%, #fff0af 100%); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 0 42px rgba(248,198,90,.24)); }
+        .victory-number small { position: absolute; right: 6%; bottom: .06em; font-family: 'Space Grotesk', sans-serif; font-size: clamp(.56rem, 2vw, .8rem); letter-spacing: .3em; color: rgba(255,255,255,.62); -webkit-text-fill-color: rgba(255,255,255,.62); }
+        .victory-title { margin-top: clamp(18px, 4vh, 32px); font-family: 'Syne', sans-serif; font-size: clamp(2rem, 7vw, 4.6rem); font-weight: 800; line-height: .92; letter-spacing: -.04em; text-transform: uppercase; }
+        .victory-title span { color: var(--gold); }
+        .victory-score { margin: clamp(20px, 4vh, 34px) auto 0; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; width: min(600px, 100%); border-top: 1px solid rgba(248,198,90,.28); border-bottom: 1px solid rgba(248,198,90,.28); }
+        .victory-team { padding: 14px 8px; }
+        .victory-team strong { display: block; font-family: 'Syne', sans-serif; font-size: clamp(1.5rem, 5vw, 2.6rem); }
+        .victory-team span { display: block; margin-top: 3px; color: rgba(255,255,255,.46); font-size: .63rem; letter-spacing: .2em; text-transform: uppercase; }
+        .victory-team:first-child strong { color: var(--gold); }
+        .victory-vs { color: rgba(255,255,255,.28); font: 700 .7rem 'Space Grotesk'; letter-spacing: .2em; }
+        .victory-credits { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 18px; margin-top: 18px; color: rgba(255,255,255,.62); font-size: clamp(.66rem, 2vw, .8rem); letter-spacing: .06em; }
+        .victory-credits b { color: #fff; }
+        .victory-enter { margin-top: clamp(20px, 4vh, 34px); padding: 11px 20px; border: 1px solid rgba(248,198,90,.42); border-radius: 999px; background: rgba(248,198,90,.08); color: var(--gold); font: 700 .65rem 'Space Grotesk'; letter-spacing: .24em; text-transform: uppercase; cursor: pointer; }
+        .victory-progress { position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: var(--gold); transform-origin: left; }
+        .victory-spark { position: absolute; z-index: 2; width: 3px; height: 3px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 12px var(--gold); }
+        .hero { min-height: 100dvh; height: 100dvh; }
+        .hero-win-label { margin-bottom: 14px; color: var(--gold); font: 700 .7rem 'Space Grotesk'; letter-spacing: .3em; text-transform: uppercase; opacity: 0; }
+        .hero-result { margin: 0 auto 16px; font-family: 'Syne', sans-serif; font-size: clamp(1.25rem, 5vw, 2rem); font-weight: 800; letter-spacing: -.03em; opacity: 0; }
+        .hero-result span { color: var(--gold); }
+        .hero-tag { letter-spacing: 2px; }
+        @media (max-height: 680px) { .victory-number { font-size: clamp(6rem, 24vh, 10rem); } .victory-title, .victory-enter { margin-top: 14px; } .victory-score { margin-top: 14px; } .victory-credits { margin-top: 10px; } }
+        @media (max-width: 520px) {
+            .victory-content { width: calc(100% - 28px); }
+            .victory-kicker { font-size: .57rem; letter-spacing: .24em; white-space: nowrap; }
+            .victory-kicker::before, .victory-kicker::after { width: 20px; }
+            .victory-number { font-size: 6.4rem; letter-spacing: -.11em; }
+            .victory-number small { right: 3%; font-size: .48rem; }
+            .victory-title { font-size: 1.42rem; line-height: .96; letter-spacing: -.055em; }
+            .victory-title span { display: block; }
+            .victory-team { padding: 12px 3px; }
+            .victory-team strong { font-size: 1.45rem; }
+            .victory-team span { font-size: .43rem; letter-spacing: .06em; white-space: nowrap; }
+            .victory-credits { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; font-size: .62rem; }
+        }
+        @media (prefers-reduced-motion: reduce) { .victory-intro::before { animation: none; } }
+
         /* ===== MARQUEE ===== */
         .marquee {
             background: var(--crimson);
@@ -1933,6 +1979,26 @@
 </head>
 <body>
 
+    <!-- The First Win — cinematic opening -->
+    <div class="victory-intro" id="victoryIntro" role="dialog" aria-label="Mighty XI first victory celebration">
+        <div class="victory-beam"></div>
+        <div class="victory-content">
+            <div class="victory-kicker">22 June 2026 · Our first win</div>
+            <div class="victory-number">145<small>RUNS</small></div>
+            <h1 class="victory-title">A win built by <span>all of us.</span></h1>
+            <div class="victory-score" aria-label="Mighty XI 218 for 4 defeated Alpha XI 73 all out">
+                <div class="victory-team"><strong>218/4</strong><span>Mighty XI · 20 overs</span></div>
+                <div class="victory-vs">DEF.</div>
+                <div class="victory-team"><strong>73</strong><span>Alpha XI · 14.3 overs</span></div>
+            </div>
+            <div class="victory-credits">
+                <span><b>Vaibhav</b> 77*</span><span><b>Sahil</b> 25 off 12</span><span><b>Rathi</b> 18 off 11</span><span><b>Eleven</b> as one</span>
+            </div>
+            <button class="victory-enter" id="victoryEnter" type="button">Enter the Mighty era</button>
+        </div>
+        <div class="victory-progress"></div>
+    </div>
+
     <!-- Nav -->
     <nav class="nav" id="nav">
         <div class="nav-logo">
@@ -1963,14 +2029,16 @@
         <div class="hero-ring hero-ring-xl"></div>
 
         <div class="hero-content">
+            <p class="hero-win-label" id="heroWinLabel">First win · 22.06.26</p>
             <div class="hero-logo-lockup">
                 <span class="hero-year">2</span>
                 <img src="m1.png" alt="Mighty XI" class="hero-logo" id="heroLogo">
                 <span class="hero-year">6</span>
             </div>
             <h1 class="hero-title" id="heroTitle"><span>Mighty</span> XI</h1>
-            <p class="hero-tag" id="heroTag">Built Mighty - Est. 2026</p>
-            <p class="hero-motto" id="heroMotto">#BasJeetnaHai</p>
+            <p class="hero-result" id="heroResult">Mighty XI won by <span>145 runs</span></p>
+            <p class="hero-tag" id="heroTag">218/4 · Alpha XI 73 all out</p>
+            <p class="hero-motto" id="heroMotto">#BasJeetnaTha · Jeet Gaye</p>
             <!-- <a href="#squad" class="hero-cta" id="heroCta">
                 Meet The Squad
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1988,16 +2056,16 @@
     <!-- Marquee -->
     <div class="marquee">
         <div class="marquee-track">
-            <span class="marquee-item">Mighty XI 2026</span>
-            <span class="marquee-item">Rule The Pitch</span>
-            <span class="marquee-item">Own The Game</span>
-            <span class="marquee-item">Rise With Pride</span>
-            <span class="marquee-item">Born To Win</span>
-            <span class="marquee-item">Mighty XI 2026</span>
-            <span class="marquee-item">Rule The Pitch</span>
-            <span class="marquee-item">Own The Game</span>
-            <span class="marquee-item">Rise With Pride</span>
-            <span class="marquee-item">Born To Win</span>
+            <span class="marquee-item">Our First Win</span>
+            <span class="marquee-item">218 For 4</span>
+            <span class="marquee-item">Won By 145 Runs</span>
+            <span class="marquee-item">One Team · One Roar</span>
+            <span class="marquee-item">Mighty Era Begins</span>
+            <span class="marquee-item">Our First Win</span>
+            <span class="marquee-item">218 For 4</span>
+            <span class="marquee-item">Won By 145 Runs</span>
+            <span class="marquee-item">One Team · One Roar</span>
+            <span class="marquee-item">Mighty Era Begins</span>
         </div>
     </div>
 
@@ -2236,20 +2304,20 @@
         </div>
         <div class="stats-grid">
             <div class="stat-box reveal-scale">
-                <div class="stat-box-num" data-target="0">0</div>
+                <div class="stat-box-num" data-target="1">0</div>
                 <div class="stat-box-label">Played</div>
             </div>
             <div class="stat-box reveal-scale">
-                <div class="stat-box-num" data-target="0">0</div>
+                <div class="stat-box-num" data-target="1">0</div>
                 <div class="stat-box-label">Wins</div>
             </div>
             <div class="stat-box reveal-scale">
-                <div class="stat-box-num" data-target="0">0</div>
+                <div class="stat-box-num" data-target="100">0</div>
                 <div class="stat-box-label">Win %</div>
             </div>
             <div class="stat-box reveal-scale">
-                <div class="stat-box-num" data-target="1">0</div>
-                <div class="stat-box-label">Upcoming</div>
+                <div class="stat-box-num" data-target="145">0</div>
+                <div class="stat-box-label">Run Victory</div>
             </div>
         </div>
     </section>
@@ -2257,39 +2325,39 @@
     <!-- Fixtures -->
     <section class="section fixtures" id="fixtures">
         <div class="section-head reveal">
-            <p class="section-label">The Next Battle</p>
-            <h2 class="section-title">Mega <span>Match</span></h2>
+            <p class="section-label">Match No. 1 · The breakthrough</p>
+            <h2 class="section-title">The First <span>Roar</span></h2>
             <div class="section-line"></div>
         </div>
 
         <div class="match-centre">
             <div class="next-match-card reveal upcoming-card">
                 <div class="match-kicker">
-                    <span>Upcoming Mega Match</span>
+                    <span>Match won · Mighty XI</span>
                     <strong>22 June 2026</strong>
                 </div>
-                <h3 class="mega-match-title">One Ground. <span>Two Forces.</span></h3>
+                <h3 class="mega-match-title">Eleven Players. <span>One Mighty Win.</span></h3>
                 <div class="match-teams">
                     <div class="match-team kings-side">
                         <div class="match-logo-shell"><img src="m1.png" alt="Mighty XI"></div>
                         <span class="match-team-name">Mighty XI</span>
-                        <span class="match-team-label">Home</span>
+                        <span class="match-team-label">218/4 · 20 overs</span>
                     </div>
                     <div class="match-versus">VS</div>
                     <div class="match-team">
                         <div class="match-logo-shell"><img src="aa.png" alt="Alpha XI"></div>
                         <span class="match-team-name">Alpha XI</span>
-                        <span class="match-team-label">Away</span>
+                        <span class="match-team-label">73 all out · 14.3 overs</span>
                     </div>
                 </div>
                 <div class="match-details">
                     <div class="match-info">
                         <span class="match-info-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v14H4V6a1 1 0 0 1 1-1Z"/></svg></span>
-                        <div><small>Match date</small><strong>22 June 2026</strong></div>
+                        <div><small>Winning margin</small><strong>145 runs</strong></div>
                     </div>
                     <div class="match-info">
                         <span class="match-info-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-                        <div><small>Venue</small><strong>Dominate Cricket Ground</strong></div>
+                        <div><small>Player of the match</small><strong>Vaibhav · 77*</strong></div>
                     </div>
                 </div>
             </div>
@@ -2355,11 +2423,63 @@
             });
         });
 
+        // ===== FIRST WIN OPENING =====
+        const victoryIntro = document.getElementById('victoryIntro');
+        const victoryEnter = document.getElementById('victoryEnter');
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        document.body.classList.add('victory-playing');
+
+        for (let i = 0; i < 34; i++) {
+            const spark = document.createElement('i');
+            spark.className = 'victory-spark';
+            spark.style.left = `${8 + Math.random() * 84}%`;
+            spark.style.top = `${8 + Math.random() * 84}%`;
+            victoryIntro.appendChild(spark);
+        }
+
+        const introTl = gsap.timeline({ delay: .12 });
+        introTl
+            .from('.victory-kicker', { opacity: 0, y: 14, duration: .55, ease: 'power3.out' })
+            .to('.victory-beam', { scaleX: 1, duration: .8, ease: 'power4.inOut' }, 0)
+            .from('.victory-number', { opacity: 0, scale: .45, duration: .9, ease: 'back.out(1.55)' }, .35)
+            .from('.victory-title', { opacity: 0, y: 36, duration: .7, ease: 'power3.out' }, .85)
+            .from('.victory-score', { opacity: 0, y: 24, duration: .65, ease: 'power3.out' }, 1.15)
+            .from('.victory-credits span', { opacity: 0, y: 12, stagger: .09, duration: .42 }, 1.45)
+            .from('.victory-enter', { opacity: 0, y: 10, duration: .45 }, 1.75)
+            .fromTo('.victory-progress', { scaleX: 0 }, { scaleX: 1, duration: 6, ease: 'none' }, 0);
+
+        if (!reducedMotion) {
+            gsap.to('.victory-spark', {
+                y: () => gsap.utils.random(-55, 55), x: () => gsap.utils.random(-35, 35),
+                opacity: () => gsap.utils.random(.15, .8), scale: () => gsap.utils.random(.4, 1.8),
+                duration: () => gsap.utils.random(1.4, 3.2), repeat: -1, yoyo: true,
+                ease: 'sine.inOut', stagger: { each: .03, from: 'random' }
+            });
+        }
+
+        let introClosed = false;
+        function closeVictoryIntro() {
+            if (introClosed) return;
+            introClosed = true;
+            gsap.to(victoryIntro, {
+                yPercent: -100, duration: reducedMotion ? .2 : 1.05, ease: 'power4.inOut',
+                onComplete: () => {
+                    victoryIntro.remove();
+                    document.body.classList.remove('victory-playing');
+                    heroTl.play();
+                }
+            });
+        }
+        victoryEnter.addEventListener('click', closeVictoryIntro);
+        setTimeout(closeVictoryIntro, reducedMotion ? 1800 : 6000);
+
         // ===== HERO ANIMATIONS =====
-        const heroTl = gsap.timeline({ delay: 0.2 });
+        const heroTl = gsap.timeline({ paused: true });
         heroTl
+            .to('#heroWinLabel', { opacity: 1, y: 0, duration: .5, ease: 'power3.out', startAt: { y: 14 } })
             .to('#heroLogo', { opacity: 1, scale: 1, duration: 1, ease: 'power3.out', startAt: { scale: 0.7 } })
             .to('#heroTitle', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', startAt: { y: 40 } }, '-=0.5')
+            .to('#heroResult', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', startAt: { y: 20 } }, '-=0.45')
             .to('#heroTag', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', startAt: { y: 20 } }, '-=0.4')
             .to('#heroMotto', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', startAt: { y: 16 } }, '-=0.3')
             .to('#heroCta', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', startAt: { y: 20 } }, '-=0.25')
