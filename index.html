@@ -20,12 +20,12 @@
         }
 
         :root {
-            --crimson: #C8911B;
-            --blood: #241604;
-            --gold: #F8C65A;
-            --gold-dim: #A76C12;
-            --dark: #090806;
-            --darker: #020202;
+            --crimson: #B3122D;
+            --blood: #29040D;
+            --gold: #FFD166;
+            --gold-dim: #C47A16;
+            --dark: #0A0508;
+            --darker: #030102;
             --card: rgba(255,255,255,0.03);
             --glass: rgba(255,255,255,0.05);
         }
@@ -162,8 +162,9 @@
             position: absolute;
             inset: 0;
             background:
-                radial-gradient(ellipse 80% 50% at 50% 50%, rgba(200,145,27,0.16) 0%, transparent 70%),
-                radial-gradient(ellipse 60% 40% at 80% 20%, rgba(248,198,90,0.08) 0%, transparent 60%);
+                radial-gradient(ellipse 80% 50% at 50% 50%, rgba(255,209,102,0.18) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 40% at 80% 20%, rgba(179,18,45,0.18) 0%, transparent 60%),
+                linear-gradient(145deg, rgba(41,4,13,0.72), rgba(3,1,2,0.92));
         }
         .hero-grid {
             position: absolute;
@@ -393,11 +394,11 @@
             50% { transform: scaleY(1.3); opacity: 1; }
         }
 
-        /* ===== FIRST WIN — OPENING FILM ===== */
+        /* ===== REPEAT WIN OPENING FILM ===== */
         body.victory-playing { overflow: hidden; }
-        .victory-intro { position: fixed; inset: 0; z-index: 5000; display: grid; place-items: center; overflow: hidden; background: #030302; color: #fff; }
-        .victory-intro::before { content: ''; position: absolute; inset: -20%; background: radial-gradient(circle at 50% 42%, rgba(248,198,90,.23), transparent 23%), conic-gradient(from 20deg at 50% 45%, transparent 0 9%, rgba(248,198,90,.07) 10%, transparent 12% 23%, rgba(200,145,27,.05) 25%, transparent 27% 100%); animation: victorySpin 18s linear infinite; }
-        .victory-intro::after { content: ''; position: absolute; inset: 0; opacity: .32; background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size: 42px 42px; mask-image: radial-gradient(circle, #000 25%, transparent 78%); }
+        .victory-intro { position: fixed; inset: 0; z-index: 5000; display: grid; place-items: center; overflow: hidden; background: #030102; color: #fff; }
+        .victory-intro::before { content: ''; position: absolute; inset: -20%; background: radial-gradient(circle at 50% 42%, rgba(255,209,102,.25), transparent 23%), radial-gradient(circle at 20% 15%, rgba(179,18,45,.28), transparent 22%), conic-gradient(from 20deg at 50% 45%, transparent 0 9%, rgba(255,209,102,.08) 10%, transparent 12% 23%, rgba(179,18,45,.08) 25%, transparent 27% 100%); animation: victorySpin 18s linear infinite; }
+        .victory-intro::after { content: ''; position: absolute; inset: 0; opacity: .34; background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size: 42px 42px; mask-image: radial-gradient(circle, #000 25%, transparent 78%); }
         @keyframes victorySpin { to { transform: rotate(360deg) scale(1.08); } }
         .victory-beam { position: absolute; left: -10%; width: 120%; height: 1px; top: 50%; background: linear-gradient(90deg, transparent, rgba(248,198,90,.9), transparent); box-shadow: 0 0 45px 14px rgba(248,198,90,.2); transform: scaleX(0); }
         .victory-content { position: relative; z-index: 3; width: min(920px, calc(100% - 32px)); text-align: center; }
@@ -418,6 +419,11 @@
         .victory-enter { margin-top: clamp(20px, 4vh, 34px); padding: 11px 20px; border: 1px solid rgba(248,198,90,.42); border-radius: 999px; background: rgba(248,198,90,.08); color: var(--gold); font: 700 .65rem 'Space Grotesk'; letter-spacing: .24em; text-transform: uppercase; cursor: pointer; }
         .victory-progress { position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: var(--gold); transform-origin: left; }
         .victory-spark { position: absolute; z-index: 2; width: 3px; height: 3px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 12px var(--gold); }
+        .fireworks-layer { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+        .firework-rocket { position: absolute; bottom: -18px; width: 4px; height: 18px; border-radius: 999px; background: linear-gradient(#fff8df, var(--gold)); box-shadow: 0 0 18px rgba(255,209,102,.9); }
+        .firework-rocket::after { content: ''; position: absolute; left: 50%; top: 14px; width: 1px; height: 70px; transform: translateX(-50%); background: linear-gradient(rgba(255,209,102,.75), transparent); }
+        .firework-bit { position: absolute; width: 5px; height: 5px; border-radius: 50%; background: var(--fw-color, var(--gold)); box-shadow: 0 0 14px var(--fw-color, var(--gold)); }
+        .victory-flash { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: radial-gradient(circle at var(--fx,50%) var(--fy,35%), rgba(255,246,202,.55), transparent 34%); opacity: 0; mix-blend-mode: screen; }
         .hero { min-height: 100dvh; height: 100dvh; }
         .hero-win-label { margin-bottom: 14px; color: var(--gold); font: 700 .7rem 'Space Grotesk'; letter-spacing: .3em; text-transform: uppercase; opacity: 0; }
         .hero-result { margin: 0 auto 16px; font-family: 'Syne', sans-serif; font-size: clamp(1.25rem, 5vw, 2rem); font-weight: 800; letter-spacing: -.03em; opacity: 0; }
@@ -1979,20 +1985,22 @@
 </head>
 <body>
 
-    <!-- The First Win — cinematic opening -->
-    <div class="victory-intro" id="victoryIntro" role="dialog" aria-label="Mighty XI first victory celebration">
+    <!-- The repeat win - cinematic opening -->
+    <div class="victory-intro" id="victoryIntro" role="dialog" aria-label="Mighty XI repeat victory celebration">
+        <div class="fireworks-layer" id="fireworksLayer"></div>
+        <div class="victory-flash" id="victoryFlash"></div>
         <div class="victory-beam"></div>
         <div class="victory-content">
-            <div class="victory-kicker">22 June 2026 · Our first win</div>
-            <div class="victory-number">145<small>RUNS</small></div>
-            <h1 class="victory-title">A win built by <span>all of us.</span></h1>
-            <div class="victory-score" aria-label="Mighty XI 218 for 4 defeated Alpha XI 73 all out">
-                <div class="victory-team"><strong>218/4</strong><span>Mighty XI · 20 overs</span></div>
+            <div class="victory-kicker">Again Mighty defeated the Alphas</div>
+            <div class="victory-number">5<small>RUNS</small></div>
+            <h1 class="victory-title">Another roar. <span>Same belief.</span></h1>
+            <div class="victory-score" aria-label="Mighty XI defeated the Alphas by 5 runs">
+                <div class="victory-team"><strong>Mighty</strong><span>Defended the total</span></div>
                 <div class="victory-vs">DEF.</div>
-                <div class="victory-team"><strong>73</strong><span>Alpha XI · 14.3 overs</span></div>
+                <div class="victory-team"><strong>Alphas</strong><span>Short by 5 runs</span></div>
             </div>
             <div class="victory-credits">
-                <span><b>Vaibhav</b> 77*</span><span><b>Sahil</b> 25 off 12</span><span><b>Rathi</b> 18 off 11</span><span><b>Eleven</b> as one</span>
+                <span><b>Again</b> against the Alphas</span><span><b>5 runs</b> of nerve</span><span><b>Mighty</b> held the line</span><span><b>Eleven</b> as one</span>
             </div>
             <button class="victory-enter" id="victoryEnter" type="button">Enter the Mighty era</button>
         </div>
@@ -2012,12 +2020,11 @@
     <div class="nav-overlay" id="navOverlay"></div>
     <div class="nav-menu" id="navMenu">
         <a href="#home" onclick="closeMenu()">Home</a>
+        <a href="#fixtures" onclick="closeMenu()">Latest Win</a>
+        <a href="#stats" onclick="closeMenu()">Records</a>
         <a href="#about" onclick="closeMenu()">About</a>
         <a href="#squad" onclick="closeMenu()">Squad</a>
         <a href="#star-player" onclick="closeMenu()">Star Players</a>
-        <a href="#fixtures" onclick="closeMenu()">Tournament</a>
-        <a href="#stats" onclick="closeMenu()">Records</a>
-        <a href="#fixtures" onclick="closeMenu()">Fixtures</a>
     </div>
 
     <!-- Hero -->
@@ -2029,16 +2036,16 @@
         <div class="hero-ring hero-ring-xl"></div>
 
         <div class="hero-content">
-            <p class="hero-win-label" id="heroWinLabel">First win · 22.06.26</p>
+            <p class="hero-win-label" id="heroWinLabel">Repeat win · Mighty vs Alphas</p>
             <div class="hero-logo-lockup">
                 <span class="hero-year">2</span>
                 <img src="m1.png" alt="Mighty XI" class="hero-logo" id="heroLogo">
                 <span class="hero-year">6</span>
             </div>
             <h1 class="hero-title" id="heroTitle"><span>Mighty</span> XI</h1>
-            <p class="hero-result" id="heroResult">Mighty XI won by <span>145 runs</span></p>
-            <p class="hero-tag" id="heroTag">218/4 · Alpha XI 73 all out</p>
-            <p class="hero-motto" id="heroMotto">#BasJeetnaTha · Jeet Gaye</p>
+            <p class="hero-result" id="heroResult">Mighty XI won by <span>5 runs</span></p>
+            <p class="hero-tag" id="heroTag">Again defeated the Alphas</p>
+            <p class="hero-motto" id="heroMotto">#DefendedBy5 · Mighty Again</p>
             <!-- <a href="#squad" class="hero-cta" id="heroCta">
                 Meet The Squad
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2056,18 +2063,60 @@
     <!-- Marquee -->
     <div class="marquee">
         <div class="marquee-track">
-            <span class="marquee-item">Our First Win</span>
-            <span class="marquee-item">218 For 4</span>
-            <span class="marquee-item">Won By 145 Runs</span>
+            <span class="marquee-item">Again Mighty Wins</span>
+            <span class="marquee-item">Defeated The Alphas</span>
+            <span class="marquee-item">Won By 5 Runs</span>
             <span class="marquee-item">One Team · One Roar</span>
-            <span class="marquee-item">Mighty Era Begins</span>
-            <span class="marquee-item">Our First Win</span>
-            <span class="marquee-item">218 For 4</span>
-            <span class="marquee-item">Won By 145 Runs</span>
+            <span class="marquee-item">Mighty Era Continues</span>
+            <span class="marquee-item">Again Mighty Wins</span>
+            <span class="marquee-item">Defeated The Alphas</span>
+            <span class="marquee-item">Won By 5 Runs</span>
             <span class="marquee-item">One Team · One Roar</span>
-            <span class="marquee-item">Mighty Era Begins</span>
+            <span class="marquee-item">Mighty Era Continues</span>
         </div>
     </div>
+
+    <!-- Fixtures -->
+    <section class="section fixtures" id="fixtures">
+        <div class="section-head reveal">
+            <p class="section-label">The rivalry · Mighty vs Alphas</p>
+            <h2 class="section-title">The Second <span>Roar</span></h2>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="match-centre">
+            <div class="next-match-card reveal upcoming-card">
+                <div class="match-kicker">
+                    <span>Match won · Mighty XI</span>
+                    <strong>Won by 5 runs</strong>
+                </div>
+                <h3 class="mega-match-title">Again Mighty. <span>Again Alphas Defeated.</span></h3>
+                <div class="match-teams">
+                    <div class="match-team kings-side">
+                        <div class="match-logo-shell"><img src="m1.png" alt="Mighty XI"></div>
+                        <span class="match-team-name">Mighty XI</span>
+                        <span class="match-team-label">Won by 5 runs</span>
+                    </div>
+                    <div class="match-versus">VS</div>
+                    <div class="match-team">
+                        <div class="match-logo-shell"><img src="aa.png" alt="Alpha XI"></div>
+                        <span class="match-team-name">The Alphas</span>
+                        <span class="match-team-label">Fell 5 runs short</span>
+                    </div>
+                </div>
+                <div class="match-details">
+                    <div class="match-info">
+                        <span class="match-info-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v14H4V6a1 1 0 0 1 1-1Z"/></svg></span>
+                        <div><small>Winning margin</small><strong>5 runs</strong></div>
+                    </div>
+                    <div class="match-info">
+                        <span class="match-info-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+                        <div><small>Match mood</small><strong>Defended under pressure</strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- About -->
     <section class="section about" id="about">
@@ -2304,11 +2353,11 @@
         </div>
         <div class="stats-grid">
             <div class="stat-box reveal-scale">
-                <div class="stat-box-num" data-target="1">0</div>
+                <div class="stat-box-num" data-target="2">0</div>
                 <div class="stat-box-label">Played</div>
             </div>
             <div class="stat-box reveal-scale">
-                <div class="stat-box-num" data-target="1">0</div>
+                <div class="stat-box-num" data-target="2">0</div>
                 <div class="stat-box-label">Wins</div>
             </div>
             <div class="stat-box reveal-scale">
@@ -2316,50 +2365,8 @@
                 <div class="stat-box-label">Win %</div>
             </div>
             <div class="stat-box reveal-scale">
-                <div class="stat-box-num" data-target="145">0</div>
-                <div class="stat-box-label">Run Victory</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Fixtures -->
-    <section class="section fixtures" id="fixtures">
-        <div class="section-head reveal">
-            <p class="section-label">Match No. 1 · The breakthrough</p>
-            <h2 class="section-title">The First <span>Roar</span></h2>
-            <div class="section-line"></div>
-        </div>
-
-        <div class="match-centre">
-            <div class="next-match-card reveal upcoming-card">
-                <div class="match-kicker">
-                    <span>Match won · Mighty XI</span>
-                    <strong>22 June 2026</strong>
-                </div>
-                <h3 class="mega-match-title">Eleven Players. <span>One Mighty Win.</span></h3>
-                <div class="match-teams">
-                    <div class="match-team kings-side">
-                        <div class="match-logo-shell"><img src="m1.png" alt="Mighty XI"></div>
-                        <span class="match-team-name">Mighty XI</span>
-                        <span class="match-team-label">218/4 · 20 overs</span>
-                    </div>
-                    <div class="match-versus">VS</div>
-                    <div class="match-team">
-                        <div class="match-logo-shell"><img src="aa.png" alt="Alpha XI"></div>
-                        <span class="match-team-name">Alpha XI</span>
-                        <span class="match-team-label">73 all out · 14.3 overs</span>
-                    </div>
-                </div>
-                <div class="match-details">
-                    <div class="match-info">
-                        <span class="match-info-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v14H4V6a1 1 0 0 1 1-1Z"/></svg></span>
-                        <div><small>Winning margin</small><strong>145 runs</strong></div>
-                    </div>
-                    <div class="match-info">
-                        <span class="match-info-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-                        <div><small>Player of the match</small><strong>Vaibhav · 77*</strong></div>
-                    </div>
-                </div>
+                <div class="stat-box-num" data-target="5">0</div>
+                <div class="stat-box-label">Run Win</div>
             </div>
         </div>
     </section>
@@ -2423,9 +2430,11 @@
             });
         });
 
-        // ===== FIRST WIN OPENING =====
+        // ===== REPEAT WIN OPENING =====
         const victoryIntro = document.getElementById('victoryIntro');
         const victoryEnter = document.getElementById('victoryEnter');
+        const fireworksLayer = document.getElementById('fireworksLayer');
+        const victoryFlash = document.getElementById('victoryFlash');
         const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         document.body.classList.add('victory-playing');
 
@@ -2457,10 +2466,70 @@
             });
         }
 
+        let fireworkTimer;
+        const fireworkColors = ['#FFD166', '#FF4D6D', '#FFF2B8', '#8BE9FD', '#FF9F1C'];
+
+        function burstFirework(xPercent, yPercent) {
+            if (!fireworksLayer || reducedMotion) return;
+
+            const rocket = document.createElement('span');
+            rocket.className = 'firework-rocket';
+            rocket.style.left = `${xPercent}%`;
+            fireworksLayer.appendChild(rocket);
+
+            gsap.to(rocket, {
+                bottom: `${100 - yPercent}%`,
+                duration: gsap.utils.random(.65, .95),
+                ease: 'power2.out',
+                onComplete: () => {
+                    rocket.remove();
+                    const color = gsap.utils.random(fireworkColors);
+                    const bits = [];
+
+                    for (let i = 0; i < 34; i++) {
+                        const bit = document.createElement('span');
+                        bit.className = 'firework-bit';
+                        bit.style.left = `${xPercent}%`;
+                        bit.style.top = `${yPercent}%`;
+                        bit.style.setProperty('--fw-color', i % 5 === 0 ? '#fff8df' : color);
+                        fireworksLayer.appendChild(bit);
+                        bits.push(bit);
+                    }
+
+                    gsap.set(victoryFlash, { '--fx': `${xPercent}%`, '--fy': `${yPercent}%` });
+                    gsap.fromTo(victoryFlash, { opacity: .72 }, { opacity: 0, duration: .42, ease: 'power2.out' });
+
+                    gsap.to(bits, {
+                        x: () => gsap.utils.random(-150, 150),
+                        y: () => gsap.utils.random(-120, 120),
+                        scale: () => gsap.utils.random(.45, 1.35),
+                        opacity: 0,
+                        duration: () => gsap.utils.random(.8, 1.25),
+                        ease: 'power3.out',
+                        stagger: { each: .006, from: 'random' },
+                        onComplete: () => bits.forEach(bit => bit.remove())
+                    });
+                }
+            });
+        }
+
+        function startFireworks() {
+            if (reducedMotion) return;
+            burstFirework(50, 32);
+            burstFirework(28, 38);
+            setTimeout(() => burstFirework(72, 28), 360);
+            fireworkTimer = setInterval(() => {
+                burstFirework(gsap.utils.random(16, 84), gsap.utils.random(18, 48));
+            }, 780);
+        }
+
+        startFireworks();
+
         let introClosed = false;
         function closeVictoryIntro() {
             if (introClosed) return;
             introClosed = true;
+            clearInterval(fireworkTimer);
             gsap.to(victoryIntro, {
                 yPercent: -100, duration: reducedMotion ? .2 : 1.05, ease: 'power4.inOut',
                 onComplete: () => {

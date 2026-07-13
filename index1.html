@@ -9,1668 +9,842 @@
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --crimson: #8B0000;
-            --blood-red: #4A0000;
+            --blood: #4A0000;
             --gold: #D4AF37;
-            --gold-light: #F4D03F;
-            --gold-dark: #B8860B;
-            --dark: #0a0a0a;
-            --darker: #050505;
-            --card-bg: rgba(139, 0, 0, 0.08);
-            --card-border: rgba(212, 175, 55, 0.2);
+            --gold-lt: #F4D03F;
+            --gold-dk: #B8860B;
+            --dark: #09070a;
+            --darker: #050305;
         }
 
-        html {
-            scroll-behavior: auto;
-        }
+        html { scroll-behavior: auto; }
 
         body {
             font-family: 'Inter', sans-serif;
             background: var(--darker);
             color: #fff;
             overflow-x: hidden;
-            cursor: default;
+            cursor: none;
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--dark);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--gold-dark);
-            border-radius: 3px;
-        }
-
-        /* Navigation */
-        .nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.4s ease;
-        }
-
-        .nav.scrolled {
-            background: rgba(5, 5, 5, 0.9);
-            backdrop-filter: blur(20px);
-            padding: 15px 40px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
-        }
-
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .nav-logo img {
-            height: 50px;
-            width: auto;
-            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.3));
-        }
-
-        .nav-logo-text {
-            font-family: 'Cinzel', serif;
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: var(--gold);
-            letter-spacing: 2px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 40px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.85rem;
-            font-weight: 500;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::after {
+        /* grain */
+        body::after {
             content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--gold);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--gold);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            background: var(--darker);
-        }
-
-        .hero-bg {
-            position: absolute;
+            position: fixed;
             inset: 0;
-            background: 
-                radial-gradient(ellipse at center, rgba(139, 0, 0, 0.15) 0%, transparent 70%),
-                radial-gradient(ellipse at 20% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.5;
         }
 
-        .hero-particles {
-            position: absolute;
-            inset: 0;
-            overflow: hidden;
-        }
+        ::-webkit-scrollbar { width: 3px; }
+        ::-webkit-scrollbar-track { background: var(--darker); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(var(--gold-dk), var(--gold)); }
 
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--gold);
+        /* ── CURSOR ── */
+        .cur-dot, .cur-ring {
+            position: fixed;
             border-radius: 50%;
-            opacity: 0.3;
-            animation: float 15s infinite ease-in-out;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+        .cur-dot { width: 6px; height: 6px; background: var(--gold); }
+        .cur-ring { width: 36px; height: 36px; border: 1px solid rgba(212,175,55,.4); }
+
+        @media (pointer: coarse) { .cur-dot, .cur-ring { display: none; } body { cursor: default; } }
+
+        /* ── NAV ── */
+        .nav {
+            position: fixed; top: 0; left: 0; width: 100%;
+            z-index: 1000; padding: 22px 56px;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: padding .45s ease, background .45s ease, border .45s ease;
+        }
+        .nav.scrolled {
+            background: rgba(5,3,5,.88);
+            backdrop-filter: blur(24px);
+            padding: 14px 56px;
+            border-bottom: 1px solid rgba(212,175,55,.07);
+        }
+        .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .nav-logo img { height: 42px; filter: drop-shadow(0 0 18px rgba(212,175,55,.35)); }
+        .nav-logo-text { font-family: 'Cinzel', serif; font-weight: 900; font-size: .95rem; color: var(--gold); letter-spacing: 4px; }
+
+        .nav-links { display: flex; gap: 44px; list-style: none; }
+        .nav-links a {
+            text-decoration: none; color: rgba(255,255,255,.5);
+            font-size: .72rem; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase;
+            transition: color .3s; position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -4px; left: 0;
+            width: 0; height: 1px; background: var(--gold);
+            transition: width .4s cubic-bezier(.4,0,.2,1);
+        }
+        .nav-links a:hover { color: var(--gold); }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* hamburger */
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; z-index: 1002; }
+        .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--gold); transform-origin: center; }
+
+        @media (max-width: 768px) {
+            .nav { padding: 18px 24px; }
+            .nav.scrolled { padding: 14px 24px; }
+            .nav-links { display: none !important; }
+            .hamburger { display: flex; }
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
-            10% { opacity: 0.3; }
-            90% { opacity: 0.3; }
-            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        /* mobile overlay */
+        .mob-menu {
+            position: fixed; inset: 0;
+            background: rgba(5,3,5,.97); backdrop-filter: blur(20px);
+            z-index: 1001;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+            clip-path: circle(0% at calc(100% - 36px) 32px);
+        }
+        .mob-link {
+            font-family: 'Cinzel', serif; font-size: clamp(1.6rem, 7vw, 2.4rem);
+            font-weight: 700; color: rgba(255,255,255,.12);
+            text-decoration: none; letter-spacing: 6px; text-transform: uppercase;
+            opacity: 0; transform: translateY(20px);
+            transition: color .3s;
+        }
+        .mob-link:hover { color: var(--gold); }
+        .mob-sep { width: 50px; height: 1px; background: rgba(212,175,55,.25); opacity: 0; margin: 12px 0; }
+
+        /* ── HERO ── */
+        .hero {
+            height: 100svh; min-height: 580px;
+            position: relative; display: flex; align-items: center; justify-content: center;
+            overflow: hidden; background: var(--darker);
+        }
+        .hero-bg {
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 50% 65%, rgba(139,0,0,.16) 0%, transparent 68%),
+                radial-gradient(ellipse at 10% 90%, rgba(212,175,55,.05) 0%, transparent 40%);
+        }
+        #pCanvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+        .hero-content { position: relative; z-index: 2; text-align: center; padding: 0 24px; width: 100%; }
+
+        .logo-wrap { position: relative; display: inline-block; margin-bottom: 28px; }
+        .hero-logo { width: clamp(110px, 18vw, 160px); filter: drop-shadow(0 0 50px rgba(212,175,55,.55)); opacity: 0; position: relative; z-index: 2; }
+        .gring {
+            position: absolute; border-radius: 50%;
+            top: 50%; left: 50%; transform: translate(-50%,-50%);
+            border: 1px solid rgba(212,175,55,.14); opacity: 0;
+        }
+        .gring-1 { width: 190px; height: 190px; }
+        .gring-2 { width: 250px; height: 250px; border-color: rgba(212,175,55,.07); }
+        .gring-3 { width: 310px; height: 310px; border-color: rgba(139,0,0,.1); }
+        @media (max-width: 480px) {
+            .gring-1 { width: 150px; height: 150px; }
+            .gring-2 { width: 200px; height: 200px; }
+            .gring-3 { width: 250px; height: 250px; }
         }
 
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            max-width: 900px;
-            padding: 0 20px;
+        .hero-sub {
+            font-family: 'Cinzel', serif; font-size: .68rem; color: var(--gold);
+            letter-spacing: 10px; text-transform: uppercase; margin-bottom: 14px; opacity: 0;
         }
-
-        .hero-logo-main {
-            width: 280px;
-            height: auto;
-            margin: 0 auto 30px;
-            filter: drop-shadow(0 0 40px rgba(212, 175, 55, 0.4));
-            opacity: 0;
-        }
-
-        .hero-subtitle {
-            font-family: 'Cinzel', serif;
-            font-size: 1rem;
-            color: var(--gold);
-            letter-spacing: 8px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            opacity: 0;
-        }
-
         .hero-title {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(4rem, 12vw, 8rem);
-            line-height: 0.9;
-            letter-spacing: 4px;
-            background: linear-gradient(135deg, #fff 0%, var(--gold-light) 50%, var(--gold) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 20px;
-            opacity: 0;
+            font-size: clamp(5.5rem, 18vw, 11rem);
+            line-height: .82; letter-spacing: 8px;
+            background: linear-gradient(155deg, #fff 0%, var(--gold-lt) 35%, var(--gold) 65%, #9a6b10 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            margin-bottom: 18px;
+        }
+        .hero-title .ch { display: inline-block; opacity: 0; will-change: transform; }
+        .hero-tag {
+            font-size: clamp(.75rem, 2.2vw, .9rem); color: rgba(255,255,255,.38);
+            font-weight: 300; letter-spacing: 6px; text-transform: uppercase; opacity: 0;
         }
 
-        .hero-tagline {
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.6);
-            font-weight: 300;
-            letter-spacing: 3px;
-            opacity: 0;
+        .hero-div {
+            display: flex; align-items: center; justify-content: center;
+            gap: 16px; margin: 36px auto; opacity: 0; max-width: 260px;
         }
+        .hdl { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(212,175,55,.35)); }
+        .hdl:last-child { background: linear-gradient(to left, transparent, rgba(212,175,55,.35)); }
+        .hdd { width: 4px; height: 4px; background: var(--gold); border-radius: 50%; }
 
-        .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 60px;
-            margin-top: 50px;
-            opacity: 0;
-        }
+        .hero-stats { display: flex; justify-content: center; gap: clamp(24px, 8vw, 80px); opacity: 0; }
+        .s-num { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 6vw, 3rem); color: var(--gold); line-height: 1; }
+        .s-lbl { font-size: .6rem; color: rgba(255,255,255,.3); letter-spacing: 3px; text-transform: uppercase; margin-top: 5px; }
 
-        .stat-item {
-            text-align: center;
+        .scroll-ind {
+            position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+            display: flex; flex-direction: column; align-items: center; gap: 10px; opacity: 0;
         }
+        .scroll-ind span { font-size: .6rem; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,.25); }
+        .scroll-mouse {
+            width: 20px; height: 32px;
+            border: 1px solid rgba(212,175,55,.28); border-radius: 10px;
+            display: flex; justify-content: center; padding-top: 5px;
+        }
+        .scroll-dot { width: 2px; height: 5px; background: var(--gold); border-radius: 2px; animation: mdot 2s infinite ease-in-out; }
+        @keyframes mdot { 0%{transform:translateY(0);opacity:1} 100%{transform:translateY(12px);opacity:0} }
 
-        .stat-number {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 3rem;
-            color: var(--gold);
-            line-height: 1;
-        }
+        /* ── SECTIONS ── */
+        .section { padding: clamp(80px,12vw,140px) clamp(24px,7vw,80px); position: relative; }
 
-        .stat-label {
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.5);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-top: 5px;
-        }
+        .sec-hdr { text-align: center; margin-bottom: clamp(50px,8vw,90px); }
+        .sec-lbl { display: block; font-family: 'Cinzel', serif; font-size: .68rem; color: var(--gold); letter-spacing: 8px; text-transform: uppercase; margin-bottom: 14px; }
+        .sec-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.6rem, 7vw, 5rem); letter-spacing: 4px; line-height: 1; background: linear-gradient(135deg,#fff 0%,var(--gold-lt) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .sec-line { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 16px auto 0; }
 
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            opacity: 0;
-        }
+        /* ── ABOUT ── */
+        .about { background: var(--dark); overflow: hidden; }
+        .about::before { content: ''; position: absolute; top: -25%; right: -12%; width: 700px; height: 700px; background: radial-gradient(circle, rgba(139,0,0,.07) 0%, transparent 70%); pointer-events: none; }
 
-        .scroll-indicator span {
-            font-size: 0.7rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.4);
-        }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px,8vw,100px); max-width: 1200px; margin: 0 auto; align-items: center; }
+        @media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; gap: 50px; } }
 
-        .scroll-line {
-            width: 1px;
-            height: 60px;
-            background: linear-gradient(to bottom, var(--gold), transparent);
-            animation: scrollPulse 2s infinite;
-        }
+        .about-text { font-size: clamp(.92rem,2vw,1.08rem); line-height: 1.9; color: rgba(255,255,255,.58); }
+        .about-text p { margin-bottom: 20px; }
+        .hl { color: var(--gold); font-weight: 600; }
 
-        @keyframes scrollPulse {
-            0%, 100% { opacity: 0.3; height: 60px; }
-            50% { opacity: 1; height: 80px; }
+        .about-vis { position: relative; display: flex; justify-content: center; align-items: center; min-height: 300px; }
+        .about-logo { width: min(340px,90%); filter: drop-shadow(0 0 80px rgba(139,0,0,.22)); position: relative; z-index: 2; }
+        .aring {
+            position: absolute; border-radius: 50%; border: 1px solid rgba(212,175,55,.1);
         }
+        .aring-1 { width: 320px; height: 320px; animation: spin 22s linear infinite; }
+        .aring-2 { width: 420px; height: 420px; border-color: rgba(139,0,0,.1); animation: spin 35s linear infinite reverse; }
+        @media (max-width: 480px) {
+            .aring-1 { width: 230px; height: 230px; }
+            .aring-2 { width: 310px; height: 310px; }
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Section Styles */
-        .section {
-            padding: 120px 40px;
-            position: relative;
+        .mag-btn {
+            display: inline-flex; align-items: center;
+            padding: 13px 34px; background: transparent;
+            border: 1px solid rgba(212,175,55,.45); color: var(--gold);
+            font-family: 'Cinzel', serif; font-size: .72rem; letter-spacing: 3px; text-transform: uppercase;
+            cursor: none; position: relative; overflow: hidden;
+            transition: color .35s; margin-top: 26px; border-radius: 2px;
         }
+        .mag-btn::before {
+            content: ''; position: absolute; inset: 0; background: var(--gold);
+            transform: translateX(-101%); transition: transform .4s cubic-bezier(.4,0,.2,1);
+        }
+        .mag-btn span { position: relative; z-index: 1; }
+        .mag-btn:hover { color: var(--dark); }
+        .mag-btn:hover::before { transform: translateX(0); }
 
-        .section-header {
-            text-align: center;
-            margin-bottom: 80px;
-        }
-
-        .section-label {
-            font-family: 'Cinzel', serif;
-            font-size: 0.85rem;
-            color: var(--gold);
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-        }
-
-        .section-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            letter-spacing: 3px;
-            background: linear-gradient(135deg, #fff 0%, var(--gold-light) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .section-line {
-            width: 80px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-            margin: 20px auto 0;
-        }
-
-        /* About Section */
-        .about {
-            background: var(--dark);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .about::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(139, 0, 0, 0.1) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            max-width: 1200px;
-            margin: 0 auto;
-            align-items: center;
-        }
-
-        .about-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .about-text p {
-            margin-bottom: 20px;
-        }
-
-        .about-highlight {
-            color: var(--gold);
-            font-weight: 600;
-        }
-
-        .about-visual {
-            position: relative;
-            display: flex;
-            justify-content: center;
-        }
-
-        .about-logo-large {
-            width: 400px;
-            filter: drop-shadow(0 0 60px rgba(139, 0, 0, 0.3));
-            position: relative;
-            z-index: 2;
-        }
-
-        .about-glow {
-            position: absolute;
-            inset: -50px;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
-            z-index: 1;
-        }
-
-        /* Team Section */
-        .team {
-            background: var(--darker);
-            position: relative;
-        }
-
-        .team::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: 
-                radial-gradient(ellipse at 80% 20%, rgba(139, 0, 0, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 20% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
-            pointer-events: none;
-        }
+        /* ── TEAM ── */
+        .team { background: var(--darker); overflow: hidden; }
+        .team::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 20%, rgba(139,0,0,.07) 0%, transparent 50%); pointer-events: none; }
 
         .team-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
+            display: grid; grid-template-columns: repeat(3,1fr);
+            gap: 22px; max-width: 1200px; margin: 0 auto; position: relative; z-index: 2;
+        }
+        @media (max-width: 1024px) { .team-grid { grid-template-columns: repeat(2,1fr); } }
+        @media (max-width: 600px) {
+            .team-grid {
+                display: flex; overflow-x: auto; gap: 14px;
+                padding-bottom: 20px; scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch; scrollbar-width: none;
+                margin: 0 -24px; padding-left: 24px; padding-right: 24px;
+            }
+            .team-grid::-webkit-scrollbar { display: none; }
         }
 
         .player-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            overflow: hidden;
-            position: relative;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
+            background: rgba(18,10,10,.85);
+            border: 1px solid rgba(212,175,55,.1);
+            border-radius: 18px; overflow: hidden; position: relative;
+            cursor: none; flex-shrink: 0; will-change: transform;
+            transition: border-color .4s, box-shadow .4s;
         }
-
-        .player-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            pointer-events: none;
-        }
+        @media (max-width: 600px) { .player-card { width: 230px; scroll-snap-align: start; } }
 
         .player-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(212, 175, 55, 0.5);
-            box-shadow: 0 20px 60px rgba(139, 0, 0, 0.2), 0 0 40px rgba(212, 175, 55, 0.1);
+            border-color: rgba(212,175,55,.35);
+            box-shadow: 0 24px 80px rgba(139,0,0,.18), 0 0 60px rgba(212,175,55,.05);
         }
 
-        .player-card:hover::before {
-            opacity: 1;
+        /* gradient border shimmer on hover */
+        .player-card::after {
+            content: ''; position: absolute; inset: 0; border-radius: 18px;
+            background: linear-gradient(135deg, rgba(212,175,55,.4) 0%, rgba(139,0,0,.2) 50%, rgba(212,175,55,.1) 100%);
+            opacity: 0; transition: opacity .4s; pointer-events: none;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude; padding: 1px;
         }
+        .player-card:hover::after { opacity: 1; }
 
-        .player-image-wrapper {
-            position: relative;
-            height: 320px;
-            overflow: hidden;
-            background: linear-gradient(180deg, rgba(139, 0, 0, 0.2) 0%, var(--dark) 100%);
-        }
+        .pimg-wrap { position: relative; height: 270px; overflow: hidden; background: linear-gradient(180deg, rgba(60,0,0,.35) 0%, rgba(9,7,10,1) 100%); }
+        @media (max-width: 600px) { .pimg-wrap { height: 210px; } }
 
-        .player-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease;
-        }
+        .p-img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s cubic-bezier(.4,0,.2,1); }
+        .player-card:hover .p-img { transform: scale(1.08); }
 
-        .player-card:hover .player-image {
-            transform: scale(1.1);
-        }
+        .pimg-ph { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: linear-gradient(135deg, rgba(139,0,0,.18) 0%, rgba(25,10,10,.85) 100%); }
+        .ph-icon { width: 60px; height: 60px; border: 1px solid rgba(212,175,55,.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: rgba(212,175,55,.35); font-size: 1.4rem; }
+        .ph-txt { font-size: .65rem; color: rgba(255,255,255,.2); letter-spacing: 2px; text-transform: uppercase; }
 
-        .player-image-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, rgba(139, 0, 0, 0.3) 0%, rgba(74, 0, 0, 0.5) 100%);
-            gap: 15px;
-        }
+        .p-overlay { position: absolute; bottom: 0; left: 0; right: 0; height: 65%; background: linear-gradient(to top, rgba(9,7,10,1) 0%, transparent 100%); pointer-events: none; }
+        .p-num { position: absolute; top: 14px; right: 16px; font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: rgba(212,175,55,.16); line-height: 1; }
 
-        .placeholder-icon {
-            width: 80px;
-            height: 80px;
-            border: 2px dashed var(--gold-dark);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--gold-dark);
-            font-size: 2rem;
-        }
+        .p-info { padding: 18px 20px 20px; }
+        .p-role { font-size: .62rem; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 5px; font-weight: 600; }
+        .p-name { font-family: 'Cinzel', serif; font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+        .p-pos { font-size: .78rem; color: rgba(255,255,255,.38); margin-bottom: 13px; }
+        .p-stats { display: flex; gap: 14px; padding-top: 13px; border-top: 1px solid rgba(212,175,55,.07); }
+        .p-sv { font-family: 'Bebas Neue', sans-serif; font-size: 1.25rem; color: var(--gold); }
+        .p-sl { font-size: .58rem; color: rgba(255,255,255,.28); letter-spacing: 1px; text-transform: uppercase; }
 
-        .placeholder-text {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.4);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
+        .swipe-hint { display: none; text-align: center; margin-top: 14px; font-size: .62rem; color: rgba(255,255,255,.25); letter-spacing: 2px; text-transform: uppercase; }
+        @media (max-width: 600px) { .swipe-hint { display: block; } }
 
-        .player-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 50%;
-            background: linear-gradient(to top, var(--dark) 0%, transparent 100%);
-            pointer-events: none;
-        }
+        /* ── STATS ── */
+        .stats-sec { background: var(--darker); position: relative; overflow: hidden; }
+        .stats-sec::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(139,0,0,.1) 0%, transparent 65%); }
+        .stats-sec::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,175,55,.15), transparent); }
 
-        .player-number {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 3rem;
-            color: rgba(212, 175, 55, 0.3);
-            line-height: 1;
-        }
-
-        .player-info {
-            padding: 25px;
-            position: relative;
-        }
-
-        .player-role {
-            font-size: 0.7rem;
-            color: var(--gold);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .player-name {
-            font-family: 'Cinzel', serif;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 5px;
-        }
-
-        .player-position {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.5);
-            margin-bottom: 15px;
-        }
-
-        .player-stats-mini {
-            display: flex;
-            gap: 20px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(212, 175, 55, 0.1);
-        }
-
-        .player-stat {
-            text-align: center;
-        }
-
-        .player-stat-value {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.5rem;
-            color: var(--gold);
-        }
-
-        .player-stat-label {
-            font-size: 0.65rem;
-            color: rgba(255, 255, 255, 0.4);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        /* Stats Section */
-        .stats {
-            background: linear-gradient(180deg, var(--darker) 0%, var(--blood-red) 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 40px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
+        .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; max-width: 1000px; margin: 0 auto; position: relative; z-index: 2; }
+        @media (max-width: 768px) { .stats-grid { grid-template-columns: repeat(2,1fr); } }
 
         .stat-card {
-            text-align: center;
-            padding: 40px 20px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            border-radius: 12px;
-            position: relative;
-            overflow: hidden;
+            text-align: center; padding: clamp(26px,4vw,44px) clamp(14px,3vw,24px);
+            background: rgba(0,0,0,.45); border: 1px solid rgba(212,175,55,.1);
+            border-radius: 14px; position: relative; overflow: hidden; backdrop-filter: blur(10px);
         }
+        .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+        .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem,6vw,4.5rem); color: var(--gold); line-height: 1; margin-bottom: 10px; }
+        .stat-lbl { font-size: .68rem; color: rgba(255,255,255,.45); letter-spacing: 3px; text-transform: uppercase; }
 
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        /* ── FIXTURES ── */
+        .fixtures-sec { background: var(--dark); }
+
+        .fix-list { max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+        .fix-item {
+            display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px;
+            padding: clamp(18px,3.5vw,30px) clamp(18px,4vw,34px);
+            background: rgba(18,10,10,.6); border: 1px solid rgba(212,175,55,.08);
+            border-radius: 12px; backdrop-filter: blur(8px);
         }
+        @media (max-width: 500px) { .fix-item { grid-template-columns: 1fr; gap: 10px; text-align: center; } }
 
-        .stat-card-number {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 4rem;
-            color: var(--gold);
-            line-height: 1;
-            margin-bottom: 10px;
-        }
+        .fix-team-name { font-family: 'Cinzel', serif; font-size: clamp(.88rem,2.5vw,1.05rem); font-weight: 700; color: #fff; }
+        .fix-vs { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; color: var(--gold); white-space: nowrap; }
+        .fix-day { font-size: .78rem; color: var(--gold); letter-spacing: 2px; margin-top: 4px; }
+        .fix-time { font-size: .68rem; color: rgba(255,255,255,.35); margin-top: 2px; }
 
-        .stat-card-label {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.6);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-
-        /* Fixtures Section */
-        .fixtures {
-            background: var(--dark);
-            position: relative;
-        }
-
-        .fixtures-list {
-            max-width: 800px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .fixture-item {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            align-items: center;
-            gap: 30px;
-            padding: 30px;
-            background: rgba(139, 0, 0, 0.05);
-            border: 1px solid rgba(212, 175, 55, 0.1);
-            border-radius: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .fixture-item:hover {
-            background: rgba(139, 0, 0, 0.1);
-            border-color: rgba(212, 175, 55, 0.3);
-            transform: translateX(10px);
-        }
-
-        .fixture-team {
-            text-align: center;
-        }
-
-        .fixture-team-name {
-            font-family: 'Cinzel', serif;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .fixture-vs {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.5rem;
-            color: var(--gold);
-            position: relative;
-        }
-
-        .fixture-vs::before,
-        .fixture-vs::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 30px;
-            height: 1px;
-            background: var(--gold);
-        }
-
-        .fixture-vs::before { right: calc(100% + 10px); }
-        .fixture-vs::after { left: calc(100% + 10px); }
-
-        .fixture-date {
-            text-align: center;
-            margin-top: 5px;
-        }
-
-        .fixture-date-day {
-            font-size: 0.8rem;
-            color: var(--gold);
-            letter-spacing: 2px;
-        }
-
-        .fixture-date-time {
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        /* Footer */
+        /* ── FOOTER ── */
         .footer {
-            background: var(--darker);
-            padding: 60px 40px 30px;
-            border-top: 1px solid rgba(212, 175, 55, 0.1);
-            text-align: center;
+            background: var(--darker); padding: clamp(50px,8vw,80px) clamp(24px,6vw,60px) clamp(24px,4vw,36px);
+            border-top: 1px solid rgba(212,175,55,.07); text-align: center;
         }
+        .foot-logo { width: 90px; margin: 0 auto 22px; display: block; filter: drop-shadow(0 0 20px rgba(212,175,55,.18)); }
+        .foot-name { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--gold); letter-spacing: 6px; margin-bottom: 7px; }
+        .foot-sub { font-size: .7rem; color: rgba(255,255,255,.3); letter-spacing: 3px; text-transform: uppercase; }
+        .foot-contact { margin-top: 14px; font-size: .75rem; color: rgba(255,255,255,.38); letter-spacing: 1px; }
+        .foot-line { width: 46px; height: 1px; background: rgba(212,175,55,.25); margin: 26px auto; }
+        .foot-copy { font-size: .68rem; color: rgba(255,255,255,.18); letter-spacing: 1px; }
 
-        .footer-logo {
-            width: 120px;
-            margin: 0 auto 30px;
-            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.2));
-        }
-
-        .footer-text {
-            font-family: 'Cinzel', serif;
-            font-size: 1.2rem;
-            color: var(--gold);
-            letter-spacing: 4px;
-            margin-bottom: 10px;
-        }
-
-        .footer-sub {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.4);
-            letter-spacing: 2px;
-        }
-
-        .footer-line {
-            width: 60px;
-            height: 1px;
-            background: var(--gold-dark);
-            margin: 30px auto;
-        }
-
-        .footer-copy {
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.3);
-            letter-spacing: 1px;
-        }
-
-        .footer-contact {
-            margin-top: 14px;
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.45);
-            letter-spacing: 1px;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .team-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .about-grid {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            .team-grid {
-                grid-template-columns: 1fr;
-            }
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .fixture-item {
-                grid-template-columns: 1fr;
-                gap: 15px;
-                text-align: center;
-            }
-            .section {
-                padding: 80px 20px;
-            }
-            .hero-stats {
-                gap: 30px;
-            }
-        }
-
-        /* Magnetic Button Effect */
-        .magnetic-btn {
-            display: inline-block;
-            padding: 15px 40px;
-            background: transparent;
-            border: 2px solid var(--gold);
-            color: var(--gold);
-            font-family: 'Cinzel', serif;
-            font-size: 0.85rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            margin-top: 30px;
-        }
-
-        .magnetic-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: var(--gold);
-            transition: left 0.4s ease;
-            z-index: -1;
-        }
-
-        .magnetic-btn:hover {
-            color: var(--dark);
-        }
-
-        .magnetic-btn:hover::before {
-            left: 0;
-        }
-
-        /* Reveal Animation Classes */
-        .reveal {
-            opacity: 0;
-            transform: translateY(60px);
-        }
-
-        .reveal-left {
-            opacity: 0;
-            transform: translateX(-60px);
-        }
-
-        .reveal-right {
-            opacity: 0;
-            transform: translateX(60px);
-        }
-
-        .reveal-scale {
-            opacity: 0;
-            transform: scale(0.8);
-        }
+        /* ── REVEAL STATES ── */
+        .rv { opacity: 0; transform: translateY(45px); }
+        .rl { opacity: 0; transform: translateX(-45px); }
+        .rr { opacity: 0; transform: translateX(45px); }
+        .rs { opacity: 0; transform: scale(.85); }
+        .sec-line { opacity: 0; }
     </style>
 <base target="_blank">
 </head>
 <body>
 
-    <!-- Navigation -->
-    <nav class="nav" id="navbar">
-        <div class="nav-logo">
-            <img src="logo.png" alt="Kings XI Logo">
-            <span class="nav-logo-text">KINGS XI</span>
-        </div>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#team">Squad</a></li>
-            <li><a href="#stats">Records</a></li>
-            <li><a href="#fixtures">Fixtures</a></li>
-        </ul>
-    </nav>
+<div class="cur-dot" id="curDot"></div>
+<div class="cur-ring" id="curRing"></div>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-bg"></div>
-        <div class="hero-particles" id="particles"></div>
+<!-- NAV -->
+<nav class="nav" id="navbar">
+    <a class="nav-logo" href="#home">
+        <img src="logo.png" alt="Kings XI">
+        <span class="nav-logo-text">KINGS XI</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#team">Squad</a></li>
+        <li><a href="#stats">Records</a></li>
+        <li><a href="#fixtures">Fixtures</a></li>
+    </ul>
+    <div class="hamburger" id="burger">
+        <span></span><span></span><span></span>
+    </div>
+</nav>
 
-        <div class="hero-content">
-            <img src="logo.png" alt="Kings XI" class="hero-logo-main" id="heroLogo">
-            <p class="hero-subtitle" id="heroSubtitle">Est. 2024</p>
-            <h1 class="hero-title" id="heroTitle">KINGS XI</h1>
-            <p class="hero-tagline" id="heroTagline">Rule the Pitch. Own the Game.</p>
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mobMenu">
+    <div class="mob-sep"></div>
+    <a href="#home" class="mob-link">Home</a>
+    <a href="#about" class="mob-link">About</a>
+    <a href="#team" class="mob-link">Squad</a>
+    <a href="#stats" class="mob-link">Records</a>
+    <a href="#fixtures" class="mob-link">Fixtures</a>
+    <div class="mob-sep"></div>
+</div>
 
-            <div class="hero-stats" id="heroStats">
-                <div class="stat-item">
-                    <div class="stat-number">11</div>
-                    <div class="stat-label">Warriors</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label">Passion</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">1</div>
-                    <div class="stat-label">Dynasty</div>
-                </div>
-            </div>
-        </div>
+<!-- HERO -->
+<section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <canvas id="pCanvas"></canvas>
 
-        <div class="scroll-indicator" id="scrollInd">
-            <span>Scroll</span>
-            <div class="scroll-line"></div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="section about" id="about">
-        <div class="section-header reveal">
-            <p class="section-label">Our Legacy</p>
-            <h2 class="section-title">THE ROYAL STORY</h2>
-            <div class="section-line"></div>
+    <div class="hero-content">
+        <div class="logo-wrap">
+            <div class="gring gring-1"></div>
+            <div class="gring gring-2"></div>
+            <div class="gring gring-3"></div>
+            <img src="logo.png" alt="Kings XI" class="hero-logo" id="heroLogo">
         </div>
 
-        <div class="about-grid">
-            <div class="about-text reveal-left">
-                <p>Born from the fire of competition and the spirit of royalty, <span class="about-highlight">Kings XI</span> stands as a testament to excellence in cricket. Our team isn't just about playing a sport — it's about <span class="about-highlight">conquering</span> it.</p>
-                <p>With a squad of 11 elite warriors, each handpicked for their unique prowess, we bring a blend of <span class="about-highlight">power, precision, and passion</span> to every match. From explosive batting to lethal bowling, our kings dominate every aspect of the game.</p>
-                <p>The crown isn't given. It's taken. And we take it every single time we step onto the field.</p>
-                <button class="magnetic-btn">Meet The Squad</button>
-            </div>
-            <div class="about-visual reveal-right">
-                <div class="about-glow"></div>
-                <img src="logo.png" alt="Kings XI Emblem" class="about-logo-large">
-            </div>
-        </div>
-    </section>
+        <p class="hero-sub" id="heroSub">Est. 2024</p>
+        <h1 class="hero-title" id="heroTitle">KINGS XI</h1>
+        <p class="hero-tag" id="heroTag">Rule the Pitch. Own the Game.</p>
 
-    <!-- Team Section -->
-    <section class="section team" id="team">
-        <div class="section-header reveal">
-            <p class="section-label">The Royal Guard</p>
-            <h2 class="section-title">MEET THE KINGS</h2>
-            <div class="section-line"></div>
+        <div class="hero-div" id="heroDivider">
+            <div class="hdl"></div>
+            <div class="hdd"></div>
+            <div class="hdl"></div>
         </div>
 
-        <div class="team-grid">
-            <!-- Player 1 -->
-            <div class="player-card reveal">
-                <div class="player-image-wrapper">
-                    <div class="player-image-placeholder">
-                        <div class="placeholder-icon">+</div>
-                        <div class="placeholder-text">Add Photo</div>
-                    </div>
-                    <div class="player-overlay"></div>
-                    <div class="player-number">01</div>
-                </div>
-                <div class="player-info">
-                    <div class="player-role">Captain</div>
-                    <h3 class="player-name">Player Name</h3>
-                    <p class="player-position">Top Order Batsman</p>
-                    <div class="player-stats-mini">
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Matches</div>
-                        </div>
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Runs</div>
-                        </div>
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Average</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Player 2 -->
-            <div class="player-card reveal">
-                <div class="player-image-wrapper">
-                    <div class="player-image-placeholder">
-                        <div class="placeholder-icon">+</div>
-                        <div class="placeholder-text">Add Photo</div>
-                    </div>
-                    <div class="player-overlay"></div>
-                    <div class="player-number">02</div>
-                </div>
-                <div class="player-info">
-                    <div class="player-role">Vice Captain</div>
-                    <h3 class="player-name">Player Name</h3>
-                    <p class="player-position">All-Rounder</p>
-                    <div class="player-stats-mini">
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Matches</div>
-                        </div>
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Runs</div>
-                        </div>
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Wickets</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Player 3 -->
-            <div class="player-card reveal">
-                <div class="player-image-wrapper">
-                    <div class="player-image-placeholder">
-                        <div class="placeholder-icon">+</div>
-                        <div class="placeholder-text">Add Photo</div>
-                    </div>
-                    <div class="player-overlay"></div>
-                    <div class="player-number">03</div>
-                </div>
-                <div class="player-info">
-                    <div class="player-role">Batsman</div>
-                    <h3 class="player-name">Player Name</h3>
-                    <p class="player-position">Opening Batsman</p>
-                    <div class="player-stats-mini">
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Matches</div>
-                        </div>
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Runs</div>
-                        </div>
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Strike Rate</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Player 4 -->
-            <div class="player-card reveal">
-                <div class="player-image-wrapper">
-                    <div class="player-image-placeholder">
-                        <div class="placeholder-icon">+</div>
-                        <div class="placeholder-text">Add Photo</div>
-                    </div>
-                    <div class="player-overlay"></div>
-                    <div class="player-number">04</div>
-                </div>
-                <div class="player-info">
-                    <div class="player-role">Batsman</div>
-                    <h3 class="player-name">Player Name</h3>
-                    <p class="player-position">Middle Order</p>
-                    <div class="player-stats-mini">
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Matches</div>
-                        </div>
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Runs</div>
-                        </div>
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Average</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Player 5 -->
-            <div class="player-card reveal">
-                <div class="player-image-wrapper">
-                    <div class="player-image-placeholder">
-                        <div class="placeholder-icon">+</div>
-                        <div class="placeholder-text">Add Photo</div>
-                    </div>
-                    <div class="player-overlay"></div>
-                    <div class="player-number">05</div>
-                </div>
-                <div class="player-info">
-                    <div class="player-role">Wicket Keeper</div>
-                    <h3 class="player-name">Player Name</h3>
-                    <p class="player-position">Wicket Keeper Batsman</p>
-                    <div class="player-stats-mini">
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Matches</div>
-                        </div>
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Dismissals</div>
-                        </div>
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Runs</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Player 6 -->
-            <div class="player-card reveal">
-                <div class="player-image-wrapper">
-                    <div class="player-image-placeholder">
-                        <div class="placeholder-icon">+</div>
-                        <div class="placeholder-text">Add Photo</div>
-                    </div>
-                    <div class="player-overlay"></div>
-                    <div class="player-number">06</div>
-                </div>
-                <div class="player-info">
-                    <div class="player-role">All-Rounder</div>
-                    <h3 class="player-name">Player Name</h3>
-                    <p class="player-position">Batting All-Rounder</p>
-                    <div class="player-stats-mini">
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Matches</div>
-                        </div>
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Runs</div>
-                        </div>
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Wickets</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Player 7 -->
-            <div class="player-card reveal">
-                <div class="player-image-wrapper">
-                    <div class="player-image-placeholder">
-                        <div class="placeholder-icon">+</div>
-                        <div class="placeholder-text">Add Photo</div>
-                    </div>
-                    <div class="player-overlay"></div>
-                    <div class="player-number">07</div>
-                </div>
-                <div class="player-info">
-                    <div class="player-role">Bowler</div>
-                    <h3 class="player-name">Player Name</h3>
-                    <p class="player-position">Fast Bowler</p>
-                    <div class="player-stats-mini">
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Matches</div>
-                        </div>
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Wickets</div>
-                        </div>
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Economy</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Player 8 -->
-            <div class="player-card reveal">
-                <div class="player-image-wrapper">
-                    <div class="player-image-placeholder">
-                        <div class="placeholder-icon">+</div>
-                        <div class="placeholder-text">Add Photo</div>
-                    </div>
-                    <div class="player-overlay"></div>
-                    <div class="player-number">08</div>
-                </div>
-                <div class="player-info">
-                    <div class="player-role">Bowler</div>
-                    <h3 class="player-name">Player Name</h3>
-                    <p class="player-position">Spin Bowler</p>
-                    <div class="player-stats-mini">
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Matches</div>
-                        </div>
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Wickets</div>
-                        </div>
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Economy</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Player 9 -->
-            <div class="player-card reveal">
-                <div class="player-image-wrapper">
-                    <div class="player-image-placeholder">
-                        <div class="placeholder-icon">+</div>
-                        <div class="placeholder-text">Add Photo</div>
-                    </div>
-                    <div class="player-overlay"></div>
-                    <div class="player-number">09</div>
-                </div>
-                <div class="player-info">
-                    <div class="player-role">Bowler</div>
-                    <h3 class="player-name">Player Name</h3>
-                    <p class="player-position">Medium Pacer</p>
-                    <div class="player-stats-mini">
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Matches</div>
-                        </div>
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Wickets</div>
-                        </div>
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Economy</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Player 10 -->
-            <div class="player-card reveal">
-                <div class="player-image-wrapper">
-                    <div class="player-image-placeholder">
-                        <div class="placeholder-icon">+</div>
-                        <div class="placeholder-text">Add Photo</div>
-                    </div>
-                    <div class="player-overlay"></div>
-                    <div class="player-number">10</div>
-                </div>
-                <div class="player-info">
-                    <div class="player-role">All-Rounder</div>
-                    <h3 class="player-name">Player Name</h3>
-                    <p class="player-position">Bowling All-Rounder</p>
-                    <div class="player-stats-mini">
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Matches</div>
-                        </div>
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Wickets</div>
-                        </div>
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Runs</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Player 11 -->
-            <div class="player-card reveal">
-                <div class="player-image-wrapper">
-                    <div class="player-image-placeholder">
-                        <div class="placeholder-icon">+</div>
-                        <div class="placeholder-text">Add Photo</div>
-                    </div>
-                    <div class="player-overlay"></div>
-                    <div class="player-number">11</div>
-                </div>
-                <div class="player-info">
-                    <div class="player-role">Bowler</div>
-                    <h3 class="player-name">Player Name</h3>
-                    <p class="player-position">Fast Bowler</p>
-                    <div class="player-stats-mini">
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Matches</div>
-                        </div>
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Wickets</div>
-                        </div>
-                        <div class="player-stat">
-                            <div class="player-stat-value">--</div>
-                            <div class="player-stat-label">Economy</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="hero-stats" id="heroStats">
+            <div><div class="s-num">11</div><div class="s-lbl">Warriors</div></div>
+            <div><div class="s-num">100%</div><div class="s-lbl">Passion</div></div>
+            <div><div class="s-num">1</div><div class="s-lbl">Dynasty</div></div>
         </div>
-    </section>
+    </div>
 
-    <!-- Stats Section -->
-    <section class="section stats" id="stats">
-        <div class="section-header reveal">
-            <p class="section-label">By The Numbers</p>
-            <h2 class="section-title">ROYAL RECORDS</h2>
-            <div class="section-line"></div>
+    <div class="scroll-ind" id="scrollInd">
+        <span>Scroll</span>
+        <div class="scroll-mouse"><div class="scroll-dot"></div></div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section about" id="about">
+    <div class="sec-hdr">
+        <span class="sec-lbl rv">Our Legacy</span>
+        <h2 class="sec-title rv">THE ROYAL STORY</h2>
+        <div class="sec-line"></div>
+    </div>
+    <div class="about-grid">
+        <div class="about-text rl">
+            <p>Born from the fire of competition and the spirit of royalty, <span class="hl">Kings XI</span> stands as a testament to excellence in cricket. Our team isn't just about playing a sport — it's about <span class="hl">conquering</span> it.</p>
+            <p>With a squad of 11 elite warriors, each handpicked for their unique prowess, we bring a blend of <span class="hl">power, precision, and passion</span> to every match. From explosive batting to lethal bowling, our kings dominate every aspect of the game.</p>
+            <p>The crown isn't given. It's taken. And we take it every single time we step onto the field.</p>
+            <button class="mag-btn"><span>Meet The Squad</span></button>
         </div>
-
-        <div class="stats-grid">
-            <div class="stat-card reveal-scale">
-                <div class="stat-card-number" data-target="11">0</div>
-                <div class="stat-card-label">Kings</div>
-            </div>
-            <div class="stat-card reveal-scale">
-                <div class="stat-card-number" data-target="100">0</div>
-                <div class="stat-card-label">Matches Played</div>
-            </div>
-            <div class="stat-card reveal-scale">
-                <div class="stat-card-number" data-target="85">0</div>
-                <div class="stat-card-label">Win Rate %</div>
-            </div>
-            <div class="stat-card reveal-scale">
-                <div class="stat-card-number" data-target="12">0</div>
-                <div class="stat-card-label">Trophies</div>
-            </div>
+        <div class="about-vis rr">
+            <div class="aring aring-1"></div>
+            <div class="aring aring-2"></div>
+            <img src="logo.png" alt="Kings XI Emblem" class="about-logo">
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Fixtures Section -->
-    <section class="section fixtures" id="fixtures">
-        <div class="section-header reveal">
-            <p class="section-label">Upcoming Battles</p>
-            <h2 class="section-title">FIXTURES</h2>
-            <div class="section-line"></div>
+<!-- TEAM -->
+<section class="section team" id="team">
+    <div class="sec-hdr">
+        <span class="sec-lbl rv">The Royal Guard</span>
+        <h2 class="sec-title rv">MEET THE KINGS</h2>
+        <div class="sec-line"></div>
+    </div>
+
+    <div class="team-grid" id="teamGrid">
+
+        <div class="player-card"><div class="pimg-wrap"><div class="pimg-ph"><div class="ph-icon">+</div><div class="ph-txt">Add Photo</div></div><div class="p-overlay"></div><div class="p-num">01</div></div><div class="p-info"><div class="p-role">Captain</div><h3 class="p-name">Player Name</h3><p class="p-pos">Top Order Batsman</p><div class="p-stats"><div><div class="p-sv">--</div><div class="p-sl">Matches</div></div><div><div class="p-sv">--</div><div class="p-sl">Runs</div></div><div><div class="p-sv">--</div><div class="p-sl">Average</div></div></div></div></div>
+
+        <div class="player-card"><div class="pimg-wrap"><div class="pimg-ph"><div class="ph-icon">+</div><div class="ph-txt">Add Photo</div></div><div class="p-overlay"></div><div class="p-num">02</div></div><div class="p-info"><div class="p-role">Vice Captain</div><h3 class="p-name">Player Name</h3><p class="p-pos">All-Rounder</p><div class="p-stats"><div><div class="p-sv">--</div><div class="p-sl">Matches</div></div><div><div class="p-sv">--</div><div class="p-sl">Runs</div></div><div><div class="p-sv">--</div><div class="p-sl">Wickets</div></div></div></div></div>
+
+        <div class="player-card"><div class="pimg-wrap"><div class="pimg-ph"><div class="ph-icon">+</div><div class="ph-txt">Add Photo</div></div><div class="p-overlay"></div><div class="p-num">03</div></div><div class="p-info"><div class="p-role">Batsman</div><h3 class="p-name">Player Name</h3><p class="p-pos">Opening Batsman</p><div class="p-stats"><div><div class="p-sv">--</div><div class="p-sl">Matches</div></div><div><div class="p-sv">--</div><div class="p-sl">Runs</div></div><div><div class="p-sv">--</div><div class="p-sl">Strike Rate</div></div></div></div></div>
+
+        <div class="player-card"><div class="pimg-wrap"><div class="pimg-ph"><div class="ph-icon">+</div><div class="ph-txt">Add Photo</div></div><div class="p-overlay"></div><div class="p-num">04</div></div><div class="p-info"><div class="p-role">Batsman</div><h3 class="p-name">Player Name</h3><p class="p-pos">Middle Order</p><div class="p-stats"><div><div class="p-sv">--</div><div class="p-sl">Matches</div></div><div><div class="p-sv">--</div><div class="p-sl">Runs</div></div><div><div class="p-sv">--</div><div class="p-sl">Average</div></div></div></div></div>
+
+        <div class="player-card"><div class="pimg-wrap"><div class="pimg-ph"><div class="ph-icon">+</div><div class="ph-txt">Add Photo</div></div><div class="p-overlay"></div><div class="p-num">05</div></div><div class="p-info"><div class="p-role">Wicket Keeper</div><h3 class="p-name">Player Name</h3><p class="p-pos">Wicket Keeper Batsman</p><div class="p-stats"><div><div class="p-sv">--</div><div class="p-sl">Matches</div></div><div><div class="p-sv">--</div><div class="p-sl">Dismissals</div></div><div><div class="p-sv">--</div><div class="p-sl">Runs</div></div></div></div></div>
+
+        <div class="player-card"><div class="pimg-wrap"><div class="pimg-ph"><div class="ph-icon">+</div><div class="ph-txt">Add Photo</div></div><div class="p-overlay"></div><div class="p-num">06</div></div><div class="p-info"><div class="p-role">All-Rounder</div><h3 class="p-name">Player Name</h3><p class="p-pos">Batting All-Rounder</p><div class="p-stats"><div><div class="p-sv">--</div><div class="p-sl">Matches</div></div><div><div class="p-sv">--</div><div class="p-sl">Runs</div></div><div><div class="p-sv">--</div><div class="p-sl">Wickets</div></div></div></div></div>
+
+        <div class="player-card"><div class="pimg-wrap"><div class="pimg-ph"><div class="ph-icon">+</div><div class="ph-txt">Add Photo</div></div><div class="p-overlay"></div><div class="p-num">07</div></div><div class="p-info"><div class="p-role">Bowler</div><h3 class="p-name">Player Name</h3><p class="p-pos">Fast Bowler</p><div class="p-stats"><div><div class="p-sv">--</div><div class="p-sl">Matches</div></div><div><div class="p-sv">--</div><div class="p-sl">Wickets</div></div><div><div class="p-sv">--</div><div class="p-sl">Economy</div></div></div></div></div>
+
+        <div class="player-card"><div class="pimg-wrap"><div class="pimg-ph"><div class="ph-icon">+</div><div class="ph-txt">Add Photo</div></div><div class="p-overlay"></div><div class="p-num">08</div></div><div class="p-info"><div class="p-role">Bowler</div><h3 class="p-name">Player Name</h3><p class="p-pos">Spin Bowler</p><div class="p-stats"><div><div class="p-sv">--</div><div class="p-sl">Matches</div></div><div><div class="p-sv">--</div><div class="p-sl">Wickets</div></div><div><div class="p-sv">--</div><div class="p-sl">Economy</div></div></div></div></div>
+
+        <div class="player-card"><div class="pimg-wrap"><div class="pimg-ph"><div class="ph-icon">+</div><div class="ph-txt">Add Photo</div></div><div class="p-overlay"></div><div class="p-num">09</div></div><div class="p-info"><div class="p-role">Bowler</div><h3 class="p-name">Player Name</h3><p class="p-pos">Medium Pacer</p><div class="p-stats"><div><div class="p-sv">--</div><div class="p-sl">Matches</div></div><div><div class="p-sv">--</div><div class="p-sl">Wickets</div></div><div><div class="p-sv">--</div><div class="p-sl">Economy</div></div></div></div></div>
+
+        <div class="player-card"><div class="pimg-wrap"><div class="pimg-ph"><div class="ph-icon">+</div><div class="ph-txt">Add Photo</div></div><div class="p-overlay"></div><div class="p-num">10</div></div><div class="p-info"><div class="p-role">All-Rounder</div><h3 class="p-name">Player Name</h3><p class="p-pos">Bowling All-Rounder</p><div class="p-stats"><div><div class="p-sv">--</div><div class="p-sl">Matches</div></div><div><div class="p-sv">--</div><div class="p-sl">Wickets</div></div><div><div class="p-sv">--</div><div class="p-sl">Runs</div></div></div></div></div>
+
+        <div class="player-card"><div class="pimg-wrap"><div class="pimg-ph"><div class="ph-icon">+</div><div class="ph-txt">Add Photo</div></div><div class="p-overlay"></div><div class="p-num">11</div></div><div class="p-info"><div class="p-role">Bowler</div><h3 class="p-name">Player Name</h3><p class="p-pos">Fast Bowler</p><div class="p-stats"><div><div class="p-sv">--</div><div class="p-sl">Matches</div></div><div><div class="p-sv">--</div><div class="p-sl">Wickets</div></div><div><div class="p-sv">--</div><div class="p-sl">Economy</div></div></div></div></div>
+
+    </div>
+    <p class="swipe-hint">← Swipe to explore →</p>
+</section>
+
+<!-- STATS -->
+<section class="section stats-sec" id="stats">
+    <div class="sec-hdr">
+        <span class="sec-lbl rv">By The Numbers</span>
+        <h2 class="sec-title rv">ROYAL RECORDS</h2>
+        <div class="sec-line"></div>
+    </div>
+    <div class="stats-grid">
+        <div class="stat-card rs"><div class="stat-num" data-target="11">0</div><div class="stat-lbl">Kings</div></div>
+        <div class="stat-card rs"><div class="stat-num" data-target="100">0</div><div class="stat-lbl">Matches Played</div></div>
+        <div class="stat-card rs"><div class="stat-num" data-target="85">0</div><div class="stat-lbl">Win Rate %</div></div>
+        <div class="stat-card rs"><div class="stat-num" data-target="12">0</div><div class="stat-lbl">Trophies</div></div>
+    </div>
+</section>
+
+<!-- FIXTURES -->
+<section class="section fixtures-sec" id="fixtures">
+    <div class="sec-hdr">
+        <span class="sec-lbl rv">Upcoming Battles</span>
+        <h2 class="sec-title rv">FIXTURES</h2>
+        <div class="sec-line"></div>
+    </div>
+    <div class="fix-list">
+        <div class="fix-item">
+            <div><div class="fix-team-name">Kings XI</div></div>
+            <div class="fix-vs">VS</div>
+            <div><div class="fix-team-name">Opponent Team</div><div class="fix-day">TBD</div><div class="fix-time">Venue & Time</div></div>
         </div>
-
-        <div class="fixtures-list">
-            <div class="fixture-item reveal-left">
-                <div class="fixture-team">
-                    <div class="fixture-team-name">Kings XI</div>
-                </div>
-                <div class="fixture-vs">VS</div>
-                <div class="fixture-team">
-                    <div class="fixture-team-name">Opponent Team</div>
-                    <div class="fixture-date">
-                        <div class="fixture-date-day">TBD</div>
-                        <div class="fixture-date-time">Venue & Time</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="fixture-item reveal-left">
-                <div class="fixture-team">
-                    <div class="fixture-team-name">Kings XI</div>
-                </div>
-                <div class="fixture-vs">VS</div>
-                <div class="fixture-team">
-                    <div class="fixture-team-name">Opponent Team</div>
-                    <div class="fixture-date">
-                        <div class="fixture-date-day">TBD</div>
-                        <div class="fixture-date-time">Venue & Time</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="fixture-item reveal-left">
-                <div class="fixture-team">
-                    <div class="fixture-team-name">Kings XI</div>
-                </div>
-                <div class="fixture-vs">VS</div>
-                <div class="fixture-team">
-                    <div class="fixture-team-name">Opponent Team</div>
-                    <div class="fixture-date">
-                        <div class="fixture-date-day">TBD</div>
-                        <div class="fixture-date-time">Venue & Time</div>
-                    </div>
-                </div>
-            </div>
+        <div class="fix-item">
+            <div><div class="fix-team-name">Kings XI</div></div>
+            <div class="fix-vs">VS</div>
+            <div><div class="fix-team-name">Opponent Team</div><div class="fix-day">TBD</div><div class="fix-time">Venue & Time</div></div>
         </div>
-    </section>
+        <div class="fix-item">
+            <div><div class="fix-team-name">Kings XI</div></div>
+            <div class="fix-vs">VS</div>
+            <div><div class="fix-team-name">Opponent Team</div><div class="fix-day">TBD</div><div class="fix-time">Venue & Time</div></div>
+        </div>
+    </div>
+</section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <img src="logo.png" alt="Kings XI" class="footer-logo">
-        <div class="footer-text">KINGS XI</div>
-        <div class="footer-sub">Royal Cricket Dynasty</div>
-        <div class="footer-contact">Want to join the team? Contact us.</div>
-        <div class="footer-line"></div>
-        <div class="footer-copy">2024 Kings XI. All Rights Reserved. Crowned with Passion.</div>
-    </footer>
+<!-- FOOTER -->
+<footer class="footer">
+    <img src="logo.png" alt="Kings XI" class="foot-logo">
+    <div class="foot-name">KINGS XI</div>
+    <div class="foot-sub">Royal Cricket Dynasty</div>
+    <div class="foot-contact">Want to join the team? Contact us.</div>
+    <div class="foot-line"></div>
+    <div class="foot-copy">2024 Kings XI. All Rights Reserved. Crowned with Passion.</div>
+</footer>
 
-    <script>
-        // Initialize Lenis Smooth Scroll
-        const lenis = new Lenis({
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            direction: 'vertical',
-            gestureDirection: 'vertical',
-            smooth: true,
-            smoothTouch: false,
-            touchMultiplier: 2,
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* ── LENIS ── */
+const lenis = new Lenis({
+    duration: 1.4,
+    easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smooth: true, smoothTouch: false, touchMultiplier: 2,
+});
+(function tick(t){ lenis.raf(t); requestAnimationFrame(tick); })(0);
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add(t => lenis.raf(t * 1000));
+gsap.ticker.lagSmoothing(0);
+
+/* ── CURSOR ── */
+const dot = document.getElementById('curDot');
+const ring = document.getElementById('curRing');
+const isTouch = window.matchMedia('(pointer: coarse)').matches;
+if (!isTouch) {
+    document.addEventListener('mousemove', e => {
+        gsap.to(dot,  { x: e.clientX, y: e.clientY, duration: 0.08, overwrite: true });
+        gsap.to(ring, { x: e.clientX, y: e.clientY, duration: 0.38, overwrite: true });
+    });
+    document.querySelectorAll('a, button, .player-card, .fix-item').forEach(el => {
+        el.addEventListener('mouseenter', () => gsap.to(ring, { scale: 1.7, opacity: .7, duration: .3 }));
+        el.addEventListener('mouseleave', () => gsap.to(ring, { scale: 1, opacity: 1, duration: .3 }));
+    });
+}
+
+/* ── PARTICLE CANVAS ── */
+const canvas = document.getElementById('pCanvas');
+const ctx = canvas.getContext('2d');
+let W, H;
+function resizeC(){ W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
+resizeC(); window.addEventListener('resize', resizeC);
+
+class P {
+    reset(){
+        this.x = Math.random() * W;
+        this.y = H + 10;
+        this.vx = (Math.random() - .5) * .5;
+        this.vy = -(Math.random() * .7 + .25);
+        this.r = Math.random() * 1.8 + .5;
+        this.life = 0;
+        this.max = Math.random() * 180 + 80;
+        this.a = 0;
+        this.peak = Math.random() * .35 + .08;
+    }
+    constructor(){ this.reset(); this.y = Math.random() * H; this.life = Math.random() * this.max; }
+    tick(){
+        this.x += this.vx; this.y += this.vy; this.life++;
+        const t = this.life / this.max;
+        this.a = t < .15 ? (t/.15)*this.peak : t > .85 ? ((1-t)/.15)*this.peak : this.peak;
+        if(this.life >= this.max) this.reset();
+    }
+    draw(){
+        ctx.save(); ctx.globalAlpha = this.a;
+        ctx.fillStyle = '#D4AF37';
+        ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI*2); ctx.fill();
+        ctx.restore();
+    }
+}
+const COUNT = isTouch ? 18 : 45;
+const parts = Array.from({length: COUNT}, () => new P());
+(function animP(){ ctx.clearRect(0,0,W,H); parts.forEach(p=>{p.tick();p.draw();}); requestAnimationFrame(animP); })();
+
+/* ── HERO TITLE SPLIT ── */
+const titleEl = document.getElementById('heroTitle');
+const titleTxt = titleEl.textContent;
+titleEl.innerHTML = [...titleTxt].map(c =>
+    `<span class="ch">${c === ' ' ? '&nbsp;' : c}</span>`
+).join('');
+
+/* ── HERO ENTRANCE ── */
+const htl = gsap.timeline({ delay: .25 });
+htl
+    .to('.gring', { opacity: 1, duration: 1.6, stagger: .2, ease: 'power2.out' })
+    .to('#heroLogo', { opacity: 1, scale: 1, duration: 1.3, ease: 'power3.out', startAt: { scale: .65 } }, 0.4)
+    .to('.gring', { rotation: 360, duration: 25, ease: 'none', repeat: -1 }, 0)
+    .to('#heroSub', { opacity: 1, y: 0, duration: .9, ease: 'power3.out', startAt: { y: 18 } }, '-=.9')
+    .to('.hero-title .ch', { opacity: 1, y: 0, stagger: .055, duration: .65, ease: 'back.out(1.7)', startAt: { y: '110%' } }, '-=.55')
+    .to('#heroTag', { opacity: 1, y: 0, duration: .8, ease: 'power3.out', startAt: { y: 16 } }, '-=.35')
+    .to('#heroDivider', { opacity: 1, duration: .7, ease: 'power2.out' }, '-=.4')
+    .to('#heroStats', { opacity: 1, y: 0, duration: .8, ease: 'power3.out', startAt: { y: 18 } }, '-=.45')
+    .to('#scrollInd', { opacity: 1, duration: 1, ease: 'power2.out' }, '-=.3');
+
+/* hero parallax */
+gsap.to('#heroLogo', {
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1.8 },
+    y: 130, scale: .65, opacity: 0,
+});
+gsap.to('.hero-title', {
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 },
+    y: 90, opacity: 0,
+});
+
+/* ── NAVBAR ── */
+window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', scrollY > 80);
+}, { passive: true });
+
+/* ── SMOOTH ANCHOR SCROLL ── */
+let menuOpen = false;
+document.querySelectorAll('[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+        e.preventDefault();
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) lenis.scrollTo(t, { offset: -80, duration: 1.4 });
+        if (menuOpen) closeMenu();
+    });
+});
+
+/* ── MOBILE MENU ── */
+const burger = document.getElementById('burger');
+const mob = document.getElementById('mobMenu');
+const mobLinks = mob.querySelectorAll('.mob-link');
+const mobSeps = mob.querySelectorAll('.mob-sep');
+const bSpans = burger.querySelectorAll('span');
+
+const menuTl = gsap.timeline({ paused: true })
+    .to(mob, { clipPath: 'circle(150% at calc(100% - 36px) 32px)', duration: .7, ease: 'power3.inOut' })
+    .to(mobLinks, { opacity: 1, y: 0, stagger: .07, duration: .4, ease: 'power2.out' }, '-=.25')
+    .to(mobSeps, { opacity: .35, duration: .3, ease: 'power2.out' }, '<');
+
+function openMenu(){
+    menuOpen = true; menuTl.play();
+    gsap.to(bSpans[0], { y: 6.5, rotate: 45, duration: .3 });
+    gsap.to(bSpans[1], { opacity: 0, duration: .18 });
+    gsap.to(bSpans[2], { y: -6.5, rotate: -45, duration: .3 });
+}
+function closeMenu(){
+    menuOpen = false; menuTl.reverse();
+    gsap.to(bSpans[0], { y: 0, rotate: 0, duration: .3 });
+    gsap.to(bSpans[1], { opacity: 1, duration: .18 });
+    gsap.to(bSpans[2], { y: 0, rotate: 0, duration: .3 });
+}
+burger.addEventListener('click', () => menuOpen ? closeMenu() : openMenu());
+
+/* ── SCROLL REVEALS ── */
+const mm = gsap.matchMedia();
+mm.add('(prefers-reduced-motion: no-preference)', () => {
+
+    /* generic up */
+    gsap.utils.toArray('.rv').forEach((el, i) => {
+        gsap.to(el, {
+            scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none reverse' },
+            opacity: 1, y: 0, duration: .9, ease: 'power3.out', delay: (i % 3) * .08,
         });
+    });
 
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
+    /* left / right */
+    gsap.utils.toArray('.rl').forEach(el => {
+        gsap.to(el, {
+            scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' },
+            opacity: 1, x: 0, duration: 1.1, ease: 'power3.out',
+        });
+    });
+    gsap.utils.toArray('.rr').forEach(el => {
+        gsap.to(el, {
+            scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' },
+            opacity: 1, x: 0, duration: 1.1, ease: 'power3.out',
+        });
+    });
+
+    /* scale */
+    gsap.utils.toArray('.rs').forEach((el, i) => {
+        gsap.to(el, {
+            scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none reverse' },
+            opacity: 1, scale: 1, duration: .9, ease: 'back.out(1.5)', delay: i * .11,
+        });
+    });
+
+    /* section lines */
+    gsap.utils.toArray('.sec-line').forEach(el => {
+        gsap.fromTo(el,
+            { opacity: 0, scaleX: 0 },
+            { scrollTrigger: { trigger: el, start: 'top 90%' }, opacity: 1, scaleX: 1, duration: 1, ease: 'power2.out' }
+        );
+    });
+
+    /* player cards stagger */
+    gsap.utils.toArray('.player-card').forEach((card, i) => {
+        gsap.fromTo(card,
+            { opacity: 0, y: 55 },
+            {
+                scrollTrigger: { trigger: '#teamGrid', start: 'top 88%', toggleActions: 'play none none reverse' },
+                opacity: 1, y: 0, duration: .75, ease: 'power3.out', delay: (i % 3) * .09,
+            }
+        );
+    });
+
+    /* fixture items */
+    gsap.utils.toArray('.fix-item').forEach((item, i) => {
+        gsap.fromTo(item,
+            { opacity: 0, x: -38 },
+            {
+                scrollTrigger: { trigger: item, start: 'top 89%', toggleActions: 'play none none reverse' },
+                opacity: 1, x: 0, duration: .85, ease: 'power3.out', delay: i * .1,
+            }
+        );
+    });
+
+    /* about logo parallax */
+    gsap.to('.about-logo', {
+        scrollTrigger: { trigger: '.about', start: 'top bottom', end: 'bottom top', scrub: 1.5 },
+        y: -55,
+    });
+});
+
+/* ── COUNTER ANIMATION ── */
+gsap.utils.toArray('.stat-num').forEach(el => {
+    const target = +el.dataset.target;
+    ScrollTrigger.create({
+        trigger: el, start: 'top 86%', once: true,
+        onEnter(){
+            gsap.fromTo(el,
+                { innerText: 0 },
+                {
+                    innerText: target, duration: 2.4, ease: 'power2.out',
+                    snap: { innerText: 1 },
+                    onUpdate(){ el.innerText = Math.round(+el.innerText); },
+                }
+            );
         }
-        requestAnimationFrame(raf);
+    });
+});
 
-        // Connect Lenis to GSAP ScrollTrigger
-        lenis.on('scroll', ScrollTrigger.update);
-        gsap.ticker.add((time) => {
-            lenis.raf(time * 1000);
-        });
-        gsap.ticker.lagSmoothing(0);
-
-        // Register ScrollTrigger
-        gsap.registerPlugin(ScrollTrigger);
-
-        // Generate floating particles
-        const particlesContainer = document.getElementById('particles');
-        for (let i = 0; i < 30; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.top = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 15 + 's';
-            particle.style.animationDuration = (10 + Math.random() * 10) + 's';
-            particle.style.width = (2 + Math.random() * 4) + 'px';
-            particle.style.height = particle.style.width;
-            particlesContainer.appendChild(particle);
+/* ── TEXT SCRAMBLE on section titles ── */
+class Scramble {
+    constructor(el){ this.el = el; this.chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!?—*'; this.run = this.run.bind(this); }
+    go(txt){
+        const old = this.el.innerText, len = Math.max(old.length, txt.length);
+        this.q = Array.from({length:len}, (_,i)=>({
+            from: old[i]||'', to: txt[i]||'',
+            start: Math.floor(Math.random()*16),
+            end: Math.floor(Math.random()*16) + Math.floor(Math.random()*16) + 8,
+            char: '',
+        }));
+        cancelAnimationFrame(this.raf); this.frame = 0; this.run();
+    }
+    run(){
+        let out = '', done = 0;
+        for(let q of this.q){
+            if(this.frame >= q.end){ done++; out += q.to; }
+            else if(this.frame >= q.start){
+                if(!q.char || Math.random() < .28) q.char = this.chars[Math.floor(Math.random()*this.chars.length)];
+                out += `<span style="color:rgba(212,175,55,.55)">${q.char}</span>`;
+            } else { out += q.from; }
         }
+        this.el.innerHTML = out;
+        if(done < this.q.length){ this.raf = requestAnimationFrame(this.run); this.frame++; }
+    }
+}
+document.querySelectorAll('.sec-title').forEach(el => {
+    const orig = el.innerText, fx = new Scramble(el);
+    ScrollTrigger.create({ trigger: el, start: 'top 84%', once: true, onEnter(){ fx.go(orig); } });
+});
 
-        // Hero Entrance Animation
-        const heroTl = gsap.timeline({ delay: 0.3 });
-
-        heroTl
-            .to('#heroLogo', {
-                opacity: 1,
-                scale: 1,
-                duration: 1.2,
-                ease: 'power3.out',
-                startAt: { scale: 0.8 }
-            })
-            .to('#heroSubtitle', {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: 'power3.out'
-            }, '-=0.6')
-            .to('#heroTitle', {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                ease: 'power3.out',
-                startAt: { y: 50 }
-            }, '-=0.5')
-            .to('#heroTagline', {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: 'power3.out',
-                startAt: { y: 30 }
-            }, '-=0.6')
-            .to('#heroStats', {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: 'power3.out',
-                startAt: { y: 30 }
-            }, '-=0.4')
-            .to('#scrollInd', {
-                opacity: 1,
-                duration: 1,
-                ease: 'power2.out'
-            }, '-=0.3');
-
-        // Navbar scroll effect
-        const navbar = document.getElementById('navbar');
-        let lastScroll = 0;
-
-        window.addEventListener('scroll', () => {
-            const currentScroll = window.pageYOffset;
-            if (currentScroll > 100) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-            lastScroll = currentScroll;
-        }, { passive: true });
-
-        // Smooth scroll for nav links
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = document.querySelector(link.getAttribute('href'));
-                if (target) {
-                    lenis.scrollTo(target, { offset: -80 });
-                }
-            });
+/* ── PLAYER CARD 3D TILT (desktop) ── */
+if (!isTouch) {
+    document.querySelectorAll('.player-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const r = card.getBoundingClientRect();
+            const x = (e.clientX - r.left) / r.width - .5;
+            const y = (e.clientY - r.top)  / r.height - .5;
+            gsap.to(card, { rotateY: x*10, rotateX: -y*10, transformPerspective: 900, duration: .4, ease: 'power2.out', overwrite: 'auto' });
         });
-
-        // Magnetic button effect
-        document.querySelectorAll('.magnetic-btn').forEach(btn => {
-            btn.addEventListener('mousemove', (e) => {
-                const rect = btn.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
-            });
-            btn.addEventListener('mouseleave', () => {
-                btn.style.transform = 'translate(0, 0)';
-            });
+        card.addEventListener('mouseleave', () => {
+            gsap.to(card, { rotateY: 0, rotateX: 0, duration: .7, ease: 'power3.out', overwrite: 'auto' });
         });
+    });
+}
 
-        // Scroll Reveal Animations
-        gsap.utils.toArray('.reveal').forEach((elem, i) => {
-            gsap.to(elem, {
-                scrollTrigger: {
-                    trigger: elem,
-                    start: 'top 85%',
-                    toggleActions: 'play none none reverse',
-                },
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: 'power3.out',
-                delay: i % 3 * 0.1
-            });
+/* ── FIXTURE HOVER (GSAP, no CSS conflict) ── */
+document.querySelectorAll('.fix-item').forEach(item => {
+    item.addEventListener('mouseenter', () => gsap.to(item, { x: 8, borderColor: 'rgba(212,175,55,.28)', background: 'rgba(25,12,12,.75)', duration: .35, ease: 'power2.out', overwrite: 'auto' }));
+    item.addEventListener('mouseleave', () => gsap.to(item, { x: 0, borderColor: 'rgba(212,175,55,.08)', background: 'rgba(18,10,10,.6)', duration: .45, ease: 'power3.out', overwrite: 'auto' }));
+});
+
+/* ── MAGNETIC BUTTON ── */
+document.querySelectorAll('.mag-btn').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+        const r = btn.getBoundingClientRect();
+        gsap.to(btn, { x: (e.clientX - r.left - r.width/2) * .28, y: (e.clientY - r.top - r.height/2) * .28, duration: .4, ease: 'power2.out' });
+    });
+    btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, { x: 0, y: 0, duration: .7, ease: 'elastic.out(1,.45)' });
+    });
+});
+
+/* ── MAGNETIC NAV LINKS ── */
+if (!isTouch) {
+    document.querySelectorAll('.nav-links a').forEach(a => {
+        a.addEventListener('mousemove', e => {
+            const r = a.getBoundingClientRect();
+            gsap.to(a, { x: (e.clientX - r.left - r.width/2) * .14, y: (e.clientY - r.top - r.height/2) * .14, duration: .3 });
         });
-
-        gsap.utils.toArray('.reveal-left').forEach((elem) => {
-            gsap.to(elem, {
-                scrollTrigger: {
-                    trigger: elem,
-                    start: 'top 85%',
-                    toggleActions: 'play none none reverse',
-                },
-                opacity: 1,
-                x: 0,
-                duration: 1,
-                ease: 'power3.out'
-            });
-        });
-
-        gsap.utils.toArray('.reveal-right').forEach((elem) => {
-            gsap.to(elem, {
-                scrollTrigger: {
-                    trigger: elem,
-                    start: 'top 85%',
-                    toggleActions: 'play none none reverse',
-                },
-                opacity: 1,
-                x: 0,
-                duration: 1,
-                ease: 'power3.out'
-            });
-        });
-
-        gsap.utils.toArray('.reveal-scale').forEach((elem, i) => {
-            gsap.to(elem, {
-                scrollTrigger: {
-                    trigger: elem,
-                    start: 'top 85%',
-                    toggleActions: 'play none none reverse',
-                },
-                opacity: 1,
-                scale: 1,
-                duration: 0.8,
-                ease: 'back.out(1.7)',
-                delay: i * 0.15
-            });
-        });
-
-        // Counter Animation for Stats
-        gsap.utils.toArray('.stat-card-number').forEach(counter => {
-            const target = parseInt(counter.getAttribute('data-target'));
-
-            ScrollTrigger.create({
-                trigger: counter,
-                start: 'top 85%',
-                onEnter: () => {
-                    gsap.to(counter, {
-                        innerText: target,
-                        duration: 2,
-                        snap: { innerText: 1 },
-                        ease: 'power2.out',
-                        onUpdate: function() {
-                            counter.innerText = Math.round(this.targets()[0].innerText);
-                        }
-                    });
-                },
-                once: true
-            });
-        });
-
-        // Parallax effect on hero logo
-        gsap.to('#heroLogo', {
-            scrollTrigger: {
-                trigger: '.hero',
-                start: 'top top',
-                end: 'bottom top',
-                scrub: 1
-            },
-            y: 100,
-            scale: 0.8,
-            opacity: 0
-        });
-
-        // Parallax on about logo
-        gsap.to('.about-logo-large', {
-            scrollTrigger: {
-                trigger: '.about',
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: 1
-            },
-            y: -50,
-            rotation: 5
-        });
-
-        // Player card hover 3D tilt effect
-        document.querySelectorAll('.player-card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = (y - centerY) / 20;
-                const rotateY = (centerX - x) / 20;
-
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
-            });
-
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-            });
-        });
-
-        // Text scramble effect on section titles (optional enhancement)
-        class TextScramble {
-            constructor(el) {
-                this.el = el;
-                this.chars = '!<>-_\/[]{}—=+*^?#________';
-                this.update = this.update.bind(this);
-            }
-            setText(newText) {
-                const oldText = this.el.innerText;
-                const length = Math.max(oldText.length, newText.length);
-                const promise = new Promise((resolve) => this.resolve = resolve);
-                this.queue = [];
-                for (let i = 0; i < length; i++) {
-                    const from = oldText[i] || '';
-                    const to = newText[i] || '';
-                    const start = Math.floor(Math.random() * 40);
-                    const end = start + Math.floor(Math.random() * 40);
-                    this.queue.push({ from, to, start, end });
-                }
-                cancelAnimationFrame(this.frameRequest);
-                this.frame = 0;
-                this.update();
-                return promise;
-            }
-            update() {
-                let output = '';
-                let complete = 0;
-                for (let i = 0, n = this.queue.length; i < n; i++) {
-                    let { from, to, start, end, char } = this.queue[i];
-                    if (this.frame >= end) {
-                        complete++;
-                        output += to;
-                    } else if (this.frame >= start) {
-                        if (!char || Math.random() < 0.28) {
-                            char = this.randomChar();
-                            this.queue[i].char = char;
-                        }
-                        output += `<span style="color: var(--gold)">${char}</span>`;
-                    } else {
-                        output += from;
-                    }
-                }
-                this.el.innerHTML = output;
-                if (complete === this.queue.length) {
-                    this.resolve();
-                } else {
-                    this.frameRequest = requestAnimationFrame(this.update);
-                    this.frame++;
-                }
-            }
-            randomChar() {
-                return this.chars[Math.floor(Math.random() * this.chars.length)];
-            }
-        }
-
-        // Apply scramble on scroll trigger for section titles
-        document.querySelectorAll('.section-title').forEach(title => {
-            const originalText = title.innerText;
-            const fx = new TextScramble(title);
-
-            ScrollTrigger.create({
-                trigger: title,
-                start: 'top 80%',
-                onEnter: () => fx.setText(originalText),
-                once: true
-            });
-        });
-
-        // Magnetic nav links
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('mousemove', (e) => {
-                const rect = link.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                link.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
-            });
-            link.addEventListener('mouseleave', () => {
-                link.style.transform = 'translate(0, 0)';
-            });
-        });
-    </script>
+        a.addEventListener('mouseleave', () => gsap.to(a, { x: 0, y: 0, duration: .55, ease: 'elastic.out(1,.5)' }));
+    });
+}
+</script>
 </body>
 </html>
