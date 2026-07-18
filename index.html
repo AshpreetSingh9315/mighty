@@ -436,15 +436,17 @@
         @media (max-height: 680px) { .victory-number { font-size: clamp(6rem, 24vh, 10rem); } .victory-title, .victory-enter { margin-top: 14px; } .victory-score { margin-top: 14px; } .victory-credits { margin-top: 10px; } }
         @media (max-width: 520px) {
             .victory-content { width: calc(100% - 28px); }
-            .victory-kicker { font-size: .57rem; letter-spacing: .24em; white-space: nowrap; }
-            .victory-kicker::before, .victory-kicker::after { width: 20px; }
-            .victory-number { font-size: 6.4rem; letter-spacing: -.11em; }
-            .victory-number small { right: 3%; font-size: .48rem; }
-            .victory-title { font-size: 1.42rem; line-height: .96; letter-spacing: -.055em; }
+            .victory-kicker { justify-content: center; max-width: 100%; font-size: .52rem; letter-spacing: .14em; white-space: normal; line-height: 1.45; }
+            .victory-kicker::before, .victory-kicker::after { width: 16px; }
+            .victory-number { font-size: clamp(5.7rem, 27vw, 7.2rem); letter-spacing: -.1em; }
+            .victory-number small { right: 0; bottom: -.15em; font-size: .43rem; letter-spacing: .2em; }
+            .victory-title { font-size: clamp(1.5rem, 8vw, 2.05rem); line-height: .98; letter-spacing: -.035em; }
             .victory-title span { display: block; }
+            .victory-score { grid-template-columns: 1fr; gap: 0; width: min(320px, 100%); }
             .victory-team { padding: 12px 3px; }
             .victory-team strong { font-size: 1.45rem; }
             .victory-team span { font-size: .43rem; letter-spacing: .06em; white-space: nowrap; }
+            .victory-vs { padding: 2px 0 4px; }
             .victory-credits { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; font-size: .62rem; }
         }
         @media (prefers-reduced-motion: reduce) { .victory-intro::before { animation: none; } }
@@ -1335,7 +1337,7 @@
             transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
         }
         .next-match-card::after {
-            content: '22';
+            content: '4-0';
             position: absolute;
             top: 38px;
             left: 50%;
@@ -1423,7 +1425,7 @@
             box-shadow: 0 0 28px rgba(248,198,90,0.07);
         }
         .match-details {
-            grid-template-columns: 0.8fr 1.2fr;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 0;
             margin: 30px 0 0;
             padding: 0;
@@ -1470,6 +1472,90 @@
             font-family: 'Space Grotesk', sans-serif;
             font-size: 0.72rem;
             line-height: 1.25;
+        }
+        .shine-crest {
+            display: grid;
+            place-items: center;
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 10px;
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 32% 24%, rgba(255,255,255,0.22), transparent 26%),
+                linear-gradient(145deg, rgba(86,14,24,0.94), rgba(10,5,7,0.98));
+            box-shadow: 0 12px 22px rgba(0,0,0,0.35), inset 0 0 0 5px rgba(248,198,90,0.08);
+            color: #fff;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .tournament-entry {
+            position: relative;
+            overflow: hidden;
+            padding: 20px;
+            border: 1px solid rgba(248,198,90,0.16);
+            border-radius: 18px;
+            background:
+                linear-gradient(145deg, rgba(179,18,45,0.13), rgba(248,198,90,0.065)),
+                rgba(255,255,255,0.025);
+        }
+        .tournament-entry::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(248,198,90,0.09), transparent 26%, transparent 74%, rgba(179,18,45,0.09));
+            pointer-events: none;
+        }
+        .tournament-copy {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .tournament-copy small {
+            color: var(--gold);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.62rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .tournament-copy h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.55rem, 6vw, 2.35rem);
+            line-height: 0.98;
+            text-transform: uppercase;
+        }
+        .tournament-copy h3 span { color: var(--gold); }
+        .tournament-copy p {
+            max-width: 620px;
+            color: rgba(255,255,255,0.64);
+            font-size: 0.86rem;
+            line-height: 1.65;
+        }
+        .tournament-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 4px;
+        }
+        .tournament-badges span {
+            display: inline-flex;
+            align-items: center;
+            min-height: 32px;
+            padding: 0 11px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 999px;
+            background: rgba(0,0,0,0.28);
+            color: rgba(255,255,255,0.76);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
         }
         @media (hover: hover) {
             .next-match-card:hover {
@@ -1607,6 +1693,27 @@
                 border-bottom: 1px solid rgba(255,255,255,0.08);
             }
             .match-info:last-child { border-bottom: 0; }
+            .match-kicker {
+                display: grid;
+                justify-items: center;
+                text-align: center;
+                gap: 7px;
+            }
+            .match-kicker strong { text-align: center; }
+            .mega-match-title {
+                max-width: 320px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .match-teams {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+            .match-versus {
+                width: 38px;
+                height: 38px;
+                margin: 0 auto;
+            }
             .match-logo-shell {
                 width: 82px;
                 height: 82px;
@@ -1615,6 +1722,42 @@
             .match-team img {
                 width: 61px;
                 height: 61px;
+            }
+            .shine-crest {
+                width: 82px;
+                height: 82px;
+                margin-bottom: 12px;
+            }
+            .fixture-image-link img {
+                max-height: none;
+                aspect-ratio: 4 / 5;
+                object-fit: cover;
+            }
+            .fixture-image-link span {
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+                min-height: 38px;
+                font-size: 0.62rem;
+                letter-spacing: 1px;
+            }
+            .tournament-entry {
+                padding: 16px;
+                border-radius: 16px;
+            }
+            .tournament-copy {
+                text-align: center;
+            }
+            .tournament-copy p {
+                font-size: 0.8rem;
+            }
+            .tournament-badges {
+                justify-content: center;
+            }
+            .tournament-badges span {
+                min-height: 30px;
+                padding: 0 9px;
+                font-size: 0.6rem;
             }
         }
         .match-action {
@@ -2158,24 +2301,24 @@
 </head>
 <body>
 
-    <!-- The MCT win - cinematic opening -->
-    <div class="victory-intro" id="victoryIntro" role="dialog" aria-label="Mighty XI MCT victory celebration">
+    <!-- The Shine 11 win - cinematic opening -->
+    <div class="victory-intro" id="victoryIntro" role="dialog" aria-label="Mighty XI Shine 11 victory celebration">
         <div class="fireworks-layer" id="fireworksLayer"></div>
         <div class="victory-flash" id="victoryFlash"></div>
         <div class="victory-beam"></div>
         <div class="victory-content">
-            <div class="victory-kicker">Today Mighty hunted down MCT</div>
-            <div class="victory-number">3<small>WIN STREAK</small></div>
-            <h1 class="victory-title">Untouchable at <span>Baprola.</span></h1>
-            <div class="victory-score" aria-label="Mighty XI defeated MCT by 5 wickets">
-                <div class="victory-team"><strong>Mighty</strong><span>159/5 in 18.2</span></div>
+            <div class="victory-kicker">Fourth win sealed. Tournament mode on.</div>
+            <div class="victory-number">4<small>WIN STREAK</small></div>
+            <h1 class="victory-title">Undefeated at <span>Baprola.</span></h1>
+            <div class="victory-score" aria-label="Mighty XI defeated Shine 11 by 29 runs">
+                <div class="victory-team"><strong>Mighty</strong><span>176/8 in 20.0</span></div>
                 <div class="victory-vs">DEF.</div>
-                <div class="victory-team"><strong>MCT</strong><span>158/9 in 20.0</span></div>
+                <div class="victory-team"><strong>Shine 11</strong><span>147/9 in 20.0</span></div>
             </div>
             <div class="victory-credits">
-                <span><b>5 wickets</b> in hand</span><span><b>Mohit</b> player of match</span><span><b>3</b> straight wins</span><span><b>Baprola</b> belongs to Mighty</span>
+                <span><b>29 runs</b> victory</span><span><b>Ashpreet</b> player of match</span><span><b>4-0</b> undefeated</span><span><b>Captain Ash</b> leading from front</span>
             </div>
-            <button class="victory-enter" id="victoryEnter" type="button">Enter the Mighty era</button>
+            <button class="victory-enter" id="victoryEnter" type="button">Enter the tournament run</button>
         </div>
         <div class="victory-progress"></div>
     </div>
@@ -2209,16 +2352,16 @@
         <div class="hero-ring hero-ring-xl"></div>
 
         <div class="hero-content">
-            <p class="hero-win-label" id="heroWinLabel">3-win streak - Mighty vs MCT</p>
+            <p class="hero-win-label" id="heroWinLabel">4-0 undefeated - entering Dominate Cup '25</p>
             <div class="hero-logo-lockup">
                 <span class="hero-year">2</span>
                 <img src="m1.png" alt="Mighty XI" class="hero-logo" id="heroLogo">
                 <span class="hero-year">6</span>
             </div>
             <h1 class="hero-title" id="heroTitle"><span>Mighty</span> XI</h1>
-            <p class="hero-result" id="heroResult">Won by <span>5 wickets</span></p>
-            <p class="hero-tag" id="heroTag">159/5 in 18.2 - chase finished with control</p>
-            <p class="hero-motto" id="heroMotto">#Untouchable</p>
+            <p class="hero-result" id="heroResult">Won by <span>29 runs</span></p>
+            <p class="hero-tag" id="heroTag">176/8 vs 147/9 - Baprola stays ours</p>
+            <p class="hero-motto" id="heroMotto">#UndefeatedCaptaincy</p>
             <!-- <a href="#squad" class="hero-cta" id="heroCta">
                 Meet The Squad
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2236,24 +2379,24 @@
     <!-- Marquee -->
     <div class="marquee">
         <div class="marquee-track">
-            <span class="marquee-item">Mighty Beat MCT</span>
-            <span class="marquee-item">3 Winning Streak</span>
-            <span class="marquee-item">Won By 5 Wickets</span>
-            <span class="marquee-item">Untouchable In Baprola</span>
-            <span class="marquee-item">Mohit Player Of Match</span>
-            <span class="marquee-item">Mighty Beat MCT</span>
-            <span class="marquee-item">3 Winning Streak</span>
-            <span class="marquee-item">Won By 5 Wickets</span>
-            <span class="marquee-item">Untouchable In Baprola</span>
-            <span class="marquee-item">Mohit Player Of Match</span>
+            <span class="marquee-item">Mighty Beat Shine 11</span>
+            <span class="marquee-item">4 Match Winning Streak</span>
+            <span class="marquee-item">Won By 29 Runs</span>
+            <span class="marquee-item">Undefeated In Baprola</span>
+            <span class="marquee-item">Ashpreet Player Of Match</span>
+            <span class="marquee-item">Mighty Beat Shine 11</span>
+            <span class="marquee-item">4 Match Winning Streak</span>
+            <span class="marquee-item">Won By 29 Runs</span>
+            <span class="marquee-item">Undefeated In Baprola</span>
+            <span class="marquee-item">Captain Ash Leads</span>
         </div>
     </div>
 
     <!-- Fixtures -->
     <section class="section fixtures" id="fixtures">
         <div class="section-head reveal">
-            <p class="section-label">Latest Win - Mighty vs MCT</p>
-            <h2 class="section-title">The Third <span>Roar</span></h2>
+            <p class="section-label">Latest Win - Mighty vs Shine 11</p>
+            <h2 class="section-title">The Fourth <span>Roar</span></h2>
             <div class="section-line"></div>
         </div>
 
@@ -2261,36 +2404,53 @@
             <div class="next-match-card reveal upcoming-card">
                 <div class="match-kicker">
                     <span>Match won - Mighty XI</span>
-                    <strong>Won by 5 wickets</strong>
+                    <strong>Won by 29 runs</strong>
                 </div>
-                <h3 class="mega-match-title">MCT Tested Us. <span>Mighty Finished It.</span></h3>
+                <h3 class="mega-match-title">Shine 11 Challenged. <span>Mighty Stayed Unbeaten.</span></h3>
                 <div class="match-teams">
                     <div class="match-team kings-side">
                         <div class="match-logo-shell"><img src="m1.png" alt="Mighty XI"></div>
                         <span class="match-team-name">Mighty XI</span>
-                        <span class="match-team-label">159/5 - 18.2 ov</span>
+                        <span class="match-team-label">176/8 - 20.0 ov</span>
                     </div>
                     <div class="match-versus">VS</div>
                     <div class="match-team">
-                        <div class="mct-crest" aria-label="MCT crest">MCT</div>
-                        <span class="match-team-name">MCT</span>
-                        <span class="match-team-label">158/9 - 20.0 ov</span>
+                        <div class="shine-crest" aria-label="Shine 11 crest">S11</div>
+                        <span class="match-team-name">Shine 11</span>
+                        <span class="match-team-label">147/9 - 20.0 ov</span>
                     </div>
                 </div>
                 <div class="match-details">
                     <div class="match-info">
                         <span class="match-info-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v14H4V6a1 1 0 0 1 1-1Z"/></svg></span>
-                        <div><small>Winning margin</small><strong>5 wickets</strong></div>
+                        <div><small>Winning margin</small><strong>29 runs</strong></div>
                     </div>
                     <div class="match-info">
                         <span class="match-info-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-                        <div><small>Ground mood</small><strong>Untouchable in Baprola</strong></div>
+                        <div><small>Ground mood</small><strong>Undefeated in Baprola</strong></div>
                     </div>
                     <div class="match-info">
                         <span class="match-info-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0V4Z"/><path d="M5 5H3v2a4 4 0 0 0 4 4M19 5h2v2a4 4 0 0 1-4 4"/></svg></span>
-                        <div><small>Player of match</small><strong>Mohit</strong></div>
+                        <div><small>Player of match</small><strong>Ashpreet</strong></div>
                     </div>
                 </div>
+            </div>
+            <div class="tournament-entry reveal">
+                <div class="tournament-copy">
+                    <small>Now entering Dominate Cup '25</small>
+                    <h3>Four wins behind us. <span>One trophy ahead.</span></h3>
+                    <p>Mighty XI walks into the tournament unbeaten under captain Ashpreet, carrying Baprola confidence, batting control, and the calm bite of a team that already knows how to finish.</p>
+                    <div class="tournament-badges" aria-label="Mighty XI tournament status">
+                        <span>4 Played</span>
+                        <span>4 Wins</span>
+                        <span>Captain Ash</span>
+                        <span>Zero Defeats</span>
+                    </div>
+                </div>
+                <a href="latest.png" class="fixture-image-link" aria-label="Open Dominate Cup fixture poster">
+                    <img src="latest.png" alt="Dominate Cup 2025 fixture schedule and team poster">
+                    <span>Dominate Cup fixture poster</span>
+                </a>
             </div>
         </div>
     </section>
@@ -2303,8 +2463,8 @@
             <div class="section-line"></div>
         </div>
         <div class="about-text reveal">
-            <p>Constructed in <strong>2026</strong>, Mighty XI isn't just a cricket team. It's a <strong>movement</strong>. Three wins deep, the roar is getting louder.</p>
-            <p>From explosive openers to death-over specialists, every player brings <strong>fire</strong>. In Baprola, we don't chase moments. We <strong>own</strong> them.</p>
+            <p>Constructed in <strong>2026</strong>, Mighty XI isn't just a cricket team. It's a <strong>movement</strong>. Four wins deep, the roar is entering tournament territory.</p>
+            <p>Led by captain <strong>Ashpreet</strong>, this unbeaten Baprola run now turns into a Dominate Cup statement. We don't chase moments. We <strong>own</strong> them.</p>
         </div>
         <div class="about-img">
             <img src="m1.png" alt="Mighty XI Emblem">
@@ -2543,11 +2703,11 @@
         </div>
         <div class="stats-grid">
             <div class="stat-box reveal-scale">
-                <div class="stat-box-num" data-target="3">0</div>
+                <div class="stat-box-num" data-target="4">0</div>
                 <div class="stat-box-label">Played</div>
             </div>
             <div class="stat-box reveal-scale">
-                <div class="stat-box-num" data-target="3">0</div>
+                <div class="stat-box-num" data-target="4">0</div>
                 <div class="stat-box-label">Wins</div>
             </div>
             <div class="stat-box reveal-scale">
@@ -2555,7 +2715,7 @@
                 <div class="stat-box-label">Win %</div>
             </div>
             <div class="stat-box reveal-scale">
-                <div class="stat-box-num" data-target="3">0</div>
+                <div class="stat-box-num" data-target="4">0</div>
                 <div class="stat-box-label">Win Streak</div>
                 <div class="stat-box-note">Baprola locked</div>
             </div>
