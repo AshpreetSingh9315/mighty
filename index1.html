@@ -2,849 +2,1282 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kings XI - Royal Cricket Dynasty</title>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dominate Cup '25</title>
+    <script src="node_modules/gsap/dist/gsap.min.js"></script>
+    <script src="node_modules/gsap/dist/ScrollTrigger.min.js"></script>
+    <script src="node_modules/lenis/dist/lenis.min.js"></script>
+    <script src="node_modules/three/build/three.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="icon" href="m1.png">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <style>
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
 
         :root {
-            --crimson: #8B0000;
-            --blood: #4A0000;
-            --gold: #D4AF37;
-            --gold-lt: #F4D03F;
-            --gold-dk: #B8860B;
-            --dark: #09070a;
-            --darker: #050305;
+            --ink: #050405;
+            --panel: rgba(10, 9, 8, 0.78);
+            --panel-strong: rgba(15, 14, 12, 0.92);
+            --gold: #f3b32a;
+            --gold-hot: #ffd978;
+            --line: rgba(243, 179, 42, 0.38);
+            --muted: #cfc4b2;
+            --mighty: #f0ad18;
+            --alpha: #1687d9;
+            --mct: #49be36;
+            --kangaroo: #e86f1d;
         }
 
-        html { scroll-behavior: auto; }
+        html {
+            overflow-x: hidden;
+            scroll-behavior: auto;
+        }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--darker);
-            color: #fff;
+            min-height: 100vh;
             overflow-x: hidden;
-            cursor: none;
+            color: #fff;
+            font-family: "Inter", sans-serif;
+            background:
+                linear-gradient(120deg, rgba(0, 0, 0, 0.52), rgba(0, 0, 0, 0.9)),
+                url("latest.png") center top / min(1250px, 160vw) auto no-repeat,
+                radial-gradient(ellipse at center top, rgba(135, 77, 9, 0.38), transparent 620px),
+                var(--ink);
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* grain */
-        body::after {
-            content: '';
+        body::before {
+            content: "";
             position: fixed;
             inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
             pointer-events: none;
-            z-index: 9998;
-            opacity: 0.5;
-        }
-
-        ::-webkit-scrollbar { width: 3px; }
-        ::-webkit-scrollbar-track { background: var(--darker); }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(var(--gold-dk), var(--gold)); }
-
-        /* ── CURSOR ── */
-        .cur-dot, .cur-ring {
-            position: fixed;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-        }
-        .cur-dot { width: 6px; height: 6px; background: var(--gold); }
-        .cur-ring { width: 36px; height: 36px; border: 1px solid rgba(212,175,55,.4); }
-
-        @media (pointer: coarse) { .cur-dot, .cur-ring { display: none; } body { cursor: default; } }
-
-        /* ── NAV ── */
-        .nav {
-            position: fixed; top: 0; left: 0; width: 100%;
-            z-index: 1000; padding: 22px 56px;
-            display: flex; justify-content: space-between; align-items: center;
-            transition: padding .45s ease, background .45s ease, border .45s ease;
-        }
-        .nav.scrolled {
-            background: rgba(5,3,5,.88);
-            backdrop-filter: blur(24px);
-            padding: 14px 56px;
-            border-bottom: 1px solid rgba(212,175,55,.07);
-        }
-        .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .nav-logo img { height: 42px; filter: drop-shadow(0 0 18px rgba(212,175,55,.35)); }
-        .nav-logo-text { font-family: 'Cinzel', serif; font-weight: 900; font-size: .95rem; color: var(--gold); letter-spacing: 4px; }
-
-        .nav-links { display: flex; gap: 44px; list-style: none; }
-        .nav-links a {
-            text-decoration: none; color: rgba(255,255,255,.5);
-            font-size: .72rem; font-weight: 500; letter-spacing: 2.5px; text-transform: uppercase;
-            transition: color .3s; position: relative;
-        }
-        .nav-links a::after {
-            content: ''; position: absolute; bottom: -4px; left: 0;
-            width: 0; height: 1px; background: var(--gold);
-            transition: width .4s cubic-bezier(.4,0,.2,1);
-        }
-        .nav-links a:hover { color: var(--gold); }
-        .nav-links a:hover::after { width: 100%; }
-
-        /* hamburger */
-        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; z-index: 1002; }
-        .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--gold); transform-origin: center; }
-
-        @media (max-width: 768px) {
-            .nav { padding: 18px 24px; }
-            .nav.scrolled { padding: 14px 24px; }
-            .nav-links { display: none !important; }
-            .hamburger { display: flex; }
-        }
-
-        /* mobile overlay */
-        .mob-menu {
-            position: fixed; inset: 0;
-            background: rgba(5,3,5,.97); backdrop-filter: blur(20px);
-            z-index: 1001;
-            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
-            clip-path: circle(0% at calc(100% - 36px) 32px);
-        }
-        .mob-link {
-            font-family: 'Cinzel', serif; font-size: clamp(1.6rem, 7vw, 2.4rem);
-            font-weight: 700; color: rgba(255,255,255,.12);
-            text-decoration: none; letter-spacing: 6px; text-transform: uppercase;
-            opacity: 0; transform: translateY(20px);
-            transition: color .3s;
-        }
-        .mob-link:hover { color: var(--gold); }
-        .mob-sep { width: 50px; height: 1px; background: rgba(212,175,55,.25); opacity: 0; margin: 12px 0; }
-
-        /* ── HERO ── */
-        .hero {
-            height: 100svh; min-height: 580px;
-            position: relative; display: flex; align-items: center; justify-content: center;
-            overflow: hidden; background: var(--darker);
-        }
-        .hero-bg {
-            position: absolute; inset: 0;
+            z-index: 0;
             background:
-                radial-gradient(ellipse 80% 60% at 50% 65%, rgba(139,0,0,.16) 0%, transparent 68%),
-                radial-gradient(ellipse at 10% 90%, rgba(212,175,55,.05) 0%, transparent 40%);
-        }
-        #pCanvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-
-        .hero-content { position: relative; z-index: 2; text-align: center; padding: 0 24px; width: 100%; }
-
-        .logo-wrap { position: relative; display: inline-block; margin-bottom: 28px; }
-        .hero-logo { width: clamp(110px, 18vw, 160px); filter: drop-shadow(0 0 50px rgba(212,175,55,.55)); opacity: 0; position: relative; z-index: 2; }
-        .gring {
-            position: absolute; border-radius: 50%;
-            top: 50%; left: 50%; transform: translate(-50%,-50%);
-            border: 1px solid rgba(212,175,55,.14); opacity: 0;
-        }
-        .gring-1 { width: 190px; height: 190px; }
-        .gring-2 { width: 250px; height: 250px; border-color: rgba(212,175,55,.07); }
-        .gring-3 { width: 310px; height: 310px; border-color: rgba(139,0,0,.1); }
-        @media (max-width: 480px) {
-            .gring-1 { width: 150px; height: 150px; }
-            .gring-2 { width: 200px; height: 200px; }
-            .gring-3 { width: 250px; height: 250px; }
+                linear-gradient(rgba(243, 179, 42, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(243, 179, 42, 0.04) 1px, transparent 1px);
+            background-size: 62px 62px;
+            mask-image: linear-gradient(to bottom, black, transparent 78%);
+            -webkit-mask-image: linear-gradient(to bottom, black, transparent 78%);
         }
 
-        .hero-sub {
-            font-family: 'Cinzel', serif; font-size: .68rem; color: var(--gold);
-            letter-spacing: 10px; text-transform: uppercase; margin-bottom: 14px; opacity: 0;
-        }
-        .hero-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(5.5rem, 18vw, 11rem);
-            line-height: .82; letter-spacing: 8px;
-            background: linear-gradient(155deg, #fff 0%, var(--gold-lt) 35%, var(--gold) 65%, #9a6b10 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-            margin-bottom: 18px;
-        }
-        .hero-title .ch { display: inline-block; opacity: 0; will-change: transform; }
-        .hero-tag {
-            font-size: clamp(.75rem, 2.2vw, .9rem); color: rgba(255,255,255,.38);
-            font-weight: 300; letter-spacing: 6px; text-transform: uppercase; opacity: 0;
+        ::-webkit-scrollbar {
+            width: 0;
         }
 
-        .hero-div {
-            display: flex; align-items: center; justify-content: center;
-            gap: 16px; margin: 36px auto; opacity: 0; max-width: 260px;
+        .page {
+            position: relative;
+            z-index: 1;
         }
-        .hdl { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(212,175,55,.35)); }
-        .hdl:last-child { background: linear-gradient(to left, transparent, rgba(212,175,55,.35)); }
-        .hdd { width: 4px; height: 4px; background: var(--gold); border-radius: 50%; }
 
-        .hero-stats { display: flex; justify-content: center; gap: clamp(24px, 8vw, 80px); opacity: 0; }
-        .s-num { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 6vw, 3rem); color: var(--gold); line-height: 1; }
-        .s-lbl { font-size: .6rem; color: rgba(255,255,255,.3); letter-spacing: 3px; text-transform: uppercase; margin-top: 5px; }
-
-        .scroll-ind {
-            position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
-            display: flex; flex-direction: column; align-items: center; gap: 10px; opacity: 0;
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 20;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px clamp(18px, 5vw, 52px);
+            transition: background 0.3s ease, padding 0.3s ease;
         }
-        .scroll-ind span { font-size: .6rem; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,.25); }
-        .scroll-mouse {
-            width: 20px; height: 32px;
-            border: 1px solid rgba(212,175,55,.28); border-radius: 10px;
-            display: flex; justify-content: center; padding-top: 5px;
+
+        .nav.scrolled {
+            padding-block: 11px;
+            background: rgba(5, 4, 5, 0.82);
+            backdrop-filter: blur(22px);
+            border-bottom: 1px solid rgba(243, 179, 42, 0.16);
         }
-        .scroll-dot { width: 2px; height: 5px; background: var(--gold); border-radius: 2px; animation: mdot 2s infinite ease-in-out; }
-        @keyframes mdot { 0%{transform:translateY(0);opacity:1} 100%{transform:translateY(12px);opacity:0} }
 
-        /* ── SECTIONS ── */
-        .section { padding: clamp(80px,12vw,140px) clamp(24px,7vw,80px); position: relative; }
-
-        .sec-hdr { text-align: center; margin-bottom: clamp(50px,8vw,90px); }
-        .sec-lbl { display: block; font-family: 'Cinzel', serif; font-size: .68rem; color: var(--gold); letter-spacing: 8px; text-transform: uppercase; margin-bottom: 14px; }
-        .sec-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.6rem, 7vw, 5rem); letter-spacing: 4px; line-height: 1; background: linear-gradient(135deg,#fff 0%,var(--gold-lt) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .sec-line { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 16px auto 0; }
-
-        /* ── ABOUT ── */
-        .about { background: var(--dark); overflow: hidden; }
-        .about::before { content: ''; position: absolute; top: -25%; right: -12%; width: 700px; height: 700px; background: radial-gradient(circle, rgba(139,0,0,.07) 0%, transparent 70%); pointer-events: none; }
-
-        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px,8vw,100px); max-width: 1200px; margin: 0 auto; align-items: center; }
-        @media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; gap: 50px; } }
-
-        .about-text { font-size: clamp(.92rem,2vw,1.08rem); line-height: 1.9; color: rgba(255,255,255,.58); }
-        .about-text p { margin-bottom: 20px; }
-        .hl { color: var(--gold); font-weight: 600; }
-
-        .about-vis { position: relative; display: flex; justify-content: center; align-items: center; min-height: 300px; }
-        .about-logo { width: min(340px,90%); filter: drop-shadow(0 0 80px rgba(139,0,0,.22)); position: relative; z-index: 2; }
-        .aring {
-            position: absolute; border-radius: 50%; border: 1px solid rgba(212,175,55,.1);
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            color: var(--gold-hot);
+            text-decoration: none;
+            font: 800 0.8rem "Syne", sans-serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
-        .aring-1 { width: 320px; height: 320px; animation: spin 22s linear infinite; }
-        .aring-2 { width: 420px; height: 420px; border-color: rgba(139,0,0,.1); animation: spin 35s linear infinite reverse; }
-        @media (max-width: 480px) {
-            .aring-1 { width: 230px; height: 230px; }
-            .aring-2 { width: 310px; height: 310px; }
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
 
-        .mag-btn {
-            display: inline-flex; align-items: center;
-            padding: 13px 34px; background: transparent;
-            border: 1px solid rgba(212,175,55,.45); color: var(--gold);
-            font-family: 'Cinzel', serif; font-size: .72rem; letter-spacing: 3px; text-transform: uppercase;
-            cursor: none; position: relative; overflow: hidden;
-            transition: color .35s; margin-top: 26px; border-radius: 2px;
+        .brand img {
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 16px rgba(243, 179, 42, 0.42));
         }
-        .mag-btn::before {
-            content: ''; position: absolute; inset: 0; background: var(--gold);
-            transform: translateX(-101%); transition: transform .4s cubic-bezier(.4,0,.2,1);
-        }
-        .mag-btn span { position: relative; z-index: 1; }
-        .mag-btn:hover { color: var(--dark); }
-        .mag-btn:hover::before { transform: translateX(0); }
 
-        /* ── TEAM ── */
-        .team { background: var(--darker); overflow: hidden; }
-        .team::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 20%, rgba(139,0,0,.07) 0%, transparent 50%); pointer-events: none; }
-
-        .team-grid {
-            display: grid; grid-template-columns: repeat(3,1fr);
-            gap: 22px; max-width: 1200px; margin: 0 auto; position: relative; z-index: 2;
+        .nav-pills {
+            display: flex;
+            gap: 8px;
         }
-        @media (max-width: 1024px) { .team-grid { grid-template-columns: repeat(2,1fr); } }
-        @media (max-width: 600px) {
-            .team-grid {
-                display: flex; overflow-x: auto; gap: 14px;
-                padding-bottom: 20px; scroll-snap-type: x mandatory;
-                -webkit-overflow-scrolling: touch; scrollbar-width: none;
-                margin: 0 -24px; padding-left: 24px; padding-right: 24px;
+
+        .nav-pills a,
+        .day-btn {
+            min-height: 38px;
+            border: 1px solid rgba(243, 179, 42, 0.34);
+            color: #fff;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 10px 14px;
+            text-decoration: none;
+            font-size: 0.76rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .nav-pills a:hover,
+        .day-btn:hover,
+        .day-btn.active {
+            color: #111;
+            background: var(--gold);
+            border-color: var(--gold);
+        }
+
+        .hero {
+            position: relative;
+            min-height: 100svh;
+            display: grid;
+            align-items: end;
+            padding: 96px clamp(18px, 5vw, 64px) 42px;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: auto 0 0;
+            height: 34%;
+            pointer-events: none;
+            background: linear-gradient(to bottom, transparent, var(--ink));
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 2;
+            width: min(1160px, 100%);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: minmax(0, 0.98fr) minmax(420px, 1.1fr);
+            align-items: end;
+            gap: clamp(22px, 4vw, 52px);
+        }
+
+        .kicker {
+            display: inline-flex;
+            gap: 12px;
+            align-items: center;
+            color: #f7efe0;
+            font-weight: 800;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font-size: clamp(0.75rem, 1.5vw, 1rem);
+        }
+
+        .kicker b {
+            color: var(--gold);
+        }
+
+        h1 {
+            margin-top: 14px;
+            font-family: "Bebas Neue", Impact, sans-serif;
+            font-size: clamp(5.2rem, 15vw, 12.5rem);
+            line-height: 0.78;
+            letter-spacing: 0;
+            text-transform: uppercase;
+            color: var(--gold);
+            text-shadow: 0 8px 0 rgba(0, 0, 0, 0.54), 0 0 48px rgba(243, 179, 42, 0.34);
+        }
+
+        h1 span {
+            display: block;
+            color: #e7e3db;
+            transform: skewX(-8deg);
+        }
+
+        .tagline {
+            width: fit-content;
+            max-width: 100%;
+            margin-top: 16px;
+            border: 1px solid var(--line);
+            color: #fff;
+            padding: 9px 15px;
+            transform: skewX(-9deg);
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: rgba(0, 0, 0, 0.42);
+        }
+
+        .tagline span {
+            display: inline-block;
+            transform: skewX(9deg);
+        }
+
+        .tagline b {
+            color: var(--gold);
+        }
+
+        .versus-stage {
+            position: relative;
+            min-height: clamp(480px, 66vh, 720px);
+            border: 1px solid rgba(243, 179, 42, 0.24);
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(8, 7, 6, 0.72));
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .versus-stage::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 50% 52%, rgba(243, 179, 42, 0.22), transparent 22%),
+                radial-gradient(circle at 22% 48%, rgba(22, 135, 217, 0.22), transparent 26%),
+                radial-gradient(circle at 78% 48%, rgba(240, 173, 24, 0.22), transparent 26%),
+                linear-gradient(to bottom, transparent 48%, rgba(0, 0, 0, 0.62));
+        }
+
+        #captain-canvas {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .css-captains {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            display: none;
+            pointer-events: none;
+        }
+
+        .css-captains.active {
+            display: block;
+        }
+
+        .css-figure {
+            position: absolute;
+            bottom: 86px;
+            width: min(31%, 190px);
+            height: min(58%, 360px);
+            transform-style: preserve-3d;
+            filter: drop-shadow(0 28px 28px rgba(0, 0, 0, 0.54));
+        }
+
+        .css-figure.left {
+            left: 13%;
+            transform: perspective(900px) rotateY(18deg);
+        }
+
+        .css-figure.right {
+            right: 13%;
+            transform: perspective(900px) rotateY(-18deg);
+        }
+
+        .css-figure .head,
+        .css-figure .body,
+        .css-figure .arm,
+        .css-figure .leg {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .css-figure .head {
+            top: 7%;
+            width: 34%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #dda166, #8d5630);
+            box-shadow: inset -12px -9px 18px rgba(0, 0, 0, 0.22);
+        }
+
+        .css-figure .head::before {
+            content: "";
+            position: absolute;
+            left: -5%;
+            right: -5%;
+            top: -12%;
+            height: 32%;
+            border-radius: 50% 50% 22% 22%;
+            background: color-mix(in srgb, var(--team-color) 36%, #050405);
+        }
+
+        .css-figure .body {
+            top: 25%;
+            width: 54%;
+            height: 42%;
+            border-radius: 34% 34% 18% 18%;
+            background:
+                linear-gradient(100deg, transparent 44%, rgba(255, 255, 255, 0.72) 46%, transparent 52%),
+                linear-gradient(145deg, var(--team-color), color-mix(in srgb, var(--team-color) 28%, #040404));
+            box-shadow: inset -20px -22px 30px rgba(0, 0, 0, 0.28), 0 0 30px color-mix(in srgb, var(--team-color) 45%, transparent);
+        }
+
+        .css-figure .arm {
+            top: 35%;
+            width: 16%;
+            height: 36%;
+            border-radius: 999px;
+            background: linear-gradient(180deg, var(--team-color), #1c1511);
+            transform-origin: top center;
+        }
+
+        .css-figure .arm.front {
+            margin-left: -38%;
+            transform: translateX(-50%) rotate(58deg);
+        }
+
+        .css-figure .arm.back {
+            margin-left: 38%;
+            transform: translateX(-50%) rotate(-58deg);
+        }
+
+        .css-figure .leg {
+            top: 64%;
+            width: 16%;
+            height: 34%;
+            border-radius: 999px;
+            background: linear-gradient(180deg, #15110f, #050505);
+        }
+
+        .css-figure .leg.one {
+            margin-left: -13%;
+        }
+
+        .css-figure .leg.two {
+            margin-left: 13%;
+        }
+
+        .render-status {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            z-index: 5;
+            max-width: calc(100% - 28px);
+            border: 1px solid rgba(243, 179, 42, 0.3);
+            background: rgba(0, 0, 0, 0.58);
+            color: #f7e8c4;
+            padding: 8px 10px;
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .stage-vs {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            pointer-events: none;
+            z-index: 3;
+            font-family: "Bebas Neue", Impact, sans-serif;
+            font-size: clamp(5rem, 12vw, 10rem);
+            color: rgba(255, 255, 255, 0.92);
+            text-shadow: 0 0 34px rgba(243, 179, 42, 0.5);
+        }
+
+        .captain-labels {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 3;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: rgba(243, 179, 42, 0.22);
+        }
+
+        .captain-card {
+            padding: 18px;
+            background: rgba(3, 3, 3, 0.74);
+            min-width: 0;
+        }
+
+        .captain-card:last-child {
+            text-align: right;
+        }
+
+        .captain-team {
+            color: var(--team-color, var(--gold));
+            font: 800 0.74rem "Syne", sans-serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .captain-name {
+            margin-top: 5px;
+            font: 400 clamp(2.1rem, 5vw, 3.7rem) "Bebas Neue", Impact, sans-serif;
+            line-height: 0.9;
+            text-transform: uppercase;
+        }
+
+        .section {
+            padding: clamp(54px, 8vw, 92px) clamp(18px, 5vw, 64px);
+        }
+
+        .wrap {
+            width: min(1160px, 100%);
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font: 400 clamp(3rem, 7vw, 5.8rem) "Bebas Neue", Impact, sans-serif;
+            color: var(--gold);
+            line-height: 0.9;
+            text-transform: uppercase;
+        }
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .section-copy {
+            max-width: 460px;
+            color: var(--muted);
+            line-height: 1.7;
+            font-size: 0.98rem;
+        }
+
+        .day-controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+        }
+
+        .match-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.75fr);
+            gap: 18px;
+        }
+
+        .panel {
+            border: 1px solid var(--line);
+            background: var(--panel);
+            backdrop-filter: blur(16px);
+        }
+
+        .fixture-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .fixture-table th,
+        .fixture-table td {
+            border-bottom: 1px solid rgba(243, 179, 42, 0.22);
+            border-right: 1px solid rgba(243, 179, 42, 0.16);
+            padding: 15px 12px;
+            text-align: center;
+            font-weight: 800;
+            font-size: clamp(0.78rem, 1.5vw, 0.95rem);
+            text-transform: uppercase;
+        }
+
+        .fixture-table th {
+            color: #f8dfaa;
+            background: rgba(243, 179, 42, 0.08);
+            letter-spacing: 1px;
+            font-size: 0.72rem;
+        }
+
+        .fixture-table td:last-child,
+        .fixture-table th:last-child {
+            border-right: 0;
+        }
+
+        .fixture-table tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .fixture-table tr.active-row {
+            background: linear-gradient(90deg, rgba(243, 179, 42, 0.16), rgba(255, 255, 255, 0.03));
+        }
+
+        .team-name {
+            color: var(--team-color, #fff);
+            white-space: nowrap;
+        }
+
+        .spotlight {
+            min-height: 100%;
+            display: grid;
+            align-content: space-between;
+            padding: 26px;
+            background:
+                linear-gradient(135deg, rgba(243, 179, 42, 0.12), transparent 46%),
+                var(--panel-strong);
+        }
+
+        .spotlight-date {
+            color: var(--gold-hot);
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-size: 0.77rem;
+        }
+
+        .spotlight-fixture {
+            margin-top: 20px;
+            font: 400 clamp(3rem, 7vw, 5.5rem) "Bebas Neue", Impact, sans-serif;
+            line-height: 0.9;
+            text-transform: uppercase;
+        }
+
+        .spotlight-fixture span {
+            display: block;
+        }
+
+        .spotlight-vs {
+            color: var(--gold);
+            font-size: 0.64em;
+        }
+
+        .meta-strip {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            border-top: 1px solid rgba(243, 179, 42, 0.2);
+            margin-top: 28px;
+        }
+
+        .meta {
+            padding-top: 16px;
+            color: var(--muted);
+            font-size: 0.83rem;
+            line-height: 1.4;
+            text-transform: uppercase;
+        }
+
+        .meta b {
+            display: block;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .teams-band {
+            background: rgba(0, 0, 0, 0.28);
+            border-block: 1px solid rgba(243, 179, 42, 0.18);
+            overflow: hidden;
+        }
+
+        .marquee {
+            display: flex;
+            width: max-content;
+            gap: 20px;
+            padding: 18px 0;
+        }
+
+        .marquee span {
+            color: #fff;
+            font: 400 clamp(2.2rem, 5vw, 4.4rem) "Bebas Neue", Impact, sans-serif;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .marquee b {
+            color: var(--gold);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .info-tile {
+            min-height: 116px;
+            border: 1px solid rgba(243, 179, 42, 0.3);
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.035);
+        }
+
+        .info-num {
+            font: 400 3.2rem "Bebas Neue", Impact, sans-serif;
+            color: var(--gold);
+            line-height: 1;
+        }
+
+        .info-label {
+            margin-top: 8px;
+            color: #ded6c9;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .poster {
+            margin-top: 22px;
+            display: grid;
+            grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+            gap: 18px;
+            align-items: stretch;
+        }
+
+        .poster-frame {
+            border: 1px solid rgba(243, 179, 42, 0.34);
+            min-height: 420px;
+            background: url("latest.png") center / cover no-repeat;
+        }
+
+        .rules {
+            display: grid;
+            gap: 12px;
+        }
+
+        .rule {
+            border-left: 3px solid var(--gold);
+            padding: 16px 18px;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .rule b {
+            display: block;
+            margin-bottom: 5px;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .rule span {
+            color: var(--muted);
+            line-height: 1.55;
+        }
+
+        .final-call {
+            padding: 52px clamp(18px, 5vw, 64px) 70px;
+            text-align: center;
+        }
+
+        .final-call p {
+            color: #e5ded1;
+            font: 400 clamp(3rem, 8vw, 6rem) "Bebas Neue", Impact, sans-serif;
+            line-height: 0.94;
+            text-transform: uppercase;
+        }
+
+        .final-call b {
+            display: block;
+            color: var(--gold);
+            font-size: 1.22em;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(34px);
+        }
+
+        @media (max-width: 920px) {
+            .nav-pills {
+                display: none;
             }
-            .team-grid::-webkit-scrollbar { display: none; }
+
+            .hero {
+                padding-top: 86px;
+            }
+
+            .hero-inner,
+            .match-grid,
+            .poster {
+                grid-template-columns: 1fr;
+            }
+
+            .versus-stage {
+                min-height: 560px;
+            }
+
+            .section-head {
+                display: block;
+            }
+
+            .section-copy {
+                margin-top: 12px;
+            }
+
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
-        .player-card {
-            background: rgba(18,10,10,.85);
-            border: 1px solid rgba(212,175,55,.1);
-            border-radius: 18px; overflow: hidden; position: relative;
-            cursor: none; flex-shrink: 0; will-change: transform;
-            transition: border-color .4s, box-shadow .4s;
+        @media (max-width: 620px) {
+            body {
+                background-size: 950px auto;
+            }
+
+            .hero {
+                min-height: auto;
+                padding-bottom: 24px;
+            }
+
+            h1 {
+                font-size: clamp(4.6rem, 23vw, 7.8rem);
+            }
+
+            .kicker {
+                letter-spacing: 3px;
+            }
+
+            .tagline {
+                font-size: 0.72rem;
+                letter-spacing: 1px;
+            }
+
+            .versus-stage {
+                min-height: 470px;
+            }
+
+            .stage-vs {
+                transform: translateY(-18px);
+            }
+
+            .captain-card {
+                padding: 14px;
+            }
+
+            .fixture-table {
+                min-width: 680px;
+            }
+
+            .panel.table-panel {
+                overflow-x: auto;
+            }
+
+            .spotlight {
+                min-height: 390px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .poster-frame {
+                min-height: 560px;
+            }
         }
-        @media (max-width: 600px) { .player-card { width: 230px; scroll-snap-align: start; } }
-
-        .player-card:hover {
-            border-color: rgba(212,175,55,.35);
-            box-shadow: 0 24px 80px rgba(139,0,0,.18), 0 0 60px rgba(212,175,55,.05);
-        }
-
-        /* gradient border shimmer on hover */
-        .player-card::after {
-            content: ''; position: absolute; inset: 0; border-radius: 18px;
-            background: linear-gradient(135deg, rgba(212,175,55,.4) 0%, rgba(139,0,0,.2) 50%, rgba(212,175,55,.1) 100%);
-            opacity: 0; transition: opacity .4s; pointer-events: none;
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor; mask-composite: exclude; padding: 1px;
-        }
-        .player-card:hover::after { opacity: 1; }
-
-        .pimg-wrap { position: relative; height: 270px; overflow: hidden; background: linear-gradient(180deg, rgba(60,0,0,.35) 0%, rgba(9,7,10,1) 100%); }
-        @media (max-width: 600px) { .pimg-wrap { height: 210px; } }
-
-        .p-img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s cubic-bezier(.4,0,.2,1); }
-        .player-card:hover .p-img { transform: scale(1.08); }
-
-        .pimg-ph { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: linear-gradient(135deg, rgba(139,0,0,.18) 0%, rgba(25,10,10,.85) 100%); }
-        .ph-icon { width: 60px; height: 60px; border: 1px solid rgba(212,175,55,.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: rgba(212,175,55,.35); font-size: 1.4rem; }
-        .ph-txt { font-size: .65rem; color: rgba(255,255,255,.2); letter-spacing: 2px; text-transform: uppercase; }
-
-        .p-overlay { position: absolute; bottom: 0; left: 0; right: 0; height: 65%; background: linear-gradient(to top, rgba(9,7,10,1) 0%, transparent 100%); pointer-events: none; }
-        .p-num { position: absolute; top: 14px; right: 16px; font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: rgba(212,175,55,.16); line-height: 1; }
-
-        .p-info { padding: 18px 20px 20px; }
-        .p-role { font-size: .62rem; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 5px; font-weight: 600; }
-        .p-name { font-family: 'Cinzel', serif; font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
-        .p-pos { font-size: .78rem; color: rgba(255,255,255,.38); margin-bottom: 13px; }
-        .p-stats { display: flex; gap: 14px; padding-top: 13px; border-top: 1px solid rgba(212,175,55,.07); }
-        .p-sv { font-family: 'Bebas Neue', sans-serif; font-size: 1.25rem; color: var(--gold); }
-        .p-sl { font-size: .58rem; color: rgba(255,255,255,.28); letter-spacing: 1px; text-transform: uppercase; }
-
-        .swipe-hint { display: none; text-align: center; margin-top: 14px; font-size: .62rem; color: rgba(255,255,255,.25); letter-spacing: 2px; text-transform: uppercase; }
-        @media (max-width: 600px) { .swipe-hint { display: block; } }
-
-        /* ── STATS ── */
-        .stats-sec { background: var(--darker); position: relative; overflow: hidden; }
-        .stats-sec::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(139,0,0,.1) 0%, transparent 65%); }
-        .stats-sec::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,175,55,.15), transparent); }
-
-        .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; max-width: 1000px; margin: 0 auto; position: relative; z-index: 2; }
-        @media (max-width: 768px) { .stats-grid { grid-template-columns: repeat(2,1fr); } }
-
-        .stat-card {
-            text-align: center; padding: clamp(26px,4vw,44px) clamp(14px,3vw,24px);
-            background: rgba(0,0,0,.45); border: 1px solid rgba(212,175,55,.1);
-            border-radius: 14px; position: relative; overflow: hidden; backdrop-filter: blur(10px);
-        }
-        .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
-        .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem,6vw,4.5rem); color: var(--gold); line-height: 1; margin-bottom: 10px; }
-        .stat-lbl { font-size: .68rem; color: rgba(255,255,255,.45); letter-spacing: 3px; text-transform: uppercase; }
-
-        /* ── FIXTURES ── */
-        .fixtures-sec { background: var(--dark); }
-
-        .fix-list { max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
-        .fix-item {
-            display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px;
-            padding: clamp(18px,3.5vw,30px) clamp(18px,4vw,34px);
-            background: rgba(18,10,10,.6); border: 1px solid rgba(212,175,55,.08);
-            border-radius: 12px; backdrop-filter: blur(8px);
-        }
-        @media (max-width: 500px) { .fix-item { grid-template-columns: 1fr; gap: 10px; text-align: center; } }
-
-        .fix-team-name { font-family: 'Cinzel', serif; font-size: clamp(.88rem,2.5vw,1.05rem); font-weight: 700; color: #fff; }
-        .fix-vs { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; color: var(--gold); white-space: nowrap; }
-        .fix-day { font-size: .78rem; color: var(--gold); letter-spacing: 2px; margin-top: 4px; }
-        .fix-time { font-size: .68rem; color: rgba(255,255,255,.35); margin-top: 2px; }
-
-        /* ── FOOTER ── */
-        .footer {
-            background: var(--darker); padding: clamp(50px,8vw,80px) clamp(24px,6vw,60px) clamp(24px,4vw,36px);
-            border-top: 1px solid rgba(212,175,55,.07); text-align: center;
-        }
-        .foot-logo { width: 90px; margin: 0 auto 22px; display: block; filter: drop-shadow(0 0 20px rgba(212,175,55,.18)); }
-        .foot-name { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--gold); letter-spacing: 6px; margin-bottom: 7px; }
-        .foot-sub { font-size: .7rem; color: rgba(255,255,255,.3); letter-spacing: 3px; text-transform: uppercase; }
-        .foot-contact { margin-top: 14px; font-size: .75rem; color: rgba(255,255,255,.38); letter-spacing: 1px; }
-        .foot-line { width: 46px; height: 1px; background: rgba(212,175,55,.25); margin: 26px auto; }
-        .foot-copy { font-size: .68rem; color: rgba(255,255,255,.18); letter-spacing: 1px; }
-
-        /* ── REVEAL STATES ── */
-        .rv { opacity: 0; transform: translateY(45px); }
-        .rl { opacity: 0; transform: translateX(-45px); }
-        .rr { opacity: 0; transform: translateX(45px); }
-        .rs { opacity: 0; transform: scale(.85); }
-        .sec-line { opacity: 0; }
     </style>
-<base target="_blank">
 </head>
 <body>
-
-<div class="cur-dot" id="curDot"></div>
-<div class="cur-ring" id="curRing"></div>
-
-<!-- NAV -->
-<nav class="nav" id="navbar">
-    <a class="nav-logo" href="#home">
-        <img src="logo.png" alt="Kings XI">
-        <span class="nav-logo-text">KINGS XI</span>
-    </a>
-    <ul class="nav-links" id="navLinks">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#team">Squad</a></li>
-        <li><a href="#stats">Records</a></li>
-        <li><a href="#fixtures">Fixtures</a></li>
-    </ul>
-    <div class="hamburger" id="burger">
-        <span></span><span></span><span></span>
-    </div>
-</nav>
-
-<!-- MOBILE MENU -->
-<div class="mob-menu" id="mobMenu">
-    <div class="mob-sep"></div>
-    <a href="#home" class="mob-link">Home</a>
-    <a href="#about" class="mob-link">About</a>
-    <a href="#team" class="mob-link">Squad</a>
-    <a href="#stats" class="mob-link">Records</a>
-    <a href="#fixtures" class="mob-link">Fixtures</a>
-    <div class="mob-sep"></div>
-</div>
-
-<!-- HERO -->
-<section class="hero" id="home">
-    <div class="hero-bg"></div>
-    <canvas id="pCanvas"></canvas>
-
-    <div class="hero-content">
-        <div class="logo-wrap">
-            <div class="gring gring-1"></div>
-            <div class="gring gring-2"></div>
-            <div class="gring gring-3"></div>
-            <img src="logo.png" alt="Kings XI" class="hero-logo" id="heroLogo">
+    <nav class="nav" aria-label="Tournament navigation">
+        <a class="brand" href="#top">
+            <img src="m1.png" alt="Mighty XI crest">
+            <span>Dominate Cup</span>
+        </a>
+        <div class="nav-pills">
+            <a href="#matchday">Matchday</a>
+            <a href="#fixtures">Fixtures</a>
+            <a href="#details">Details</a>
         </div>
+    </nav>
 
-        <p class="hero-sub" id="heroSub">Est. 2024</p>
-        <h1 class="hero-title" id="heroTitle">KINGS XI</h1>
-        <p class="hero-tag" id="heroTag">Rule the Pitch. Own the Game.</p>
+    <main class="page" id="top">
+        <section class="hero">
+            <div class="hero-inner">
+                <div class="hero-copy">
+                    <div class="kicker"><span>4 Teams.</span><b>1 Trophy.</b><span>Zero Mercy.</span></div>
+                    <h1>Dominate <span>Cup '25</span></h1>
+                    <div class="tagline"><span>It's not just a tournament, it's a <b>statement</b>.</span></div>
+                </div>
 
-        <div class="hero-div" id="heroDivider">
-            <div class="hdl"></div>
-            <div class="hdd"></div>
-            <div class="hdl"></div>
-        </div>
+                <div class="versus-stage" id="matchday">
+                    <canvas id="captain-canvas" aria-label="3D captain figures face-off"></canvas>
+                    <div class="css-captains" id="cssCaptains" aria-hidden="true">
+                        <div class="css-figure left" id="cssLeftFigure">
+                            <span class="head"></span>
+                            <span class="body"></span>
+                            <span class="arm front"></span>
+                            <span class="arm back"></span>
+                            <span class="leg one"></span>
+                            <span class="leg two"></span>
+                        </div>
+                        <div class="css-figure right" id="cssRightFigure">
+                            <span class="head"></span>
+                            <span class="body"></span>
+                            <span class="arm front"></span>
+                            <span class="arm back"></span>
+                            <span class="leg one"></span>
+                            <span class="leg two"></span>
+                        </div>
+                    </div>
+                    <div class="render-status" id="renderStatus">Loading 3D captains</div>
+                    <div class="stage-vs">VS</div>
+                    <div class="captain-labels">
+                        <article class="captain-card" id="leftCaptain">
+                            <div class="captain-team">Alpha XI</div>
+                            <div class="captain-name">Sumit (C)</div>
+                        </article>
+                        <article class="captain-card" id="rightCaptain">
+                            <div class="captain-team">Mighty XI</div>
+                            <div class="captain-name">Ash (C)</div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <div class="hero-stats" id="heroStats">
-            <div><div class="s-num">11</div><div class="s-lbl">Warriors</div></div>
-            <div><div class="s-num">100%</div><div class="s-lbl">Passion</div></div>
-            <div><div class="s-num">1</div><div class="s-lbl">Dynasty</div></div>
-        </div>
-    </div>
+        <section class="teams-band" aria-label="Tournament teams">
+            <div class="marquee" id="teamMarquee">
+                <span><b>Mighty XI</b> / Alpha XI / MCT / Kangaroo XI /</span>
+                <span><b>Mighty XI</b> / Alpha XI / MCT / Kangaroo XI /</span>
+                <span><b>Mighty XI</b> / Alpha XI / MCT / Kangaroo XI /</span>
+            </div>
+        </section>
 
-    <div class="scroll-ind" id="scrollInd">
-        <span>Scroll</span>
-        <div class="scroll-mouse"><div class="scroll-dot"></div></div>
-    </div>
-</section>
+        <section class="section" id="fixtures">
+            <div class="wrap">
+                <div class="section-head reveal">
+                    <h2 class="section-title">Fixture Schedule</h2>
+                    <p class="section-copy">Pick a matchday and the arena updates the captains, colors, date, and match card. Match 1 is complete: Alpha XI beat Mighty XI by 2 wickets.</p>
+                </div>
 
-<!-- ABOUT -->
-<section class="section about" id="about">
-    <div class="sec-hdr">
-        <span class="sec-lbl rv">Our Legacy</span>
-        <h2 class="sec-title rv">THE ROYAL STORY</h2>
-        <div class="sec-line"></div>
-    </div>
-    <div class="about-grid">
-        <div class="about-text rl">
-            <p>Born from the fire of competition and the spirit of royalty, <span class="hl">Kings XI</span> stands as a testament to excellence in cricket. Our team isn't just about playing a sport — it's about <span class="hl">conquering</span> it.</p>
-            <p>With a squad of 11 elite warriors, each handpicked for their unique prowess, we bring a blend of <span class="hl">power, precision, and passion</span> to every match. From explosive batting to lethal bowling, our kings dominate every aspect of the game.</p>
-            <p>The crown isn't given. It's taken. And we take it every single time we step onto the field.</p>
-            <button class="mag-btn"><span>Meet The Squad</span></button>
-        </div>
-        <div class="about-vis rr">
-            <div class="aring aring-1"></div>
-            <div class="aring aring-2"></div>
-            <img src="logo.png" alt="Kings XI Emblem" class="about-logo">
-        </div>
-    </div>
-</section>
+                <div class="day-controls reveal" id="dayControls" aria-label="Select match day"></div>
 
-<!-- TEAM -->
-<section class="section team" id="team">
-    <div class="sec-hdr">
-        <span class="sec-lbl rv">The Royal Guard</span>
-        <h2 class="sec-title rv">MEET THE KINGS</h2>
-        <div class="sec-line"></div>
-    </div>
+                <div class="match-grid">
+                    <div class="panel table-panel reveal">
+                        <table class="fixture-table">
+                            <thead>
+                                <tr>
+                                    <th>Match</th>
+                                    <th>Date</th>
+                                    <th>Day</th>
+                                    <th>Fixture</th>
+                                    <th>Type</th>
+                                </tr>
+                            </thead>
+                            <tbody id="fixtureRows"></tbody>
+                        </table>
+                    </div>
 
-    <div class="team-grid" id="teamGrid">
+                    <aside class="panel spotlight reveal" aria-live="polite">
+                        <div>
+                            <div class="spotlight-date" id="spotlightDate">20 Jul / Mon / 20th Barprola Ground / Alpha XI won by 2 wickets</div>
+                            <div class="spotlight-fixture">
+                                <span id="spotLeft">Alpha XI</span>
+                                <span class="spotlight-vs">vs</span>
+                                <span id="spotRight">Mighty XI</span>
+                            </div>
+                        </div>
+                        <div class="meta-strip">
+                            <div class="meta"><b id="spotType">League Result</b>Match Type</div>
+                            <div class="meta"><b>Start</b>Weekdays only</div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
 
-        <div class="player-card"><div class="pimg-wrap"><div class="pimg-ph"><div class="ph-icon">+</div><div class="ph-txt">Add Photo</div></div><div class="p-overlay"></div><div class="p-num">01</div></div><div class="p-info"><div class="p-role">Captain</div><h3 class="p-name">Player Name</h3><p class="p-pos">Top Order Batsman</p><div class="p-stats"><div><div class="p-sv">--</div><div class="p-sl">Matches</div></div><div><div class="p-sv">--</div><div class="p-sl">Runs</div></div><div><div class="p-sv">--</div><div class="p-sl">Average</div></div></div></div></div>
+        <section class="section" id="details">
+            <div class="wrap">
+                <div class="section-head reveal">
+                    <h2 class="section-title">Tournament Intel</h2>
+                    <p class="section-copy">A compact command board for the teams, schedule, and contribution plan inspired by the new poster.</p>
+                </div>
 
-        <div class="player-card"><div class="pimg-wrap"><div class="pimg-ph"><div class="ph-icon">+</div><div class="ph-txt">Add Photo</div></div><div class="p-overlay"></div><div class="p-num">02</div></div><div class="p-info"><div class="p-role">Vice Captain</div><h3 class="p-name">Player Name</h3><p class="p-pos">All-Rounder</p><div class="p-stats"><div><div class="p-sv">--</div><div class="p-sl">Matches</div></div><div><div class="p-sv">--</div><div class="p-sl">Runs</div></div><div><div class="p-sv">--</div><div class="p-sl">Wickets</div></div></div></div></div>
+                <div class="info-grid">
+                    <article class="info-tile reveal">
+                        <div class="info-num">4</div>
+                        <div class="info-label">Teams</div>
+                    </article>
+                    <article class="info-tile reveal">
+                        <div class="info-num">7</div>
+                        <div class="info-label">Matches</div>
+                    </article>
+                    <article class="info-tile reveal">
+                        <div class="info-num">1</div>
+                        <div class="info-label">Champion</div>
+                    </article>
+                    <article class="info-tile reveal">
+                        <div class="info-num">₹500</div>
+                        <div class="info-label">Per Person</div>
+                    </article>
+                </div>
 
-        <div class="player-card"><div class="pimg-wrap"><div class="pimg-ph"><div class="ph-icon">+</div><div class="ph-txt">Add Photo</div></div><div class="p-overlay"></div><div class="p-num">03</div></div><div class="p-info"><div class="p-role">Batsman</div><h3 class="p-name">Player Name</h3><p class="p-pos">Opening Batsman</p><div class="p-stats"><div><div class="p-sv">--</div><div class="p-sl">Matches</div></div><div><div class="p-sv">--</div><div class="p-sl">Runs</div></div><div><div class="p-sv">--</div><div class="p-sl">Strike Rate</div></div></div></div></div>
+                <div class="poster">
+                    <div class="poster-frame reveal" role="img" aria-label="Dominate Cup 2025 tournament poster"></div>
+                    <div class="rules reveal">
+                        <div class="rule"><b>Ground</b><span>20th Barprola Ground hosts the tournament from 20 July to 30 July 2025.</span></div>
+                        <div class="rule"><b>Format</b><span>Six league fixtures decide the top two teams for the final.</span></div>
+                        <div class="rule"><b>Contribution</b><span>Total expenses are ₹21,350, split across four teams at roughly ₹5,350 per team.</span></div>
+                        <div class="rule"><b>Battle Call</b><span>Play hard. Respect all. Dominate.</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <div class="player-card"><div class="pimg-wrap"><div class="pimg-ph"><div class="ph-icon">+</div><div class="ph-txt">Add Photo</div></div><div class="p-overlay"></div><div class="p-num">04</div></div><div class="p-info"><div class="p-role">Batsman</div><h3 class="p-name">Player Name</h3><p class="p-pos">Middle Order</p><div class="p-stats"><div><div class="p-sv">--</div><div class="p-sl">Matches</div></div><div><div class="p-sv">--</div><div class="p-sl">Runs</div></div><div><div class="p-sv">--</div><div class="p-sl">Average</div></div></div></div></div>
+        <section class="final-call">
+            <p class="reveal">First battle done.<b>Mighty reset for the next one.</b></p>
+        </section>
+    </main>
 
-        <div class="player-card"><div class="pimg-wrap"><div class="pimg-ph"><div class="ph-icon">+</div><div class="ph-txt">Add Photo</div></div><div class="p-overlay"></div><div class="p-num">05</div></div><div class="p-info"><div class="p-role">Wicket Keeper</div><h3 class="p-name">Player Name</h3><p class="p-pos">Wicket Keeper Batsman</p><div class="p-stats"><div><div class="p-sv">--</div><div class="p-sl">Matches</div></div><div><div class="p-sv">--</div><div class="p-sl">Dismissals</div></div><div><div class="p-sv">--</div><div class="p-sl">Runs</div></div></div></div></div>
+    <script>
+        const teams = {
+            mighty: { name: "Mighty XI", captain: "Ash (C)", color: "#f0ad18", dark: "#3c2602" },
+            alpha: { name: "Alpha XI", captain: "Sumit (C)", color: "#1687d9", dark: "#041b34" },
+            mct: { name: "MCT", captain: "Vivek (C)", color: "#49be36", dark: "#0c2a08" },
+            kangaroo: { name: "Kangaroo XI", captain: "Sagar (C)", color: "#e86f1d", dark: "#351304" }
+        };
 
-        <div class="player-card"><div class="pimg-wrap"><div class="pimg-ph"><div class="ph-icon">+</div><div class="ph-txt">Add Photo</div></div><div class="p-overlay"></div><div class="p-num">06</div></div><div class="p-info"><div class="p-role">All-Rounder</div><h3 class="p-name">Player Name</h3><p class="p-pos">Batting All-Rounder</p><div class="p-stats"><div><div class="p-sv">--</div><div class="p-sl">Matches</div></div><div><div class="p-sv">--</div><div class="p-sl">Runs</div></div><div><div class="p-sv">--</div><div class="p-sl">Wickets</div></div></div></div></div>
+        const fixtures = [
+            { match: 1, date: "20 Jul", day: "Mon", left: "alpha", right: "mighty", type: "League Result", result: "Alpha XI won by 2 wickets" },
+            { match: 2, date: "22 Jul", day: "Wed", left: "mct", right: "kangaroo", type: "League" },
+            { match: 3, date: "23 Jul", day: "Thu", left: "mighty", right: "mct", type: "League" },
+            { match: 4, date: "24 Jul", day: "Fri", left: "alpha", right: "kangaroo", type: "League" },
+            { match: 5, date: "27 Jul", day: "Mon", left: "mighty", right: "kangaroo", type: "League" },
+            { match: 6, date: "28 Jul", day: "Tue", left: "alpha", right: "mct", type: "League" },
+            { match: 7, date: "30 Jul", day: "Thu", left: "mighty", right: "alpha", type: "Final", final: true }
+        ];
 
-        <div class="player-card"><div class="pimg-wrap"><div class="pimg-ph"><div class="ph-icon">+</div><div class="ph-txt">Add Photo</div></div><div class="p-overlay"></div><div class="p-num">07</div></div><div class="p-info"><div class="p-role">Bowler</div><h3 class="p-name">Player Name</h3><p class="p-pos">Fast Bowler</p><div class="p-stats"><div><div class="p-sv">--</div><div class="p-sl">Matches</div></div><div><div class="p-sv">--</div><div class="p-sl">Wickets</div></div><div><div class="p-sv">--</div><div class="p-sl">Economy</div></div></div></div></div>
+        const hasGsap = Boolean(window.gsap);
+        const hasScrollTrigger = Boolean(window.ScrollTrigger);
+        const hasLenis = Boolean(window.Lenis);
+        const hasThree = Boolean(window.THREE);
+        const renderStatus = document.getElementById("renderStatus");
+        const cssCaptains = document.getElementById("cssCaptains");
+        const cssLeftFigure = document.getElementById("cssLeftFigure");
+        const cssRightFigure = document.getElementById("cssRightFigure");
+        let lenis = null;
 
-        <div class="player-card"><div class="pimg-wrap"><div class="pimg-ph"><div class="ph-icon">+</div><div class="ph-txt">Add Photo</div></div><div class="p-overlay"></div><div class="p-num">08</div></div><div class="p-info"><div class="p-role">Bowler</div><h3 class="p-name">Player Name</h3><p class="p-pos">Spin Bowler</p><div class="p-stats"><div><div class="p-sv">--</div><div class="p-sl">Matches</div></div><div><div class="p-sv">--</div><div class="p-sl">Wickets</div></div><div><div class="p-sv">--</div><div class="p-sl">Economy</div></div></div></div></div>
-
-        <div class="player-card"><div class="pimg-wrap"><div class="pimg-ph"><div class="ph-icon">+</div><div class="ph-txt">Add Photo</div></div><div class="p-overlay"></div><div class="p-num">09</div></div><div class="p-info"><div class="p-role">Bowler</div><h3 class="p-name">Player Name</h3><p class="p-pos">Medium Pacer</p><div class="p-stats"><div><div class="p-sv">--</div><div class="p-sl">Matches</div></div><div><div class="p-sv">--</div><div class="p-sl">Wickets</div></div><div><div class="p-sv">--</div><div class="p-sl">Economy</div></div></div></div></div>
-
-        <div class="player-card"><div class="pimg-wrap"><div class="pimg-ph"><div class="ph-icon">+</div><div class="ph-txt">Add Photo</div></div><div class="p-overlay"></div><div class="p-num">10</div></div><div class="p-info"><div class="p-role">All-Rounder</div><h3 class="p-name">Player Name</h3><p class="p-pos">Bowling All-Rounder</p><div class="p-stats"><div><div class="p-sv">--</div><div class="p-sl">Matches</div></div><div><div class="p-sv">--</div><div class="p-sl">Wickets</div></div><div><div class="p-sv">--</div><div class="p-sl">Runs</div></div></div></div></div>
-
-        <div class="player-card"><div class="pimg-wrap"><div class="pimg-ph"><div class="ph-icon">+</div><div class="ph-txt">Add Photo</div></div><div class="p-overlay"></div><div class="p-num">11</div></div><div class="p-info"><div class="p-role">Bowler</div><h3 class="p-name">Player Name</h3><p class="p-pos">Fast Bowler</p><div class="p-stats"><div><div class="p-sv">--</div><div class="p-sl">Matches</div></div><div><div class="p-sv">--</div><div class="p-sl">Wickets</div></div><div><div class="p-sv">--</div><div class="p-sl">Economy</div></div></div></div></div>
-
-    </div>
-    <p class="swipe-hint">← Swipe to explore →</p>
-</section>
-
-<!-- STATS -->
-<section class="section stats-sec" id="stats">
-    <div class="sec-hdr">
-        <span class="sec-lbl rv">By The Numbers</span>
-        <h2 class="sec-title rv">ROYAL RECORDS</h2>
-        <div class="sec-line"></div>
-    </div>
-    <div class="stats-grid">
-        <div class="stat-card rs"><div class="stat-num" data-target="11">0</div><div class="stat-lbl">Kings</div></div>
-        <div class="stat-card rs"><div class="stat-num" data-target="100">0</div><div class="stat-lbl">Matches Played</div></div>
-        <div class="stat-card rs"><div class="stat-num" data-target="85">0</div><div class="stat-lbl">Win Rate %</div></div>
-        <div class="stat-card rs"><div class="stat-num" data-target="12">0</div><div class="stat-lbl">Trophies</div></div>
-    </div>
-</section>
-
-<!-- FIXTURES -->
-<section class="section fixtures-sec" id="fixtures">
-    <div class="sec-hdr">
-        <span class="sec-lbl rv">Upcoming Battles</span>
-        <h2 class="sec-title rv">FIXTURES</h2>
-        <div class="sec-line"></div>
-    </div>
-    <div class="fix-list">
-        <div class="fix-item">
-            <div><div class="fix-team-name">Kings XI</div></div>
-            <div class="fix-vs">VS</div>
-            <div><div class="fix-team-name">Opponent Team</div><div class="fix-day">TBD</div><div class="fix-time">Venue & Time</div></div>
-        </div>
-        <div class="fix-item">
-            <div><div class="fix-team-name">Kings XI</div></div>
-            <div class="fix-vs">VS</div>
-            <div><div class="fix-team-name">Opponent Team</div><div class="fix-day">TBD</div><div class="fix-time">Venue & Time</div></div>
-        </div>
-        <div class="fix-item">
-            <div><div class="fix-team-name">Kings XI</div></div>
-            <div class="fix-vs">VS</div>
-            <div><div class="fix-team-name">Opponent Team</div><div class="fix-day">TBD</div><div class="fix-time">Venue & Time</div></div>
-        </div>
-    </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="footer">
-    <img src="logo.png" alt="Kings XI" class="foot-logo">
-    <div class="foot-name">KINGS XI</div>
-    <div class="foot-sub">Royal Cricket Dynasty</div>
-    <div class="foot-contact">Want to join the team? Contact us.</div>
-    <div class="foot-line"></div>
-    <div class="foot-copy">2024 Kings XI. All Rights Reserved. Crowned with Passion.</div>
-</footer>
-
-<script>
-gsap.registerPlugin(ScrollTrigger);
-
-/* ── LENIS ── */
-const lenis = new Lenis({
-    duration: 1.4,
-    easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smooth: true, smoothTouch: false, touchMultiplier: 2,
-});
-(function tick(t){ lenis.raf(t); requestAnimationFrame(tick); })(0);
-lenis.on('scroll', ScrollTrigger.update);
-gsap.ticker.add(t => lenis.raf(t * 1000));
-gsap.ticker.lagSmoothing(0);
-
-/* ── CURSOR ── */
-const dot = document.getElementById('curDot');
-const ring = document.getElementById('curRing');
-const isTouch = window.matchMedia('(pointer: coarse)').matches;
-if (!isTouch) {
-    document.addEventListener('mousemove', e => {
-        gsap.to(dot,  { x: e.clientX, y: e.clientY, duration: 0.08, overwrite: true });
-        gsap.to(ring, { x: e.clientX, y: e.clientY, duration: 0.38, overwrite: true });
-    });
-    document.querySelectorAll('a, button, .player-card, .fix-item').forEach(el => {
-        el.addEventListener('mouseenter', () => gsap.to(ring, { scale: 1.7, opacity: .7, duration: .3 }));
-        el.addEventListener('mouseleave', () => gsap.to(ring, { scale: 1, opacity: 1, duration: .3 }));
-    });
-}
-
-/* ── PARTICLE CANVAS ── */
-const canvas = document.getElementById('pCanvas');
-const ctx = canvas.getContext('2d');
-let W, H;
-function resizeC(){ W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
-resizeC(); window.addEventListener('resize', resizeC);
-
-class P {
-    reset(){
-        this.x = Math.random() * W;
-        this.y = H + 10;
-        this.vx = (Math.random() - .5) * .5;
-        this.vy = -(Math.random() * .7 + .25);
-        this.r = Math.random() * 1.8 + .5;
-        this.life = 0;
-        this.max = Math.random() * 180 + 80;
-        this.a = 0;
-        this.peak = Math.random() * .35 + .08;
-    }
-    constructor(){ this.reset(); this.y = Math.random() * H; this.life = Math.random() * this.max; }
-    tick(){
-        this.x += this.vx; this.y += this.vy; this.life++;
-        const t = this.life / this.max;
-        this.a = t < .15 ? (t/.15)*this.peak : t > .85 ? ((1-t)/.15)*this.peak : this.peak;
-        if(this.life >= this.max) this.reset();
-    }
-    draw(){
-        ctx.save(); ctx.globalAlpha = this.a;
-        ctx.fillStyle = '#D4AF37';
-        ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI*2); ctx.fill();
-        ctx.restore();
-    }
-}
-const COUNT = isTouch ? 18 : 45;
-const parts = Array.from({length: COUNT}, () => new P());
-(function animP(){ ctx.clearRect(0,0,W,H); parts.forEach(p=>{p.tick();p.draw();}); requestAnimationFrame(animP); })();
-
-/* ── HERO TITLE SPLIT ── */
-const titleEl = document.getElementById('heroTitle');
-const titleTxt = titleEl.textContent;
-titleEl.innerHTML = [...titleTxt].map(c =>
-    `<span class="ch">${c === ' ' ? '&nbsp;' : c}</span>`
-).join('');
-
-/* ── HERO ENTRANCE ── */
-const htl = gsap.timeline({ delay: .25 });
-htl
-    .to('.gring', { opacity: 1, duration: 1.6, stagger: .2, ease: 'power2.out' })
-    .to('#heroLogo', { opacity: 1, scale: 1, duration: 1.3, ease: 'power3.out', startAt: { scale: .65 } }, 0.4)
-    .to('.gring', { rotation: 360, duration: 25, ease: 'none', repeat: -1 }, 0)
-    .to('#heroSub', { opacity: 1, y: 0, duration: .9, ease: 'power3.out', startAt: { y: 18 } }, '-=.9')
-    .to('.hero-title .ch', { opacity: 1, y: 0, stagger: .055, duration: .65, ease: 'back.out(1.7)', startAt: { y: '110%' } }, '-=.55')
-    .to('#heroTag', { opacity: 1, y: 0, duration: .8, ease: 'power3.out', startAt: { y: 16 } }, '-=.35')
-    .to('#heroDivider', { opacity: 1, duration: .7, ease: 'power2.out' }, '-=.4')
-    .to('#heroStats', { opacity: 1, y: 0, duration: .8, ease: 'power3.out', startAt: { y: 18 } }, '-=.45')
-    .to('#scrollInd', { opacity: 1, duration: 1, ease: 'power2.out' }, '-=.3');
-
-/* hero parallax */
-gsap.to('#heroLogo', {
-    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1.8 },
-    y: 130, scale: .65, opacity: 0,
-});
-gsap.to('.hero-title', {
-    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 },
-    y: 90, opacity: 0,
-});
-
-/* ── NAVBAR ── */
-window.addEventListener('scroll', () => {
-    document.getElementById('navbar').classList.toggle('scrolled', scrollY > 80);
-}, { passive: true });
-
-/* ── SMOOTH ANCHOR SCROLL ── */
-let menuOpen = false;
-document.querySelectorAll('[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-        e.preventDefault();
-        const t = document.querySelector(a.getAttribute('href'));
-        if (t) lenis.scrollTo(t, { offset: -80, duration: 1.4 });
-        if (menuOpen) closeMenu();
-    });
-});
-
-/* ── MOBILE MENU ── */
-const burger = document.getElementById('burger');
-const mob = document.getElementById('mobMenu');
-const mobLinks = mob.querySelectorAll('.mob-link');
-const mobSeps = mob.querySelectorAll('.mob-sep');
-const bSpans = burger.querySelectorAll('span');
-
-const menuTl = gsap.timeline({ paused: true })
-    .to(mob, { clipPath: 'circle(150% at calc(100% - 36px) 32px)', duration: .7, ease: 'power3.inOut' })
-    .to(mobLinks, { opacity: 1, y: 0, stagger: .07, duration: .4, ease: 'power2.out' }, '-=.25')
-    .to(mobSeps, { opacity: .35, duration: .3, ease: 'power2.out' }, '<');
-
-function openMenu(){
-    menuOpen = true; menuTl.play();
-    gsap.to(bSpans[0], { y: 6.5, rotate: 45, duration: .3 });
-    gsap.to(bSpans[1], { opacity: 0, duration: .18 });
-    gsap.to(bSpans[2], { y: -6.5, rotate: -45, duration: .3 });
-}
-function closeMenu(){
-    menuOpen = false; menuTl.reverse();
-    gsap.to(bSpans[0], { y: 0, rotate: 0, duration: .3 });
-    gsap.to(bSpans[1], { opacity: 1, duration: .18 });
-    gsap.to(bSpans[2], { y: 0, rotate: 0, duration: .3 });
-}
-burger.addEventListener('click', () => menuOpen ? closeMenu() : openMenu());
-
-/* ── SCROLL REVEALS ── */
-const mm = gsap.matchMedia();
-mm.add('(prefers-reduced-motion: no-preference)', () => {
-
-    /* generic up */
-    gsap.utils.toArray('.rv').forEach((el, i) => {
-        gsap.to(el, {
-            scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none reverse' },
-            opacity: 1, y: 0, duration: .9, ease: 'power3.out', delay: (i % 3) * .08,
-        });
-    });
-
-    /* left / right */
-    gsap.utils.toArray('.rl').forEach(el => {
-        gsap.to(el, {
-            scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' },
-            opacity: 1, x: 0, duration: 1.1, ease: 'power3.out',
-        });
-    });
-    gsap.utils.toArray('.rr').forEach(el => {
-        gsap.to(el, {
-            scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' },
-            opacity: 1, x: 0, duration: 1.1, ease: 'power3.out',
-        });
-    });
-
-    /* scale */
-    gsap.utils.toArray('.rs').forEach((el, i) => {
-        gsap.to(el, {
-            scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none reverse' },
-            opacity: 1, scale: 1, duration: .9, ease: 'back.out(1.5)', delay: i * .11,
-        });
-    });
-
-    /* section lines */
-    gsap.utils.toArray('.sec-line').forEach(el => {
-        gsap.fromTo(el,
-            { opacity: 0, scaleX: 0 },
-            { scrollTrigger: { trigger: el, start: 'top 90%' }, opacity: 1, scaleX: 1, duration: 1, ease: 'power2.out' }
-        );
-    });
-
-    /* player cards stagger */
-    gsap.utils.toArray('.player-card').forEach((card, i) => {
-        gsap.fromTo(card,
-            { opacity: 0, y: 55 },
-            {
-                scrollTrigger: { trigger: '#teamGrid', start: 'top 88%', toggleActions: 'play none none reverse' },
-                opacity: 1, y: 0, duration: .75, ease: 'power3.out', delay: (i % 3) * .09,
+        function animateFromTo(targets, fromVars, toVars) {
+            if (hasGsap) {
+                gsap.fromTo(targets, fromVars, toVars);
             }
-        );
-    });
+        }
 
-    /* fixture items */
-    gsap.utils.toArray('.fix-item').forEach((item, i) => {
-        gsap.fromTo(item,
-            { opacity: 0, x: -38 },
-            {
-                scrollTrigger: { trigger: item, start: 'top 89%', toggleActions: 'play none none reverse' },
-                opacity: 1, x: 0, duration: .85, ease: 'power3.out', delay: i * .1,
+        function animateTo(targets, vars) {
+            if (hasGsap) {
+                gsap.to(targets, vars);
             }
-        );
-    });
+        }
 
-    /* about logo parallax */
-    gsap.to('.about-logo', {
-        scrollTrigger: { trigger: '.about', start: 'top bottom', end: 'bottom top', scrub: 1.5 },
-        y: -55,
-    });
-});
+        function animateFrom(targets, vars) {
+            if (hasGsap) {
+                gsap.from(targets, vars);
+            }
+        }
 
-/* ── COUNTER ANIMATION ── */
-gsap.utils.toArray('.stat-num').forEach(el => {
-    const target = +el.dataset.target;
-    ScrollTrigger.create({
-        trigger: el, start: 'top 86%', once: true,
-        onEnter(){
-            gsap.fromTo(el,
-                { innerText: 0 },
-                {
-                    innerText: target, duration: 2.4, ease: 'power2.out',
-                    snap: { innerText: 1 },
-                    onUpdate(){ el.innerText = Math.round(+el.innerText); },
+        if (hasGsap && hasScrollTrigger) {
+            gsap.registerPlugin(ScrollTrigger);
+        }
+
+        if (hasLenis && hasGsap) {
+            lenis = new Lenis({ lerp: 0.08, wheelMultiplier: 0.9 });
+            if (hasScrollTrigger) {
+                lenis.on("scroll", ScrollTrigger.update);
+            }
+            gsap.ticker.add((time) => lenis.raf(time * 1000));
+            gsap.ticker.lagSmoothing(0);
+        }
+
+        const nav = document.querySelector(".nav");
+        if (lenis) {
+            lenis.on("scroll", ({ scroll }) => nav.classList.toggle("scrolled", scroll > 20));
+        } else {
+            window.addEventListener("scroll", () => nav.classList.toggle("scrolled", window.scrollY > 20), { passive: true });
+        }
+
+        const fixtureRows = document.getElementById("fixtureRows");
+        const dayControls = document.getElementById("dayControls");
+        const spotDate = document.getElementById("spotlightDate");
+        const spotLeft = document.getElementById("spotLeft");
+        const spotRight = document.getElementById("spotRight");
+        const spotType = document.getElementById("spotType");
+        const leftCaptain = document.getElementById("leftCaptain");
+        const rightCaptain = document.getElementById("rightCaptain");
+
+        function teamText(teamKey) {
+            const team = teams[teamKey];
+            return `<span class="team-name" style="--team-color:${team.color}">${team.name}</span>`;
+        }
+
+        function renderFixtures() {
+            fixtureRows.innerHTML = fixtures.map((item, index) => `
+                <tr data-index="${index}">
+                    <td>${item.match}</td>
+                    <td>${item.date}</td>
+                    <td>${item.day}</td>
+                    <td>${item.final ? "<b>Final</b><br><small>Top 2 Teams</small>" : `${teamText(item.left)} &nbsp; vs &nbsp; ${teamText(item.right)}${item.result ? `<br><small>${item.result}</small>` : ""}`}</td>
+                    <td>${item.type}</td>
+                </tr>
+            `).join("");
+
+            dayControls.innerHTML = fixtures.map((item, index) => `
+                <button class="day-btn" type="button" data-index="${index}">${item.final ? "Final" : `Day ${item.match}`}</button>
+            `).join("");
+
+            dayControls.querySelectorAll("button").forEach((button) => {
+                button.addEventListener("click", () => setMatch(Number(button.dataset.index)));
+            });
+
+            fixtureRows.querySelectorAll("tr").forEach((row) => {
+                row.addEventListener("click", () => setMatch(Number(row.dataset.index)));
+            });
+        }
+
+        function setCssFigures(leftKey, rightKey) {
+            if (!cssLeftFigure || !cssRightFigure) return;
+            cssLeftFigure.style.setProperty("--team-color", teams[leftKey].color);
+            cssRightFigure.style.setProperty("--team-color", teams[rightKey].color);
+        }
+
+        function showCssFallback(message) {
+            cssCaptains.classList.add("active");
+            canvas.style.opacity = "0";
+            renderStatus.textContent = message;
+        }
+
+        function showThreePreview() {
+            cssCaptains.classList.remove("active");
+            canvas.style.opacity = "1";
+            renderStatus.textContent = "Three.js captains active";
+        }
+
+        let scene;
+        let camera;
+        let renderer;
+        let figures = [];
+        const canvas = document.getElementById("captain-canvas");
+
+        function material(color, roughness = 0.52, metalness = 0.12) {
+            return new THREE.MeshStandardMaterial({ color, roughness, metalness });
+        }
+
+        function addFigure(group, side, colors) {
+            const bodyMat = material(colors.color, 0.46, 0.2);
+            const darkMat = material(colors.dark, 0.66, 0.06);
+            const skinMat = material("#c9874c", 0.55, 0.03);
+            const whiteMat = material("#ece8dc", 0.48, 0.08);
+            const xSign = side === "left" ? -1 : 1;
+
+            const torso = new THREE.Mesh(new THREE.CapsuleGeometry(0.47, 1.15, 8, 18), bodyMat);
+            torso.position.y = 0.2;
+            torso.rotation.z = xSign * 0.08;
+            group.add(torso);
+
+            const chestStripe = new THREE.Mesh(new THREE.BoxGeometry(0.11, 1.28, 0.055), whiteMat);
+            chestStripe.position.set(-xSign * 0.12, 0.22, 0.44);
+            chestStripe.rotation.z = xSign * 0.24;
+            group.add(chestStripe);
+
+            const head = new THREE.Mesh(new THREE.SphereGeometry(0.31, 24, 20), skinMat);
+            head.position.y = 1.12;
+            group.add(head);
+
+            const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.35, 0.16, 28), darkMat);
+            cap.position.y = 1.38;
+            cap.rotation.z = xSign * 0.05;
+            group.add(cap);
+
+            const brim = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.06, 0.26), darkMat);
+            brim.position.set(-xSign * 0.16, 1.33, 0.25);
+            brim.rotation.y = xSign * 0.26;
+            group.add(brim);
+
+            const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.18, 0.18, 16), skinMat);
+            neck.position.y = 0.8;
+            group.add(neck);
+
+            const armGeo = new THREE.CapsuleGeometry(0.12, 0.9, 8, 14);
+            const frontArm = new THREE.Mesh(armGeo, bodyMat);
+            frontArm.position.set(-xSign * 0.48, 0.22, 0.32);
+            frontArm.rotation.z = xSign * 1.08;
+            frontArm.rotation.x = 0.72;
+            group.add(frontArm);
+
+            const backArm = new THREE.Mesh(armGeo, bodyMat);
+            backArm.position.set(xSign * 0.5, 0.18, 0.18);
+            backArm.rotation.z = -xSign * 1.02;
+            backArm.rotation.x = 0.68;
+            group.add(backArm);
+
+            const legGeo = new THREE.CapsuleGeometry(0.15, 0.82, 8, 14);
+            const leftLeg = new THREE.Mesh(legGeo, darkMat);
+            leftLeg.position.set(-0.18, -0.95, 0);
+            leftLeg.rotation.z = 0.06;
+            group.add(leftLeg);
+
+            const rightLeg = new THREE.Mesh(legGeo, darkMat);
+            rightLeg.position.set(0.18, -0.95, 0);
+            rightLeg.rotation.z = -0.06;
+            group.add(rightLeg);
+
+            const shoulder = new THREE.Mesh(new THREE.TorusGeometry(0.5, 0.018, 8, 48), material("#f6d37a", 0.4, 0.3));
+            shoulder.position.y = 0.73;
+            shoulder.rotation.x = Math.PI / 2;
+            group.add(shoulder);
+        }
+
+        function makeCaptain(side, teamKey) {
+            const group = new THREE.Group();
+            addFigure(group, side, teams[teamKey]);
+            group.position.set(side === "left" ? -1.55 : 1.55, -0.22, 0);
+            group.rotation.y = side === "left" ? 0.5 : -0.5;
+            group.userData.side = side;
+            scene.add(group);
+            return group;
+        }
+
+        function initThree() {
+            if (!hasThree) {
+                showCssFallback("Three.js CDN blocked - CSS captain preview active");
+                return false;
+            }
+
+            try {
+                scene = new THREE.Scene();
+                camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+                camera.position.set(0, 0.75, 6.2);
+
+                renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.8));
+                renderer.setClearColor(0x000000, 0);
+
+                const ambient = new THREE.AmbientLight(0xf5ddaa, 1.25);
+                scene.add(ambient);
+
+                const keyLight = new THREE.SpotLight(0xffc35a, 4.2, 14, 0.62, 0.58);
+                keyLight.position.set(0, 5.2, 4.5);
+                scene.add(keyLight);
+
+                const rimLeft = new THREE.PointLight(0x1687d9, 3, 8);
+                rimLeft.position.set(-3.2, 1.7, 2.2);
+                scene.add(rimLeft);
+
+                const rimRight = new THREE.PointLight(0xf0ad18, 3, 8);
+                rimRight.position.set(3.2, 1.7, 2.2);
+                scene.add(rimRight);
+
+                const floor = new THREE.Mesh(
+                    new THREE.CircleGeometry(4.2, 96),
+                    new THREE.MeshStandardMaterial({ color: 0x090807, roughness: 0.8, metalness: 0.15, transparent: true, opacity: 0.78 })
+                );
+                floor.rotation.x = -Math.PI / 2;
+                floor.position.y = -1.54;
+                scene.add(floor);
+
+                for (let i = 0; i < 24; i++) {
+                    const shard = new THREE.Mesh(
+                        new THREE.BoxGeometry(0.015, 0.18 + Math.random() * 0.2, 0.015),
+                        new THREE.MeshBasicMaterial({ color: 0xf3b32a })
+                    );
+                    shard.position.set((Math.random() - 0.5) * 5.4, Math.random() * 2.8 - 0.8, -1.1 - Math.random() * 1.2);
+                    shard.rotation.z = Math.random() * Math.PI;
+                    scene.add(shard);
                 }
-            );
+
+                figures = [makeCaptain("left", "alpha"), makeCaptain("right", "mighty")];
+                resizeThree();
+                window.addEventListener("resize", resizeThree);
+                animateThree();
+                showThreePreview();
+                return true;
+            } catch (error) {
+                showCssFallback(`WebGL blocked - ${error.message || "CSS captain preview active"}`);
+                return false;
+            }
         }
-    });
-});
 
-/* ── TEXT SCRAMBLE on section titles ── */
-class Scramble {
-    constructor(el){ this.el = el; this.chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!?—*'; this.run = this.run.bind(this); }
-    go(txt){
-        const old = this.el.innerText, len = Math.max(old.length, txt.length);
-        this.q = Array.from({length:len}, (_,i)=>({
-            from: old[i]||'', to: txt[i]||'',
-            start: Math.floor(Math.random()*16),
-            end: Math.floor(Math.random()*16) + Math.floor(Math.random()*16) + 8,
-            char: '',
-        }));
-        cancelAnimationFrame(this.raf); this.frame = 0; this.run();
-    }
-    run(){
-        let out = '', done = 0;
-        for(let q of this.q){
-            if(this.frame >= q.end){ done++; out += q.to; }
-            else if(this.frame >= q.start){
-                if(!q.char || Math.random() < .28) q.char = this.chars[Math.floor(Math.random()*this.chars.length)];
-                out += `<span style="color:rgba(212,175,55,.55)">${q.char}</span>`;
-            } else { out += q.from; }
+        function resizeThree() {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            renderer.setSize(rect.width, rect.height, false);
+            camera.aspect = rect.width / Math.max(rect.height, 1);
+            camera.updateProjectionMatrix();
         }
-        this.el.innerHTML = out;
-        if(done < this.q.length){ this.raf = requestAnimationFrame(this.run); this.frame++; }
-    }
-}
-document.querySelectorAll('.sec-title').forEach(el => {
-    const orig = el.innerText, fx = new Scramble(el);
-    ScrollTrigger.create({ trigger: el, start: 'top 84%', once: true, onEnter(){ fx.go(orig); } });
-});
 
-/* ── PLAYER CARD 3D TILT (desktop) ── */
-if (!isTouch) {
-    document.querySelectorAll('.player-card').forEach(card => {
-        card.addEventListener('mousemove', e => {
-            const r = card.getBoundingClientRect();
-            const x = (e.clientX - r.left) / r.width - .5;
-            const y = (e.clientY - r.top)  / r.height - .5;
-            gsap.to(card, { rotateY: x*10, rotateX: -y*10, transformPerspective: 900, duration: .4, ease: 'power2.out', overwrite: 'auto' });
-        });
-        card.addEventListener('mouseleave', () => {
-            gsap.to(card, { rotateY: 0, rotateX: 0, duration: .7, ease: 'power3.out', overwrite: 'auto' });
-        });
-    });
-}
+        function animateThree() {
+            const time = performance.now() * 0.001;
+            figures.forEach((figure, index) => {
+                figure.position.y = -0.22 + Math.sin(time * 1.6 + index) * 0.035;
+                figure.rotation.y = (figure.userData.side === "left" ? 0.5 : -0.5) + Math.sin(time * 0.9 + index) * 0.06;
+            });
+            renderer.render(scene, camera);
+            requestAnimationFrame(animateThree);
+        }
 
-/* ── FIXTURE HOVER (GSAP, no CSS conflict) ── */
-document.querySelectorAll('.fix-item').forEach(item => {
-    item.addEventListener('mouseenter', () => gsap.to(item, { x: 8, borderColor: 'rgba(212,175,55,.28)', background: 'rgba(25,12,12,.75)', duration: .35, ease: 'power2.out', overwrite: 'auto' }));
-    item.addEventListener('mouseleave', () => gsap.to(item, { x: 0, borderColor: 'rgba(212,175,55,.08)', background: 'rgba(18,10,10,.6)', duration: .45, ease: 'power3.out', overwrite: 'auto' }));
-});
+        function rebuildFigures(leftKey, rightKey) {
+            setCssFigures(leftKey, rightKey);
+            if (!scene || !hasThree) {
+                return;
+            }
+            figures.forEach((figure) => scene.remove(figure));
+            figures = [makeCaptain("left", leftKey), makeCaptain("right", rightKey)];
+            animateFromTo(figures.map((figure) => figure.scale), { x: 0.84, y: 0.84, z: 0.84 }, { x: 1, y: 1, z: 1, duration: 0.42, stagger: 0.05, ease: "back.out(1.8)" });
+        }
 
-/* ── MAGNETIC BUTTON ── */
-document.querySelectorAll('.mag-btn').forEach(btn => {
-    btn.addEventListener('mousemove', e => {
-        const r = btn.getBoundingClientRect();
-        gsap.to(btn, { x: (e.clientX - r.left - r.width/2) * .28, y: (e.clientY - r.top - r.height/2) * .28, duration: .4, ease: 'power2.out' });
-    });
-    btn.addEventListener('mouseleave', () => {
-        gsap.to(btn, { x: 0, y: 0, duration: .7, ease: 'elastic.out(1,.45)' });
-    });
-});
+        function setCaptainCard(card, teamKey) {
+            const team = teams[teamKey];
+            card.style.setProperty("--team-color", team.color);
+            card.querySelector(".captain-team").textContent = team.name;
+            card.querySelector(".captain-name").textContent = team.captain;
+        }
 
-/* ── MAGNETIC NAV LINKS ── */
-if (!isTouch) {
-    document.querySelectorAll('.nav-links a').forEach(a => {
-        a.addEventListener('mousemove', e => {
-            const r = a.getBoundingClientRect();
-            gsap.to(a, { x: (e.clientX - r.left - r.width/2) * .14, y: (e.clientY - r.top - r.height/2) * .14, duration: .3 });
-        });
-        a.addEventListener('mouseleave', () => gsap.to(a, { x: 0, y: 0, duration: .55, ease: 'elastic.out(1,.5)' }));
-    });
-}
-</script>
+        function setMatch(index) {
+            const fixture = fixtures[index];
+            const leftKey = fixture.final ? "mighty" : fixture.left;
+            const rightKey = fixture.final ? "alpha" : fixture.right;
+            const left = teams[leftKey];
+            const right = teams[rightKey];
+
+            document.querySelectorAll(".day-btn").forEach((button) => button.classList.toggle("active", Number(button.dataset.index) === index));
+            document.querySelectorAll("#fixtureRows tr").forEach((row) => row.classList.toggle("active-row", Number(row.dataset.index) === index));
+
+            spotDate.textContent = `${fixture.date} / ${fixture.day} / 20th Barprola Ground${fixture.result ? ` / ${fixture.result}` : ""}`;
+            spotLeft.textContent = fixture.final ? "Top Team 1" : left.name;
+            spotRight.textContent = fixture.final ? "Top Team 2" : right.name;
+            spotLeft.style.color = fixture.final ? "#fff" : left.color;
+            spotRight.style.color = fixture.final ? "#fff" : right.color;
+            spotType.textContent = fixture.type;
+
+            setCaptainCard(leftCaptain, leftKey);
+            setCaptainCard(rightCaptain, rightKey);
+            rebuildFigures(leftKey, rightKey);
+
+            animateFromTo([".spotlight-fixture", ".captain-card"], { y: 18, opacity: 0.35 }, { y: 0, opacity: 1, duration: 0.42, ease: "power2.out", stagger: 0.03 });
+        }
+
+        renderFixtures();
+        initThree();
+        setMatch(0);
+
+        animateFrom(".hero-copy > *", { y: 34, opacity: 0, duration: 0.9, stagger: 0.12, ease: "power3.out" });
+        animateFrom(".versus-stage", { y: 42, opacity: 0, duration: 1, ease: "power3.out", delay: 0.1 });
+        animateTo(".stage-vs", { scale: 1.08, opacity: 0.68, duration: 1.15, repeat: -1, yoyo: true, ease: "sine.inOut" });
+        animateTo("#teamMarquee", { xPercent: -33.333, duration: 22, repeat: -1, ease: "none" });
+
+        if (hasGsap && hasScrollTrigger) {
+            gsap.utils.toArray(".reveal").forEach((element, index) => {
+                gsap.to(element, {
+                    scrollTrigger: { trigger: element, start: "top 88%" },
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.72,
+                    delay: (index % 3) * 0.05,
+                    ease: "power3.out"
+                });
+            });
+        } else {
+            document.querySelectorAll(".reveal").forEach((element) => {
+                element.style.opacity = "1";
+                element.style.transform = "none";
+            });
+        }
+    </script>
 </body>
 </html>

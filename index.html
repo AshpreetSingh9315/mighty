@@ -1337,7 +1337,7 @@
             transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
         }
         .next-match-card::after {
-            content: '4-0';
+            content: '4-1';
             position: absolute;
             top: 38px;
             left: 50%;
@@ -2301,24 +2301,24 @@
 </head>
 <body>
 
-    <!-- The Shine 11 win - cinematic opening -->
-    <div class="victory-intro" id="victoryIntro" role="dialog" aria-label="Mighty XI Shine 11 victory celebration">
+    <!-- Dominate Cup opener result - cinematic opening -->
+    <div class="victory-intro" id="victoryIntro" role="dialog" aria-label="Mighty XI Dominate Cup opener result">
         <div class="fireworks-layer" id="fireworksLayer"></div>
         <div class="victory-flash" id="victoryFlash"></div>
         <div class="victory-beam"></div>
         <div class="victory-content">
-            <div class="victory-kicker">Fourth win sealed. Tournament mode on.</div>
-            <div class="victory-number">4<small>WIN STREAK</small></div>
-            <h1 class="victory-title">Undefeated at <span>Baprola.</span></h1>
-            <div class="victory-score" aria-label="Mighty XI defeated Shine 11 by 29 runs">
-                <div class="victory-team"><strong>Mighty</strong><span>176/8 in 20.0</span></div>
-                <div class="victory-vs">DEF.</div>
-                <div class="victory-team"><strong>Shine 11</strong><span>147/9 in 20.0</span></div>
+            <div class="victory-kicker">Streak snapped in the opener. Reset mode on.</div>
+            <div class="victory-number">2<small>WICKET LOSS</small></div>
+            <h1 class="victory-title">First match hurt. <span>Next one matters.</span></h1>
+            <div class="victory-score" aria-label="Mighty XI lost to Alpha XI by 2 wickets">
+                <div class="victory-team"><strong>Mighty</strong><span>Score pending</span></div>
+                <div class="victory-vs">LOST</div>
+                <div class="victory-team"><strong>Alpha XI</strong><span>Won by 2 wickets</span></div>
             </div>
             <div class="victory-credits">
-                <span><b>29 runs</b> victory</span><span><b>Ashpreet</b> player of match</span><span><b>4-0</b> undefeated</span><span><b>Captain Ash</b> leading from front</span>
+                <span><b>2 wickets</b> loss</span><span><b>Streak</b> broken</span><span><b>4-1</b> overall run</span><span><b>Next match</b> focus</span>
             </div>
-            <button class="victory-enter" id="victoryEnter" type="button">Enter the tournament run</button>
+            <button class="victory-enter" id="victoryEnter" type="button">Enter the reset</button>
         </div>
         <div class="victory-progress"></div>
     </div>
@@ -2336,7 +2336,7 @@
     <div class="nav-overlay" id="navOverlay"></div>
     <div class="nav-menu" id="navMenu">
         <a href="#home" onclick="closeMenu()">Home</a>
-        <a href="#fixtures" onclick="closeMenu()">Latest Win</a>
+        <a href="#fixtures" onclick="closeMenu()">Latest Result</a>
         <a href="#stats" onclick="closeMenu()">Records</a>
         <a href="#about" onclick="closeMenu()">About</a>
         <a href="#squad" onclick="closeMenu()">Squad</a>
@@ -2352,16 +2352,16 @@
         <div class="hero-ring hero-ring-xl"></div>
 
         <div class="hero-content">
-            <p class="hero-win-label" id="heroWinLabel">4-0 undefeated - entering Dominate Cup '25</p>
+            <p class="hero-win-label" id="heroWinLabel">Streak broken - Dominate Cup reset starts now</p>
             <div class="hero-logo-lockup">
                 <span class="hero-year">2</span>
                 <img src="m1.png" alt="Mighty XI" class="hero-logo" id="heroLogo">
                 <span class="hero-year">6</span>
             </div>
             <h1 class="hero-title" id="heroTitle"><span>Mighty</span> XI</h1>
-            <p class="hero-result" id="heroResult">Won by <span>29 runs</span></p>
-            <p class="hero-tag" id="heroTag">176/8 vs 147/9 - Baprola stays ours</p>
-            <p class="hero-motto" id="heroMotto">#UndefeatedCaptaincy</p>
+            <p class="hero-result" id="heroResult">Lost by <span>2 wickets</span></p>
+            <p class="hero-tag" id="heroTag">Alpha XI edged the opener - Mighty look to the next match</p>
+            <p class="hero-motto" id="heroMotto">#ResetAndRoar</p>
             <!-- <a href="#squad" class="hero-cta" id="heroCta">
                 Meet The Squad
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2379,72 +2379,72 @@
     <!-- Marquee -->
     <div class="marquee">
         <div class="marquee-track">
-            <span class="marquee-item">Mighty Beat Shine 11</span>
-            <span class="marquee-item">4 Match Winning Streak</span>
-            <span class="marquee-item">Won By 29 Runs</span>
-            <span class="marquee-item">Undefeated In Baprola</span>
-            <span class="marquee-item">Ashpreet Player Of Match</span>
-            <span class="marquee-item">Mighty Beat Shine 11</span>
-            <span class="marquee-item">4 Match Winning Streak</span>
-            <span class="marquee-item">Won By 29 Runs</span>
-            <span class="marquee-item">Undefeated In Baprola</span>
-            <span class="marquee-item">Captain Ash Leads</span>
+            <span class="marquee-item">Alpha XI Won By 2 Wickets</span>
+            <span class="marquee-item">Mighty Streak Broken</span>
+            <span class="marquee-item">Reset For The Next Match</span>
+            <span class="marquee-item">Dominate Cup Opener Complete</span>
+            <span class="marquee-item">Captain Ash Leads The Response</span>
+            <span class="marquee-item">Alpha XI Won By 2 Wickets</span>
+            <span class="marquee-item">Mighty Streak Broken</span>
+            <span class="marquee-item">Reset For The Next Match</span>
+            <span class="marquee-item">Dominate Cup Opener Complete</span>
+            <span class="marquee-item">Next Match Focus</span>
         </div>
     </div>
 
     <!-- Fixtures -->
     <section class="section fixtures" id="fixtures">
         <div class="section-head reveal">
-            <p class="section-label">Latest Win - Mighty vs Shine 11</p>
-            <h2 class="section-title">The Fourth <span>Roar</span></h2>
+            <p class="section-label">Latest Result - Mighty vs Alpha XI</p>
+            <h2 class="section-title">The Streak <span>Snapped</span></h2>
             <div class="section-line"></div>
         </div>
 
         <div class="match-centre">
             <div class="next-match-card reveal upcoming-card">
                 <div class="match-kicker">
-                    <span>Match won - Mighty XI</span>
-                    <strong>Won by 29 runs</strong>
+                    <span>Result updated - Dominate Cup opener</span>
+                    <strong>Lost by 2 wickets</strong>
                 </div>
-                <h3 class="mega-match-title">Shine 11 Challenged. <span>Mighty Stayed Unbeaten.</span></h3>
+                <h3 class="mega-match-title">Alpha XI Held Nerve. <span>Mighty Reset.</span></h3>
                 <div class="match-teams">
                     <div class="match-team kings-side">
                         <div class="match-logo-shell"><img src="m1.png" alt="Mighty XI"></div>
                         <span class="match-team-name">Mighty XI</span>
-                        <span class="match-team-label">176/8 - 20.0 ov</span>
+                        <span class="match-team-label">Score pending</span>
                     </div>
                     <div class="match-versus">VS</div>
                     <div class="match-team">
-                        <div class="shine-crest" aria-label="Shine 11 crest">S11</div>
-                        <span class="match-team-name">Shine 11</span>
-                        <span class="match-team-label">147/9 - 20.0 ov</span>
+                        <div class="shine-crest" aria-label="Alpha XI crest">AXI</div>
+                        <span class="match-team-name">Alpha XI</span>
+                        <span class="match-team-label">Won by 2 wickets</span>
                     </div>
                 </div>
                 <div class="match-details">
                     <div class="match-info">
                         <span class="match-info-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v14H4V6a1 1 0 0 1 1-1Z"/></svg></span>
-                        <div><small>Winning margin</small><strong>29 runs</strong></div>
+                        <div><small>Result</small><strong>Alpha XI by 2 wickets</strong></div>
                     </div>
                     <div class="match-info">
                         <span class="match-info-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-                        <div><small>Ground mood</small><strong>Undefeated in Baprola</strong></div>
+                        <div><small>Ground mood</small><strong>Streak broken</strong></div>
                     </div>
                     <div class="match-info">
                         <span class="match-info-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0V4Z"/><path d="M5 5H3v2a4 4 0 0 0 4 4M19 5h2v2a4 4 0 0 1-4 4"/></svg></span>
-                        <div><small>Player of match</small><strong>Ashpreet</strong></div>
+                        <div><small>Team response</small><strong>Next match focus</strong></div>
                     </div>
                 </div>
             </div>
             <div class="tournament-entry reveal">
                 <div class="tournament-copy">
-                    <small>Now entering Dominate Cup '25</small>
-                    <h3>Four wins behind us. <span>One trophy ahead.</span></h3>
-                    <p>Mighty XI walks into the tournament unbeaten under captain Ashpreet, carrying Baprola confidence, batting control, and the calm bite of a team that already knows how to finish.</p>
+                    <small>Dominate Cup '25 update</small>
+                    <h3>The streak is done. <span>The campaign is not.</span></h3>
+                    <p>Mighty XI lost the first tournament match by 2 wickets. The run is broken, but the response starts with the next fixture.</p>
                     <div class="tournament-badges" aria-label="Mighty XI tournament status">
-                        <span>4 Played</span>
-                        <span>4 Wins</span>
+                        <span>4 Wins Before Cup</span>
+                        <span>1 Cup Loss</span>
                         <span>Captain Ash</span>
-                        <span>Zero Defeats</span>
+                        <span>Next Match Focus</span>
                     </div>
                 </div>
                 <a href="latest.png" class="fixture-image-link" aria-label="Open Dominate Cup fixture poster">
@@ -2463,8 +2463,8 @@
             <div class="section-line"></div>
         </div>
         <div class="about-text reveal">
-            <p>Constructed in <strong>2026</strong>, Mighty XI isn't just a cricket team. It's a <strong>movement</strong>. Four wins deep, the roar is entering tournament territory.</p>
-            <p>Led by captain <strong>Ashpreet</strong>, this unbeaten Baprola run now turns into a Dominate Cup statement. We don't chase moments. We <strong>own</strong> them.</p>
+            <p>Constructed in <strong>2026</strong>, Mighty XI isn't just a cricket team. It's a <strong>movement</strong>. Four wins built the run; the first Dominate Cup result now tests the response.</p>
+            <p>Led by captain <strong>Ashpreet</strong>, the streak has been broken by a 2-wicket loss to Alpha XI. The next match is where the comeback starts.</p>
         </div>
         <div class="about-img">
             <img src="m1.png" alt="Mighty XI Emblem">
